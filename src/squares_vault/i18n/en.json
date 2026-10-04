@@ -8,5 +8,14 @@
   "err_group_chat": "Sorry, SQUARES Vault only works in private chats.",
   "err_rate_limit": "Whoa, slow down! Please wait a moment before sending more messages.",
   "err_internal": "An internal error occurred. I've noted it down.",
-  "admin_only": "This command is only available to the bot owner."
+  "admin_only": "This command is only available to the bot owner.",
+  "onboarding_consent": "Before we begin, you must be 18+ and consent to the Privacy Policy.\n\nRead it here: https://example.com/privacy\n\nDo you consent?",
+  "btn_consent_yes": "✅ Yes, I am 18+ and consent",
+  "btn_consent_no": "❌ No",
+  "onboarding_rejected": "You must consent to use SQUARES Vault. Use /start to try again.",
+  "onboarding_invite_prompt": "Please enter your invite code:",
+  "onboarding_invite_invalid": "Invalid or already used invite code. Please try again:",
+  "onboarding_tz_prompt": "Please reply with your Timezone (e.g. Asia/Kolkata, Europe/London), or type 'skip' to use the default (Asia/Kolkata).",
+  "onboarding_tz_invalid": "I couldn't recognize that timezone. Try again, or type 'skip'.",
+  "onboarding_done": "Setup complete! You are ready to use SQUARES Vault."
 }

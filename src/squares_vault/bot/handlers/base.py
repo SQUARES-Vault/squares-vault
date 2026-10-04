@@ -12,15 +12,6 @@ from squares_vault.i18n.loader import t
 router = Router(name="base")
 
 
-@router.message(CommandStart())
-async def cmd_start(message: Message) -> None:
-    """Handle /start."""
-    await message.answer(
-        t("start_welcome"),
-        reply_markup=get_main_keyboard(),
-    )
-
-
 @router.message(Command("help"))
 async def cmd_help(message: Message) -> None:
     """Handle /help."""

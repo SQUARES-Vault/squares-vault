@@ -14,6 +14,7 @@ from squares_vault.bot.middlewares.private_chat import PrivateChatOnlyMiddleware
 from squares_vault.bot.middlewares.ratelimit import RateLimitMiddleware
 from squares_vault.bot.state import SqliteStorage
 from squares_vault.bot.handlers.base import router as base_router
+from squares_vault.flows.onboarding import router as onboarding_router
 
 log = get_logger(__name__)
 
@@ -40,6 +41,7 @@ async def main() -> None:
     dp.message.middleware(RateLimitMiddleware())
     
     # Register routers
+    dp.include_router(onboarding_router)
     dp.include_router(base_router)
     
     # 4. Start polling
