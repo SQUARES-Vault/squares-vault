@@ -6,6 +6,15 @@ All notable changes to SQUARES Vault will be documented here (Keep a Changelog f
 
 ## [Unreleased]
 
+### M6 — AI extraction (done)
+- Gemini REST API integration using structured JSON outputs.
+- Background `ai_queue` worker loop for asynchronous document parsing.
+- Global and per-user daily rate limits with next-day deferral.
+- Automatic image downscaling and EXIF stripping before AI processing.
+- Strict post-validation rules (Indian vehicle formats, computing warranty dates).
+- Bring Your Own Key (`/byok`) flow using encrypted `user_keys`.
+- Golden tests for JSON schema adherence.
+
 ### M5 — Reminders (done)
 - Schedule generator with category-specific logic.
 - Idempotent `claim-before-send` scheduler loop.

@@ -13,16 +13,16 @@ async def test_m5_scheduler_idempotency(setup_db):
     
     # Insert dummy user
     async with get_db() as db:
-        await db.execute("INSERT INTO users (id, chat_id) VALUES (1, 1)")
+        await db.execute("INSERT OR IGNORE INTO users (id, chat_id) VALUES (101, 101)")
         # Insert a dummy record
         await db.execute(
-            "INSERT INTO records (id, user_id, category, title, code) VALUES ('rec1', 1, 'vehicle', 'Car RC', 'ABC')"
+            "INSERT INTO records (id, user_id, category, title, code) VALUES ('rec_m5_1', 101, 'vehicle', 'Car RC', 'ABC')"
         )
         # Insert 2 pending reminders, one in the past, one in the future
         await db.execute(
             "INSERT INTO reminders (id, record_id, user_id, kind, fire_at, state) VALUES "
-            "('rem1', 'rec1', 1, 'due', '2000-01-01T09:00:00Z', 'pending'), "
-            "('rem2', 'rec1', 1, 'due', '2099-01-01T09:00:00Z', 'pending')"
+            "('rem_m5_1', 'rec_m5_1', 101, 'due', '2000-01-01T09:00:00Z', 'pending'), "
+            "('rem_m5_2', 'rec_m5_1', 101, 'due', '2099-01-01T09:00:00Z', 'pending')"
         )
         await db.commit()
         
@@ -36,7 +36,7 @@ async def test_m5_scheduler_idempotency(setup_db):
     
     # Manually check DB
     async with get_db() as db:
-        async with db.execute("SELECT state FROM reminders WHERE id = 'rem1'") as cur:
+        async with db.execute("SELECT state FROM reminders WHERE id = 'rem_m5_1'") as cur:
             assert (await cur.fetchone())["state"] == "sent"
-        async with db.execute("SELECT state FROM reminders WHERE id = 'rem2'") as cur:
+        async with db.execute("SELECT state FROM reminders WHERE id = 'rem_m5_2'") as cur:
             assert (await cur.fetchone())["state"] == "pending"
