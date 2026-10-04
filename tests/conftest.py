@@ -28,3 +28,12 @@ def _set_test_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
 
     from squares_vault.config import init_settings
     init_settings()
+
+
+@pytest.fixture(autouse=True)
+async def setup_db(tmp_path):
+    from squares_vault.db.connection import get_db
+    from squares_vault.db.migrations import run_migrations
+    
+    async with get_db() as db:
+        await run_migrations(db)

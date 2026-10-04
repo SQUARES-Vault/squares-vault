@@ -22,15 +22,17 @@ from squares_vault.i18n.loader import t
 
 
 @pytest.fixture(autouse=True)
-async def setup_db(tmp_path):
-    """Run migrations on the test database before each test."""
+async def setup_invite_code():
+    """Insert a test invite code."""
     async with get_db() as db:
-        await run_migrations(db)
-        
         import hashlib
         code_hash = hashlib.sha256(b"TEST-CODE").hexdigest()
         await db.execute("INSERT OR IGNORE INTO invite_codes (code_hash) VALUES (?)", (code_hash,))
         await db.commit()
+
+@pytest.fixture
+def state():
+    return AsyncMock(spec=FSMContext)
     yield
 
 

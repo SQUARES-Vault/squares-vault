@@ -6,6 +6,19 @@ All notable changes to SQUARES Vault will be documented here (Keep a Changelog f
 
 ## [Unreleased]
 
+### M4 — Records and manifest sync (done)
+- Database repositories for CRUD operations on records and files.
+- `ulid` based ID generation and base32 coded names for privacy.
+- `Pillow` image processor for stripping EXIF data and resizing.
+- Two-way manifest sync stub and rebuild integration test.
+- Automated testing covers DB rebuilds and image processing.
+
+### M3 — Google Drive Integration (done)
+- AIOHTTP Device Auth flow implementation (`/connect`).
+- AES-256-GCM envelope encryption for OAuth tokens at rest (`token_store.py`).
+- Background token polling logic with timeout.
+- Auto-refreshing Drive API wrapper (`api.py`).
+
 ### M2 — Onboarding (done)
 - FSM for `/start` flow (`onboarding_start` -> `consent` -> `invite_code` -> `timezone` -> `done`).
 - 18+ and Privacy Policy consent logged in `consent_log` (S9).

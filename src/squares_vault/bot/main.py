@@ -7,8 +7,10 @@ import asyncio
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 
-from squares_vault.config import init_settings, settings
-from squares_vault.db.connection import close_db, init_db
+from squares_vault import config
+from squares_vault.config import init_settings
+from squares_vault.db.connection import close_db, init_db, get_db
+from squares_vault.db.migrations import run_migrations
 from squares_vault.logging_setup import get_logger, setup_logging
 from squares_vault.bot.middlewares.private_chat import PrivateChatOnlyMiddleware
 from squares_vault.bot.middlewares.ratelimit import RateLimitMiddleware
@@ -28,10 +30,12 @@ async def main() -> None:
     
     # 2. Setup DB connection pool
     await init_db()
+    async with get_db() as db:
+        await run_migrations(db)
 
     # 3. Setup Bot and Dispatcher
     bot = Bot(
-        token=settings.telegram_bot_token,
+        token=config.settings.telegram_bot_token,
         default=DefaultBotProperties(parse_mode="HTML")
     )
     

@@ -127,8 +127,6 @@ class Settings:
     uptime_ping_url: str  # empty string = disabled
 
     # App settings
-    google_client_id: str
-    google_client_secret: str
     max_users: int
     policy_version: str
     default_tz: str
@@ -180,8 +178,6 @@ def load_settings() -> Settings:
         # Ops
         uptime_ping_url=_opt("UPTIME_PING_URL"),
         # App
-        google_client_id=_opt("GOOGLE_CLIENT_ID"),
-        google_client_secret=_opt("GOOGLE_CLIENT_SECRET"),
         max_users=_int("MAX_USERS", 100),
         policy_version=_opt("POLICY_VERSION", "1.0"),
         default_tz=_opt("DEFAULT_TZ", "Asia/Kolkata"),
