@@ -16,6 +16,8 @@ from squares_vault.bot.state import SqliteStorage
 from squares_vault.bot.handlers.base import router as base_router
 from squares_vault.flows.onboarding import router as onboarding_router
 
+from squares_vault.flows.drive_auth import router as drive_auth_router
+
 log = get_logger(__name__)
 
 
@@ -42,6 +44,7 @@ async def main() -> None:
     
     # Register routers
     dp.include_router(onboarding_router)
+    dp.include_router(drive_auth_router)
     dp.include_router(base_router)
     
     # 4. Start polling
