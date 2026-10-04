@@ -1,0 +1,1 @@
+"""SQUARES Vault – package root."""
