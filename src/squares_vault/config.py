@@ -187,7 +187,7 @@ def load_settings() -> Settings:
 
 # Module-level lazy singleton – import and use ``settings`` from other modules.
 # It is populated by calling ``init_settings()`` at bot startup.
-settings: Settings  # forward declaration (set by init_settings)
+settings: Settings = None  # type: ignore
 
 
 def init_settings() -> Settings:

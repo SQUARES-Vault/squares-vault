@@ -1,0 +1,12 @@
+{
+  "start_welcome": "Welcome to SQUARES Vault! I'm your personal life-admin assistant.\n\nSend me a photo or PDF of a document (vehicle papers, warranties, bills, IDs) and I'll keep it safe in your own Google Drive. I will also remind you when things are due.",
+  "help_text": "SQUARES Vault Help\n\n- Send a photo or PDF anytime to add a record.\n- Use the menu below to find things or see what's coming up.\n\nFor support, contact the bot admin.",
+  "menu_add": "➕ Add",
+  "menu_find": "🔍 Find",
+  "menu_upcoming": "📅 Upcoming",
+  "menu_settings": "⚙️ Settings",
+  "err_group_chat": "Sorry, SQUARES Vault only works in private chats.",
+  "err_rate_limit": "Whoa, slow down! Please wait a moment before sending more messages.",
+  "err_internal": "An internal error occurred. I've noted it down.",
+  "admin_only": "This command is only available to the bot owner."
+}

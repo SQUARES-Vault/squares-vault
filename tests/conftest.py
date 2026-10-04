@@ -25,3 +25,6 @@ def _set_test_env(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     monkeypatch.setenv("DB_PATH", str(tmp_path / "test.sqlite3"))
     monkeypatch.setenv("MASTER_KEY_PATH", str(tmp_path / "master.key"))
     monkeypatch.setenv("TMP_DIR", str(tmp_path / "tmp"))
+
+    from squares_vault.config import init_settings
+    init_settings()

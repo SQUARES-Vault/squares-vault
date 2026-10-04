@@ -24,7 +24,7 @@ from typing import AsyncGenerator
 
 import aiosqlite
 
-from squares_vault.config import settings
+from squares_vault import config
 
 # Module-level connection pool (single connection reused across coroutines
 # via asyncio serialization; aiosqlite is not truly pooled, but one shared
@@ -51,7 +51,7 @@ async def init_db() -> None:
     global _connection  # noqa: PLW0603
     async with _lock:
         if _connection is None:
-            _connection = await _open_connection(settings.db_path)
+            _connection = await _open_connection(config.settings.db_path)
 
 
 async def close_db() -> None:
