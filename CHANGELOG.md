@@ -6,6 +6,16 @@ All notable changes to SQUARES Vault will be documented here (Keep a Changelog f
 
 ## [Unreleased]
 
+### M9 — Privacy and lifecycle (done)
+- Full `/deletemydata` workflow executing comprehensive right-to-be-forgotten deletion across all tables.
+- Implemented `/storage` and `/export` commands for data transparency.
+- Secure tombstone generation for cross-device sync consistency.
+
+### M8 — Search and retrieval (done)
+- FTS5 and trigram virtual tables in SQLite for instant text search.
+- Seamless synchronization with standard records via a Python wrapper.
+- Natural language search interface for Telegram.
+
 ### M7 — Add/Edit flows (done)
 - Interactive Draft cards for AI extracted documents with Save/Edit/Discard inline buttons.
 - Fully simulated end-to-end flow testing from upload, to queue, to AI parsing, to DB saving, to reminder generation.

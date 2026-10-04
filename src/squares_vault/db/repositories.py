@@ -30,6 +30,9 @@ async def create_record(user_id: int, category: str, title: str, code: str, **kw
         )
         await db.commit()
         
+    from squares_vault.search.index import sync_fts_for_record
+    await sync_fts_for_record(record_id, user_id, title, category, kwargs.get("tags"))
+    
     return record_id
 
 

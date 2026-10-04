@@ -23,6 +23,8 @@ from squares_vault.bot.handlers.reminders import router as reminders_router
 from squares_vault.bot.handlers.upload import router as upload_router
 from squares_vault.bot.handlers.byok import router as byok_router
 from squares_vault.bot.handlers.drafts import router as drafts_router
+from squares_vault.bot.handlers.search import router as search_router
+from squares_vault.bot.handlers.privacy import router as privacy_router
 from squares_vault.reminders.scheduler import scheduler_loop
 from squares_vault.ai.queue import ai_worker_loop
 
@@ -59,6 +61,8 @@ async def main() -> None:
     dp.include_router(drafts_router)
     dp.include_router(byok_router)
     dp.include_router(reminders_router)
+    dp.include_router(search_router)
+    dp.include_router(privacy_router)
     dp.include_router(base_router)
     
     import asyncio
