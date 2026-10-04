@@ -19,6 +19,8 @@ from squares_vault.bot.handlers.base import router as base_router
 from squares_vault.flows.onboarding import router as onboarding_router
 
 from squares_vault.flows.drive_auth import router as drive_auth_router
+from squares_vault.bot.handlers.reminders import router as reminders_router
+from squares_vault.reminders.scheduler import scheduler_loop
 
 log = get_logger(__name__)
 
@@ -49,7 +51,11 @@ async def main() -> None:
     # Register routers
     dp.include_router(onboarding_router)
     dp.include_router(drive_auth_router)
+    dp.include_router(reminders_router)
     dp.include_router(base_router)
+    
+    import asyncio
+    asyncio.create_task(scheduler_loop(bot))
     
     # 4. Start polling
     log.info("bot_start_polling")

@@ -20,5 +20,6 @@
   "onboarding_done": "Setup complete! You are ready to use SQUARES Vault.",
   "drive_connect_prompt": "Let's connect your Google Drive so I can save your files.\n\n1️⃣ Open this link on any device:\n{url}\n\n2️⃣ Enter this code:\n`{code}`\n\nI'll wait here for you to finish.",
   "drive_connect_success": "✅ Google Drive connected successfully! I've created a folder for your files.",
-  "drive_connect_timeout": "⏳ The connection timed out. Please try again when you're ready."
+  "drive_connect_timeout": "⏳ The connection timed out. Please try again when you're ready.",
+  "rem_marked_done": "Done!"
 }

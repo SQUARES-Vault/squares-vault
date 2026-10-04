@@ -6,6 +6,12 @@ All notable changes to SQUARES Vault will be documented here (Keep a Changelog f
 
 ## [Unreleased]
 
+### M5 — Reminders (done)
+- Schedule generator with category-specific logic.
+- Idempotent `claim-before-send` scheduler loop.
+- Inline keyboard handlers for Snooze and Done.
+- Integration test for scheduler restart and math.
+
 ### M4 — Records and manifest sync (done)
 - Database repositories for CRUD operations on records and files.
 - `ulid` based ID generation and base32 coded names for privacy.
