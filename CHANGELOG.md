@@ -6,6 +6,12 @@ All notable changes to SQUARES Vault will be documented here (Keep a Changelog f
 
 ## [Unreleased]
 
+### M7 — Add/Edit flows (done)
+- Interactive Draft cards for AI extracted documents with Save/Edit/Discard inline buttons.
+- Fully simulated end-to-end flow testing from upload, to queue, to AI parsing, to DB saving, to reminder generation.
+- 30-second undo capability after saving a draft.
+- Seamless creation of schedules tied to manually reviewed drafts.
+
 ### M6 — AI extraction (done)
 - Gemini REST API integration using structured JSON outputs.
 - Background `ai_queue` worker loop for asynchronous document parsing.

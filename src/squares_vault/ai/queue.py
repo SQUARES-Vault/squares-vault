@@ -11,6 +11,7 @@ from squares_vault.logging_setup import get_logger
 from squares_vault.ai.quota import check_and_increment_quota, QuotaExceededError, GlobalCeilingExceededError
 from squares_vault.ai.gemini import extract_document_data, AIProviderError
 from squares_vault.drive.api import DriveAPI
+from squares_vault.ops.images import process_image
 
 log = get_logger(__name__)
 
@@ -49,7 +50,6 @@ async def process_queue_item(bot, item_id: str, user_id: int, draft_id: str, fil
         
         # 3. Process with Gemini
         # Assuming it's an image for now. If PDF, we'd use PyMuPDF.
-        from squares_vault.ops.images import process_image
         try:
             clean_image = process_image(img_data)
             mime = "image/jpeg"

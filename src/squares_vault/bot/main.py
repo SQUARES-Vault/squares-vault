@@ -22,6 +22,7 @@ from squares_vault.flows.drive_auth import router as drive_auth_router
 from squares_vault.bot.handlers.reminders import router as reminders_router
 from squares_vault.bot.handlers.upload import router as upload_router
 from squares_vault.bot.handlers.byok import router as byok_router
+from squares_vault.bot.handlers.drafts import router as drafts_router
 from squares_vault.reminders.scheduler import scheduler_loop
 from squares_vault.ai.queue import ai_worker_loop
 
@@ -55,6 +56,7 @@ async def main() -> None:
     dp.include_router(onboarding_router)
     dp.include_router(drive_auth_router)
     dp.include_router(upload_router)
+    dp.include_router(drafts_router)
     dp.include_router(byok_router)
     dp.include_router(reminders_router)
     dp.include_router(base_router)
