@@ -237,3 +237,17 @@ async def process_timezone(message: Message, state: FSMContext) -> None:
 
     await state.clear()
     await message.answer(t("onboarding_done"), reply_markup=get_main_keyboard(), parse_mode="Markdown")
+
+    # Prompt to connect personal Google Drive
+    drive_kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🔗 Connect Google Drive", callback_data="drive_auth_start")],
+        [InlineKeyboardButton(text="⏩ Skip for Now", callback_data="settings_close")]
+    ])
+    await message.answer(
+        "🔐 *Connect Your Google Drive*\n\n"
+        "Link your personal Google Drive to keep all your documents strictly under your ownership:\n\n"
+        "• *Private Storage:* Uploaded files and backups go straight to your Drive.\n"
+        "• *Zero Lock-in:* Access or download your documents anytime.",
+        reply_markup=drive_kb,
+        parse_mode="Markdown"
+    )

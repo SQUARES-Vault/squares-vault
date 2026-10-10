@@ -59,10 +59,12 @@ async def _build_storage_view(user_id: int):
         ) as cur:
             records = (await cur.fetchone())["c"]
         async with db.execute(
-            "SELECT COUNT(*) as c FROM reminders WHERE user_id = ? AND state = 'pending'",
+            "SELECT COUNT(DISTINCT record_id) as docs_c, COUNT(*) as alerts_c FROM reminders WHERE user_id = ? AND state = 'pending'",
             (user_id,)
         ) as cur:
-            reminders = (await cur.fetchone())["c"]
+            rem_row = await cur.fetchone()
+            rem_docs = rem_row["docs_c"] if rem_row else 0
+            rem_alerts = rem_row["alerts_c"] if rem_row else 0
         async with db.execute(
             "SELECT category, COUNT(*) as c FROM records WHERE user_id = ? AND status != 'soft_deleted' GROUP BY category ORDER BY c DESC",
             (user_id,)
@@ -82,10 +84,17 @@ async def _build_storage_view(user_id: int):
 
     breakdown_text = "\n".join(cat_lines) if cat_lines else "_No records stored yet._"
 
+    if rem_docs == 0:
+        rem_display = "0"
+    elif rem_docs == 1:
+        rem_display = f"1 document ({rem_alerts} scheduled alerts)"
+    else:
+        rem_display = f"{rem_docs} documents ({rem_alerts} scheduled alerts)"
+
     msg = (
         f"📊 *Storage Breakdown*\n\n"
         f"📁 *Total Active Documents:* {records}\n"
-        f"⏰ *Active Reminders:* {reminders}\n\n"
+        f"⏰ *Active Reminders:* {rem_display}\n\n"
         f"📂 *Folders:*\n{breakdown_text}\n\n"
         f"☁️ _All files are securely synced to your connected Google Drive._"
     )
@@ -158,7 +167,7 @@ async def process_delete_my_data(message: Message) -> None:
 async def on_drive_auth_start(cq: CallbackQuery) -> None:
     from squares_vault.flows.drive_auth import cmd_connect_drive
     await cq.message.delete()
-    await cmd_connect_drive(cq.message)
+    await cmd_connect_drive(cq.message, user_id_override=cq.from_user.id)
     await cq.answer()
 
 @router.callback_query(F.data == "settings_connections")

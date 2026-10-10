@@ -163,7 +163,7 @@ async def _render_upcoming(target, user_id: int, months_limit: int | None = 3, *
     if months_limit == 3:
         filter_sql = """
             AND (
-                (r.key_date_type IN ('expiry', 'due') AND r.key_date IS NOT NULL AND r.key_date != '' 
+                (r.key_date IS NOT NULL AND r.key_date != '' 
                  AND r.key_date >= date('now', '-10 days') AND r.key_date <= date('now', '+3 months'))
                 OR EXISTS (
                     SELECT 1 FROM reminders rem2 
@@ -178,7 +178,7 @@ async def _render_upcoming(target, user_id: int, months_limit: int | None = 3, *
     else:
         filter_sql = """
             AND (
-                (r.key_date_type IN ('expiry', 'due') AND r.key_date IS NOT NULL AND r.key_date != '' 
+                (r.key_date IS NOT NULL AND r.key_date != '' 
                  AND r.key_date >= date('now', '-10 days'))
                 OR EXISTS (
                     SELECT 1 FROM reminders rem2 
@@ -219,6 +219,52 @@ async def _render_upcoming(target, user_id: int, months_limit: int | None = 3, *
         async with db.execute(query, (user_id, user_id)) as cur:
             rows = await cur.fetchall()
 
+    is_fallback_all = False
+    if months_limit == 3 and not rows:
+        all_filter = """
+            AND (
+                (r.key_date IS NOT NULL AND r.key_date != '' 
+                 AND r.key_date >= date('now', '-10 days'))
+                OR EXISTS (
+                    SELECT 1 FROM reminders rem2 
+                    WHERE rem2.record_id = r.id AND rem2.state = 'pending'
+                      AND (r.key_date IS NULL OR r.key_date = '' OR r.key_date >= date('now', '-10 days'))
+                )
+            )
+        """
+        fallback_query = f"""
+            SELECT 
+                r.id as record_id, 
+                r.title, 
+                r.category, 
+                r.key_date, 
+                r.key_date_type,
+                r.parent_record_id,
+                rem.kind, 
+                rem.fire_at, 
+                rem.state as reminder_state
+            FROM records r
+            LEFT JOIN reminders rem ON rem.record_id = r.id AND rem.state = 'pending'
+            WHERE (r.user_id = ? OR r.id IN (
+                SELECT r2.id FROM records r2 
+                JOIN access_grants ag ON r2.user_id = ag.owner_id 
+                WHERE ag.granted_id = ? AND ag.category = 'all'
+            ))
+              AND r.status NOT IN ('soft_deleted', 'renewed', 'done')
+              {all_filter}
+            ORDER BY 
+                CASE WHEN r.key_date IS NULL OR r.key_date = '' THEN 1 ELSE 0 END,
+                r.key_date ASC,
+                rem.fire_at ASC
+        """
+        async with get_db() as db:
+            async with db.execute(fallback_query, (user_id, user_id)) as cur:
+                fallback_rows = await cur.fetchall()
+        if fallback_rows:
+            rows = fallback_rows
+            is_fallback_all = True
+            title_header = "📅 **UPCOMING DEADLINES & ALERTS**\n_No deadlines in next 3 months. Showing upcoming deadlines:_"
+
     today = datetime.now(timezone.utc).date()
     grouped = OrderedDict()
     for row in rows:
@@ -255,7 +301,9 @@ async def _render_upcoming(target, user_id: int, months_limit: int | None = 3, *
             has_pending_any = cnt_row["cnt"] > 0 if cnt_row else False
 
     kb_rows = []
-    if months_limit == 3:
+    if is_fallback_all:
+        kb_rows.append([InlineKeyboardButton(text="📅 Show Next 3 Months Only", callback_data="upcoming_view:3m")])
+    elif months_limit == 3:
         kb_rows.append([InlineKeyboardButton(text="📋 View All Deadlines & Reminders", callback_data="upcoming_view:all")])
     else:
         kb_rows.append([InlineKeyboardButton(text="📅 Show Next 3 Months Only", callback_data="upcoming_view:3m")])

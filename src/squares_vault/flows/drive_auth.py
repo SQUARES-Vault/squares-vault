@@ -12,13 +12,17 @@ from squares_vault.drive.client import start_device_flow, poll_for_token
 from squares_vault.drive.token_store import save_token
 from squares_vault.i18n.loader import t
 
+import logging
+
+log = logging.getLogger("squares_vault.drive_auth")
+
 router = Router(name="drive_auth")
 
 
 @router.message(Command("connect"))
-async def cmd_connect_drive(message: Message) -> None:
+async def cmd_connect_drive(message: Message, user_id_override: int | None = None) -> None:
     """Start the device auth flow for Google Drive."""
-    user_id = message.from_user.id
+    user_id = user_id_override or message.from_user.id
     
     # 1. Get device code
     flow_info = await start_device_flow()
@@ -48,17 +52,24 @@ async def cmd_connect_drive(message: Message) -> None:
 
 
 async def _poll_and_save(user_id: int, message: Message, device_code: str, interval: int, max_attempts: int) -> None:
-    token_info = await poll_for_token(device_code, interval, max_attempts)
-    
-    if not token_info or not token_info.refresh_token:
-        await message.answer(t("drive_connect_timeout"))
-        return
+    try:
+        token_info = await poll_for_token(device_code, interval, max_attempts)
         
-    await save_token(
-        user_id,
-        token_info.access_token,
-        token_info.refresh_token,
-        token_info.expires_in
-    )
-    
-    await message.answer(t("drive_connect_success"))
+        if not token_info or not token_info.refresh_token:
+            await message.answer(t("drive_connect_timeout"))
+            return
+            
+        await save_token(
+            user_id,
+            token_info.access_token,
+            token_info.refresh_token,
+            token_info.expires_in
+        )
+        
+        kb = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="⚙️ View Connections Dashboard", callback_data="settings_connections")]
+        ])
+        await message.answer(t("drive_connect_success"), reply_markup=kb, parse_mode="Markdown")
+    except Exception as e:
+        log.exception("Error in _poll_and_save for user %s: %s", user_id, e)
+        await message.answer("⚠️ An error occurred while linking Google Drive. Please try again.")
