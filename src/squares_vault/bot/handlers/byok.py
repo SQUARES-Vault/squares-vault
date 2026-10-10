@@ -7,7 +7,7 @@ from aiogram.types import Message
 from aiogram.filters import Command
 
 from squares_vault.db.connection import get_db
-from squares_vault.security.crypto import encrypt_key
+from squares_vault.security.crypto import encrypt_secret, load_master_key
 from squares_vault.i18n.loader import t
 
 router = Router(name="byok")
@@ -30,7 +30,9 @@ async def handle_gemini_key(message: Message) -> None:
     
     # In a real app we would call Gemini models.list to validate the key first.
     # For now, encrypt and store.
-    enc_blob, wrapped_dek = encrypt_key(key.encode('utf-8'))
+    from squares_vault import config
+    master_key = load_master_key(config.settings.master_key_path)
+    enc_blob, wrapped_dek = encrypt_secret(master_key, key.encode('utf-8'))
     
     async with get_db() as db:
         await db.execute(

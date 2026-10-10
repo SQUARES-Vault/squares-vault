@@ -14,8 +14,10 @@ def get_main_keyboard(locale: str = "en") -> ReplyKeyboardMarkup:
             [
                 KeyboardButton(text=t("menu_add", locale=locale)),
                 KeyboardButton(text=t("menu_find", locale=locale)),
+                KeyboardButton(text=t("menu_browse", locale=locale)),
             ],
             [
+                KeyboardButton(text=t("menu_ask", locale=locale)),
                 KeyboardButton(text=t("menu_upcoming", locale=locale)),
                 KeyboardButton(text=t("menu_settings", locale=locale)),
             ],

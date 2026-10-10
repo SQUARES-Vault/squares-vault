@@ -23,4 +23,4 @@ class ExtractedRecord(BaseModel):
     purchase_date: Optional[str] = Field(None, description="Date of purchase (YYYY-MM-DD)")
     warranty_months: Optional[int] = Field(None, description="Number of months of warranty")
     
-    notes: Optional[str] = Field(None, description="Any other key details or context")
+    notes: Optional[str] = Field(None, description="Any other key details or context (e.g., line items, quantities, specific terms, or important extracted text).")

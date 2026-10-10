@@ -36,12 +36,12 @@ async def save_token(user_id: int, access_token: str, refresh_token: str, expire
     async with get_db() as db:
         await db.execute(
             """
-            INSERT INTO oauth_tokens (user_id, token_ct, dek_ct)
+            INSERT INTO oauth_tokens (user_id, refresh_token_enc, dek_wrapped)
             VALUES (?, ?, ?)
             ON CONFLICT(user_id) DO UPDATE SET
-                token_ct = excluded.token_ct,
-                dek_ct = excluded.dek_ct,
-                updated_at = CURRENT_TIMESTAMP
+                refresh_token_enc = excluded.refresh_token_enc,
+                dek_wrapped = excluded.dek_wrapped,
+                last_refreshed_at = CURRENT_TIMESTAMP
             """,
             (user_id, ct, dek)
         )
@@ -53,14 +53,14 @@ async def save_token(user_id: int, access_token: str, refresh_token: str, expire
 async def get_token(user_id: int) -> Optional[Tuple[str, str]]:
     """Retrieve and decrypt a user's tokens. Returns (access_token, refresh_token)."""
     async with get_db() as db:
-        async with db.execute("SELECT token_ct, dek_ct FROM oauth_tokens WHERE user_id = ?", (user_id,)) as cur:
+        async with db.execute("SELECT refresh_token_enc, dek_wrapped FROM oauth_tokens WHERE user_id = ?", (user_id,)) as cur:
             row = await cur.fetchone()
             
     if not row:
         return None
         
     try:
-        pt = decrypt_secret(_get_master_key(), row["token_ct"], row["dek_ct"])
+        pt = decrypt_secret(_get_master_key(), row["refresh_token_enc"], row["dek_wrapped"])
         data = json.loads(pt.decode("utf-8"))
         return data["access_token"], data["refresh_token"]
     except Exception:

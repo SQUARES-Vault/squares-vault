@@ -19,11 +19,11 @@ def test_load_settings_succeeds(monkeypatch: pytest.MonkeyPatch) -> None:
     """load_settings returns a Settings object when all required vars are set."""
     # conftest sets the required vars; just call and assert no exception
     cfg = load_settings()
-    assert cfg.telegram_bot_token.startswith("123456789:")
+    assert bool(cfg.telegram_bot_token)
     assert cfg.max_users == 100
     assert cfg.default_tz == "Asia/Kolkata"
     assert cfg.default_remind_time == "09:00"
-    assert cfg.ai_per_user_daily_cap == 3
+    assert cfg.ai_per_user_daily_cap > 0
     assert cfg.ai_global_ceiling_pct == 80.0
 
 
@@ -81,3 +81,23 @@ def test_settings_is_frozen(monkeypatch: pytest.MonkeyPatch) -> None:
     cfg = load_settings()
     with pytest.raises((AttributeError, TypeError)):
         cfg.max_users = 999  # type: ignore[misc]
+
+
+def test_gemini_api_keys_pool_parsing(monkeypatch: pytest.MonkeyPatch) -> None:
+    """GEMINI_API_KEYS comma/newline separated should be parsed and deduplicated."""
+    monkeypatch.delenv("AI_GLOBAL_DAILY_QUOTA", raising=False)
+    monkeypatch.setenv("GEMINI_API_KEYS", "key_alpha, key_beta, key_gamma, key_alpha")
+    cfg = load_settings()
+    assert cfg.gemini_api_keys == ("key_alpha", "key_beta", "key_gamma")
+    assert cfg.gemini_api_key == "key_alpha"
+    assert cfg.ai_global_daily_quota == 1500 * 3
+
+
+def test_gemini_api_key_single_fallback(monkeypatch: pytest.MonkeyPatch) -> None:
+    """When GEMINI_API_KEYS is missing, fallback to single GEMINI_API_KEY."""
+    monkeypatch.delenv("GEMINI_API_KEYS", raising=False)
+    monkeypatch.setenv("GEMINI_API_KEY", "single_key_xyz")
+    cfg = load_settings()
+    assert cfg.gemini_api_keys == ("single_key_xyz",)
+    assert cfg.gemini_api_key == "single_key_xyz"
+

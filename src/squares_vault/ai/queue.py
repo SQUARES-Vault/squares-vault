@@ -6,6 +6,8 @@ import asyncio
 from datetime import datetime, timezone
 import ulid
 
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 from squares_vault.db.connection import get_db
 from squares_vault.logging_setup import get_logger
 from squares_vault.ai.quota import check_and_increment_quota, QuotaExceededError, GlobalCeilingExceededError
@@ -37,43 +39,123 @@ async def queue_document(user_id: int, file_id: str, file_unique_id: str) -> str
     return queue_id
 
 
+async def queue_multi_document(user_id: int, files: list[dict[str, str]]) -> str:
+    """Add a multi-page telegram media group to the AI queue."""
+    draft_id = str(ulid.ULID())
+    queue_id = str(ulid.ULID())
+    import json
+    paths_json = json.dumps({"files": files})
+    
+    async with get_db() as db:
+        await db.execute(
+            "INSERT INTO drafts (id, user_id, state, temp_paths, created_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)",
+            (draft_id, user_id, "queued", paths_json)
+        )
+        await db.execute(
+            "INSERT INTO ai_queue (id, user_id, draft_id) VALUES (?, ?, ?)",
+            (queue_id, user_id, draft_id)
+        )
+        await db.commit()
+        
+    return queue_id
+
+
 async def process_queue_item(bot, item_id: str, user_id: int, draft_id: str, file_id: str) -> None:
-    """Process a single queue item."""
+    """Process a single queue item (single or multi-page)."""
     try:
+        # Check if AI pipeline is enabled by admin
+        from squares_vault.bot.handlers.admin import get_system_setting
+        ai_on = (await get_system_setting("ai_enabled", "1")) == "1"
+        if not ai_on:
+            log.warning("ai_pipeline_paused_deferring", item_id=item_id)
+            async with get_db() as db:
+                await db.execute(
+                    "UPDATE ai_queue SET state = 'queued', next_try_at = datetime('now', '+10 minutes') WHERE id = ?",
+                    (item_id,),
+                )
+                await db.commit()
+            return
+
         # 1. Check quota
         await check_and_increment_quota(user_id)
-        
-        # 2. Download file
-        file_info = await bot.get_file(file_id)
-        file_bytes = await bot.download_file(file_info.file_path)
-        img_data = file_bytes.getvalue()
-        
-        # 3. Process with Gemini
-        # Assuming it's an image for now. If PDF, we'd use PyMuPDF.
+
+        # 2. Check if multi-file album
+        import json
+        files_to_fetch = []
         try:
-            clean_image = process_image(img_data)
-            mime = "image/jpeg"
+            meta = json.loads(file_id)
+            if "files" in meta:
+                files_to_fetch = meta["files"]
         except Exception:
-            # Maybe it's a PDF
-            clean_image = img_data
-            mime = "application/pdf"
-            
-        record = await extract_document_data(user_id, clean_image, mime)
+            pass
+
+        if not files_to_fetch:
+            files_to_fetch = [{"file_id": file_id, "mime": "image/jpeg"}]
+
+        # 3. Download files from Telegram
+        await bot.send_chat_action(user_id, "typing")
+        page_msg = f" ({len(files_to_fetch)} pages)" if len(files_to_fetch) > 1 else ""
+        msg_obj = await bot.send_message(user_id, f"🔍 *Scanning text{page_msg}...*", parse_mode="Markdown")
         
-        # 4. Save to draft
+        all_bytes = []
+        dominant_mime = "image/jpeg"
+        for item in files_to_fetch:
+            fid = item["file_id"]
+            file_info = await bot.get_file(fid)
+            f_bytes = await bot.download_file(file_info.file_path)
+            raw_data = f_bytes.getvalue()
+            
+            if raw_data[:4] == b"%PDF":
+                all_bytes.append(raw_data)
+                item["mime"] = "application/pdf"
+                dominant_mime = "application/pdf"
+            elif raw_data[:8] == b"\x89PNG\r\n\x1a\n":
+                all_bytes.append(raw_data)
+                item["mime"] = "image/png"
+            elif raw_data[:4] == b"RIFF" and raw_data[8:12] == b"WEBP":
+                all_bytes.append(raw_data)
+                item["mime"] = "image/webp"
+            else:
+                item["mime"] = "image/jpeg"
+                try:
+                    all_bytes.append(process_image(raw_data))
+                except Exception:
+                    all_bytes.append(raw_data)
+
+        # 4. Send to Gemini
+        if msg_obj:
+            await msg_obj.edit_text("🧠 *Categorizing...*", parse_mode="Markdown")
+        
+        record = await extract_document_data(user_id, all_bytes if len(all_bytes) > 1 else all_bytes[0], dominant_mime)
+
+        if msg_obj:
+            await msg_obj.delete()
+
+        # 5. Save to draft
+        new_temp_paths = json.dumps({"files": files_to_fetch, "mime": dominant_mime})
         async with get_db() as db:
             await db.execute(
-                "UPDATE drafts SET state = 'review', ai_json = ? WHERE id = ?",
-                (record.model_dump_json(), draft_id)
+                "UPDATE drafts SET state = 'review', ai_json = ?, temp_paths = ? WHERE id = ?",
+                (record.model_dump_json(), new_temp_paths, draft_id)
             )
             await db.execute("DELETE FROM ai_queue WHERE id = ?", (item_id,))
             await db.commit()
-            
-        # 5. Notify user
+
+        # 6. Notify user with full extracted data
         kb = _get_draft_keyboard(draft_id)
+        amt = f"\nAmount: ₹{record.amount_minor/100:.2f}" if record.amount_minor else ""
+        dt = f"\nDate: {record.key_date}" if record.key_date else ""
+        notes_preview = f"\n\n📝 {record.notes[:200]}" if record.notes else ""
         await bot.send_message(
             chat_id=user_id,
-            text=f"📄 **{record.title}**\n\nCategory: {record.category}\nDate: {record.key_date}\n\nReview this draft before saving.",
+            text=(
+                f"✅ *AI Read Complete!*\n\n"
+                f"📄 *{record.title}*\n"
+                f"Category: {record.category}"
+                f"{amt}{dt}"
+                f"{notes_preview}\n\n"
+                f"Review this draft before saving."
+            ),
             reply_markup=kb,
             parse_mode="Markdown"
         )
@@ -91,11 +173,15 @@ async def process_queue_item(bot, item_id: str, user_id: int, draft_id: str, fil
         async with get_db() as db:
             await db.execute("UPDATE ai_queue SET state = 'failed', last_error = ? WHERE id = ?", (str(e), item_id))
             await db.commit()
-        await bot.send_message(user_id, "❌ Sorry, I failed to read that document. You can try manual entry.")
+        
+        kb = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="✏️ Add Manually", callback_data=f"add_manual_fail:{draft_id}")],
+            [InlineKeyboardButton(text="❌ Cancel", callback_data="man_cancel")]
+        ])
+        await bot.send_message(user_id, "❌ Sorry, I failed to read that document.", reply_markup=kb)
 
 
 def _get_draft_keyboard(draft_id: str):
-    from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="💾 Save to Vault", callback_data=f"draft:save:{draft_id}")],
         [InlineKeyboardButton(text="✏️ Edit manually", callback_data=f"draft:edit:{draft_id}")],

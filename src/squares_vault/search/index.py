@@ -8,9 +8,9 @@ from squares_vault.logging_setup import get_logger
 
 log = get_logger(__name__)
 
-async def sync_fts_for_record(record_id: str, user_id: int, title: str, category: str, tags: str = None) -> None:
+async def sync_fts_for_record(record_id: str, user_id: int, title: str, category: str, tags: str = None, notes: str = None) -> None:
     """Sync a record into both FTS5 indexes."""
-    text = f"{title} {category} {tags or ''}".lower()
+    text = f"{title} {category} {tags or ''} {notes or ''}".lower()
     
     async with get_db() as db:
         # Delete old entries
@@ -29,11 +29,17 @@ async def sync_fts_for_record(record_id: str, user_id: int, title: str, category
         await db.commit()
 
 
-async def search_records(user_id: int, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+async def search_records(user_id: int, query: str, limit: int = 50) -> List[Dict[str, Any]]:
     """Search records for a user using FTS5."""
     # Simple prefix search for unicode61
-    safe_query = query.replace('"', '').replace("'", "")
-    fts_query = f"{safe_query}*"
+    import re
+    # Strip all special characters to avoid FTS5 syntax errors
+    safe_text = re.sub(r'[^a-zA-Z0-9\s]', ' ', query)
+    words = safe_text.split()
+    if not words:
+        return []
+    fts_query = " AND ".join(f'"{w}"*' for w in words)
+    safe_query = safe_text
     
     async with get_db() as db:
         async with db.execute(
@@ -41,11 +47,18 @@ async def search_records(user_id: int, query: str, limit: int = 5) -> List[Dict[
             SELECT r.id, r.title, r.category, r.key_date, r.status
             FROM fts_records f
             JOIN records r ON f.record_id = r.id
-            WHERE f.user_id = ? AND fts_records MATCH ? AND r.status != 'soft_deleted'
+            WHERE (
+                f.user_id = ? 
+                OR r.id IN (
+                    SELECT r2.id FROM records r2 
+                    JOIN access_grants ag ON r2.user_id = ag.owner_id 
+                    WHERE ag.granted_id = ? AND (ag.category = 'all' OR r2.category LIKE '%' || ag.category || '%')
+                )
+            ) AND fts_records MATCH ? AND r.status != 'soft_deleted'
             ORDER BY rank
             LIMIT ?
             """,
-            (user_id, fts_query, limit)
+            (user_id, user_id, fts_query, limit)
         ) as cur:
             results = await cur.fetchall()
             
@@ -56,10 +69,17 @@ async def search_records(user_id: int, query: str, limit: int = 5) -> List[Dict[
                 SELECT r.id, r.title, r.category, r.key_date, r.status
                 FROM fts_trigram f
                 JOIN records r ON f.record_id = r.id
-                WHERE f.user_id = ? AND text LIKE ? AND r.status != 'soft_deleted'
+                WHERE (
+                    f.user_id = ? 
+                    OR r.id IN (
+                        SELECT r2.id FROM records r2 
+                        JOIN access_grants ag ON r2.user_id = ag.owner_id 
+                        WHERE ag.granted_id = ? AND (ag.category = 'all' OR r2.category LIKE '%' || ag.category || '%')
+                    )
+                ) AND text LIKE ? AND r.status != 'soft_deleted'
                 LIMIT ?
                 """,
-                (user_id, f"%{safe_query}%", limit)
+                (user_id, user_id, f"%{safe_query}%", limit)
             ) as cur:
                 results = await cur.fetchall()
                 

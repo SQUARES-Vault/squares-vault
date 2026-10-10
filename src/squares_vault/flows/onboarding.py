@@ -48,9 +48,20 @@ async def start_onboarding(message: Message, state: FSMContext) -> None:
         await message.answer(t("start_welcome"), reply_markup=get_main_keyboard())
         return
 
+    # Check if signups are enabled
+    from squares_vault.bot.handlers.admin import get_system_setting
+    signups_on = (await get_system_setting("signups_enabled", "1")) == "1"
+    if not signups_on and user_id not in config.settings.admin_user_ids:
+        await message.answer("⚠️ New user registrations are temporarily paused by the administrator.")
+        return
+
     # New user: start consent flow
     await state.set_state(Onboarding.consent)
-    await message.answer(t("onboarding_consent"), reply_markup=_consent_kb())
+    await message.answer(
+        t("onboarding_consent", url=config.settings.privacy_policy_url),
+        reply_markup=_consent_kb(),
+        parse_mode="Markdown",
+    )
 
 
 @router.message(Onboarding.consent, F.text == t("btn_consent_no"))
@@ -109,11 +120,30 @@ async def process_timezone(message: Message, state: FSMContext) -> None:
     tz = config.settings.default_tz
     
     if text.lower() != "skip":
-        parsed = dateparser.parse(f"now in {text}")
-        if parsed and parsed.tzinfo:
-            # Python 3.9+ tzname is available, or we just trust the text if it parses
+        valid = False
+        try:
+            from zoneinfo import ZoneInfo
+            ZoneInfo(text)
             tz = text
-        else:
+            valid = True
+        except Exception:
+            try:
+                import zoneinfo
+                available = {z.lower(): z for z in zoneinfo.available_timezones()}
+                if text.lower() in available:
+                    tz = available[text.lower()]
+                    valid = True
+            except Exception:
+                pass
+
+        if not valid:
+            # Fallback check with dateparser
+            parsed = dateparser.parse(f"now in {text}")
+            if parsed and parsed.tzinfo:
+                tz = text
+                valid = True
+
+        if not valid:
             await message.answer(t("onboarding_tz_invalid"))
             return
 

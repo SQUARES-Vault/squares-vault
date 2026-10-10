@@ -62,11 +62,16 @@ class SqliteStorage(BaseStorage):
     async def set_data(self, key: StorageKey, data: Dict[str, Any]) -> None:
         async with get_db() as db:
             data_json = json.dumps(data)
+            expires_at = (datetime.now(timezone.utc) + timedelta(minutes=STATE_EXPIRY_MINUTES)).isoformat()
             await db.execute(
                 """
-                UPDATE user_state SET data_json = ? WHERE user_id = ?
+                INSERT INTO user_state (user_id, data_json, expires_at)
+                VALUES (?, ?, ?)
+                ON CONFLICT(user_id) DO UPDATE SET 
+                    data_json = excluded.data_json,
+                    expires_at = excluded.expires_at
                 """,
-                (data_json, key.user_id)
+                (key.user_id, data_json, expires_at)
             )
             await db.commit()
 

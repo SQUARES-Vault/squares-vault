@@ -42,7 +42,15 @@ async def tick(bot: Bot) -> None:
             
             try:
                 # Send
-                text = f"🔔 <b>Reminder:</b> {row['title']}\n"
+                if row["kind"] == "pre":
+                    alert_name = "Early Alert (10 Days Left)"
+                elif row["kind"] == "due":
+                    alert_name = "Due Date Alert (2 Days Left)"
+                elif row["kind"] == "overdue":
+                    alert_name = "Overdue Alert (Expires Today)"
+                else:
+                    alert_name = "Reminder"
+                text = f"🔔 <b>{alert_name}:</b> {row['title']}\n"
                 kb = get_reminder_keyboard(row["record_id"])
                 
                 msg = await bot.send_message(

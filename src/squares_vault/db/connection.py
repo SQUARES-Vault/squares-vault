@@ -43,6 +43,17 @@ async def _open_connection(db_path: Path) -> aiosqlite.Connection:
     await conn.execute("PRAGMA busy_timeout = 5000")   # ms
     await conn.execute("PRAGMA synchronous = NORMAL")
     await conn.execute("PRAGMA temp_store = MEMORY")
+    await conn.execute("""
+    CREATE TABLE IF NOT EXISTS access_grants (
+        id          TEXT PRIMARY KEY,
+        owner_id    INTEGER NOT NULL,
+        granted_id  INTEGER NOT NULL,
+        category    TEXT NOT NULL,
+        created_at  TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(owner_id, granted_id, category)
+    )
+    """)
+    await conn.commit()
     return conn
 
 

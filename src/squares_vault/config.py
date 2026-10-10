@@ -75,6 +75,26 @@ def _fallback_chain(key: str) -> tuple[str, ...]:
     return tuple(m.strip() for m in raw.split(",") if m.strip())
 
 
+def _api_keys(key_plural: str, key_singular: str) -> tuple[str, ...]:
+    """Parse comma/newline separated API keys from either plural or singular env var."""
+    raw = os.environ.get(key_plural, "").strip()
+    if not raw:
+        raw = os.environ.get(key_singular, "").strip()
+    if not raw:
+        raise ValueError(
+            f"Required environment variable '{key_plural}' or '{key_singular}' is not set. "
+            "Check .env.example for the full list."
+        )
+    parts = [k.strip() for k in raw.replace("\n", ",").split(",") if k.strip()]
+    seen: set[str] = set()
+    deduped: list[str] = []
+    for k in parts:
+        if k not in seen:
+            seen.add(k)
+            deduped.append(k)
+    return tuple(deduped)
+
+
 # ── Main settings dataclass ────────────────────────────────────────────────────
 
 @dataclass(frozen=True)
@@ -94,7 +114,9 @@ class Settings:
     google_client_secret: str
 
     # Gemini AI
+    gemini_api_keys: tuple[str, ...]
     gemini_api_key: str
+    ai_key_daily_limit: int
     ai_model_name: str
     ai_fallback_chain: tuple[str, ...]
     ai_per_user_daily_cap: int
@@ -129,6 +151,7 @@ class Settings:
     # App settings
     max_users: int
     policy_version: str
+    privacy_policy_url: str
     default_tz: str
     default_remind_time: str  # HH:MM local
 
@@ -144,6 +167,7 @@ def load_settings() -> Settings:
     ValueError
         If any *required* variable is missing or any value is malformed.
     """
+    keys = _api_keys("GEMINI_API_KEYS", "GEMINI_API_KEY")
     return Settings(
         # Telegram
         telegram_bot_token=_require("TELEGRAM_BOT_TOKEN"),
@@ -152,11 +176,13 @@ def load_settings() -> Settings:
         google_client_id=_require("GOOGLE_CLIENT_ID"),
         google_client_secret=_require("GOOGLE_CLIENT_SECRET"),
         # Gemini
-        gemini_api_key=_require("GEMINI_API_KEY"),
+        gemini_api_keys=keys,
+        gemini_api_key=keys[0],
+        ai_key_daily_limit=_int("AI_KEY_DAILY_LIMIT", 1500),
         ai_model_name=_opt("AI_MODEL_NAME", "gemini-2.0-flash-lite"),
         ai_fallback_chain=_fallback_chain("AI_FALLBACK_CHAIN"),
-        ai_per_user_daily_cap=_int("AI_PER_USER_DAILY_CAP", 3),
-        ai_global_daily_quota=_int("AI_GLOBAL_DAILY_QUOTA", 500),
+        ai_per_user_daily_cap=_int("AI_PER_USER_DAILY_CAP", 1500),
+        ai_global_daily_quota=_int("AI_GLOBAL_DAILY_QUOTA", 1500 * len(keys)),
         ai_global_ceiling_pct=_float("AI_GLOBAL_CEILING_PCT", 80.0),
         # DB
         db_path=Path(_opt("DB_PATH", "/var/lib/squares-vault/db/squares.sqlite3")),
@@ -180,6 +206,7 @@ def load_settings() -> Settings:
         # App
         max_users=_int("MAX_USERS", 100),
         policy_version=_opt("POLICY_VERSION", "1.0"),
+        privacy_policy_url=_opt("PRIVACY_POLICY_URL", "https://squaresvault.github.io/privacy.html"),
         default_tz=_opt("DEFAULT_TZ", "Asia/Kolkata"),
         default_remind_time=_opt("DEFAULT_REMIND_TIME", "09:00"),
     )

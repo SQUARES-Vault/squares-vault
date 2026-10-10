@@ -40,7 +40,7 @@ async def start_device_flow() -> DeviceFlowInfo:
     async with aiohttp.ClientSession() as session:
         data = {
             "client_id": config.settings.google_client_id,
-            "scope": "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.appdata",
+            "scope": "https://www.googleapis.com/auth/drive.file",
         }
         async with session.post(DEVICE_CODE_URL, data=data) as resp:
             resp.raise_for_status()

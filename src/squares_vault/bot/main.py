@@ -14,8 +14,10 @@ from squares_vault.db.migrations import run_migrations
 from squares_vault.logging_setup import get_logger, setup_logging
 from squares_vault.bot.middlewares.private_chat import PrivateChatOnlyMiddleware
 from squares_vault.bot.middlewares.ratelimit import RateLimitMiddleware
+from squares_vault.bot.middlewares.menu_interrupt import MenuInterruptMiddleware
 from squares_vault.bot.state import SqliteStorage
 from squares_vault.bot.handlers.base import router as base_router
+from squares_vault.bot.handlers.admin import router as admin_router
 from squares_vault.flows.onboarding import router as onboarding_router
 
 from squares_vault.flows.drive_auth import router as drive_auth_router
@@ -24,6 +26,8 @@ from squares_vault.bot.handlers.upload import router as upload_router
 from squares_vault.bot.handlers.byok import router as byok_router
 from squares_vault.bot.handlers.drafts import router as drafts_router
 from squares_vault.bot.handlers.search import router as search_router
+from squares_vault.bot.handlers.manual import router as manual_router
+from squares_vault.bot.handlers.ask import router as ask_router
 from squares_vault.bot.handlers.privacy import router as privacy_router
 from squares_vault.reminders.scheduler import scheduler_loop
 from squares_vault.ai.queue import ai_worker_loop
@@ -53,8 +57,10 @@ async def main() -> None:
     # Register global middlewares
     dp.message.middleware(PrivateChatOnlyMiddleware())
     dp.message.middleware(RateLimitMiddleware())
+    dp.message.middleware(MenuInterruptMiddleware())
     
     # Register routers
+    dp.include_router(admin_router)
     dp.include_router(onboarding_router)
     dp.include_router(drive_auth_router)
     dp.include_router(upload_router)
@@ -62,12 +68,16 @@ async def main() -> None:
     dp.include_router(byok_router)
     dp.include_router(reminders_router)
     dp.include_router(search_router)
+    dp.include_router(ask_router)
     dp.include_router(privacy_router)
+    dp.include_router(manual_router)
     dp.include_router(base_router)
     
     import asyncio
+    from squares_vault.drive.outbox import drive_outbox_loop
     asyncio.create_task(scheduler_loop(bot))
     asyncio.create_task(ai_worker_loop(bot))
+    asyncio.create_task(drive_outbox_loop(bot))
     
     # 4. Start polling
     log.info("bot_start_polling")

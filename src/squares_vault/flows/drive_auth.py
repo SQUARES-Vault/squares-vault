@@ -6,7 +6,7 @@ import asyncio
 
 from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import CopyTextButton, InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from squares_vault.drive.client import start_device_flow, poll_for_token
 from squares_vault.drive.token_store import save_token
@@ -23,12 +23,20 @@ async def cmd_connect_drive(message: Message) -> None:
     # 1. Get device code
     flow_info = await start_device_flow()
     
-    # 2. Tell user
+    # 2. Tell user with Copy button
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(
+            text="📋 Copy Code",
+            copy_text=CopyTextButton(text=flow_info.user_code)
+        )]
+    ])
+    
     await message.answer(
         t("drive_connect_prompt").format(
             url=flow_info.verification_url,
             code=flow_info.user_code
         ),
+        reply_markup=kb,
         parse_mode="Markdown"
     )
     
