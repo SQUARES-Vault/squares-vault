@@ -50,7 +50,9 @@ async def tick(bot: Bot) -> None:
                     alert_name = "Overdue Alert (Expires Today)"
                 else:
                     alert_name = "Reminder"
-                text = f"🔔 <b>{alert_name}:</b> {row['title']}\n"
+                import html
+                safe_title = html.escape(row["title"] or "Document")
+                text = f"🔔 <b>{alert_name}:</b> {safe_title}\n"
                 kb = get_reminder_keyboard(row["record_id"])
                 
                 msg = await bot.send_message(

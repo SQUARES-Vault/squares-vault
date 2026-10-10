@@ -24,6 +24,12 @@ async def drive_outbox_loop(bot) -> None:
                     
             for row in rows:
                 try:
+                    from squares_vault.drive.token_store import get_token
+                    tokens = await get_token(row["user_id"])
+                    if not tokens:
+                        # User has not connected Google Drive yet; skip until connected
+                        continue
+
                     target_fid = row["drive_file_id"]
                     if target_fid.startswith("{"):
                         try:

@@ -155,12 +155,18 @@ async def process_delete_my_data(message: Message) -> None:
         await db.execute("DELETE FROM ai_usage WHERE user_id = ?", (user_id,))
         await db.execute("DELETE FROM drafts WHERE user_id = ?", (user_id,))
         await db.execute("DELETE FROM ai_queue WHERE user_id = ?", (user_id,))
+        await db.execute("DELETE FROM access_grants WHERE owner_id = ? OR granted_id = ?", (user_id, user_id))
         
         # Add tombstone
         await db.execute("INSERT INTO tombstones (user_hash, deleted_at) VALUES (?, ?)", (user_hash, now))
         await db.commit()
         
-    await message.reply("✅ Your account and data have been permanently deleted.")
+    from aiogram.types import ReplyKeyboardRemove
+    await message.reply(
+        "✅ Your account and data have been permanently deleted.\n\nTap /start anytime to begin fresh.",
+        reply_markup=ReplyKeyboardRemove(),
+        parse_mode="Markdown"
+    )
 
 
 @router.callback_query(F.data == "drive_auth_start")

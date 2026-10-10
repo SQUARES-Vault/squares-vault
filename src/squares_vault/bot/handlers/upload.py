@@ -28,6 +28,15 @@ async def _process_media_group_after_delay(group_id: str, user_id: int) -> None:
     if not files:
         return
 
+    from squares_vault.db.connection import get_db
+    async with get_db() as db:
+        async with db.execute("SELECT id FROM users WHERE id = ?", (user_id,)) as cur:
+            exists = await cur.fetchone()
+    if not exists:
+        if msg:
+            await msg.reply("👋 Welcome! Please send /start to set up your Vault before adding documents.")
+        return
+
     if len(files) == 1:
         await queue_document(user_id, files[0]["file_id"], files[0]["file_id"])
     else:
@@ -91,5 +100,14 @@ async def handle_document(message: Message) -> None:
 
 async def _handle_file(message: Message, file_id: str) -> None:
     """Common logic to queue a single file."""
-    await queue_document(message.from_user.id, file_id, file_id)
+    from squares_vault.db.connection import get_db
+    user_id = message.from_user.id
+    async with get_db() as db:
+        async with db.execute("SELECT id FROM users WHERE id = ?", (user_id,)) as cur:
+            exists = await cur.fetchone()
+    if not exists:
+        await message.reply("👋 Welcome! Please send /start to set up your Vault before adding documents.")
+        return
+
+    await queue_document(user_id, file_id, file_id)
     await message.reply("⏳ Upload received! I am reading the document...")

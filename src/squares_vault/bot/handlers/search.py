@@ -31,7 +31,7 @@ async def handle_search_query(message: Message, state: FSMContext) -> None:
     query = message.text.strip()
     
     # If they pressed another menu button, clear state and dispatch that menu directly
-    if any(btn in query for btn in ["➕ Add", "🔍 Search", "🔍 Find", "📁 Browse", "📅 Upcoming", "⚙️ Settings"]):
+    if any(btn in query for btn in ["➕ Add", "🔍 Search", "🔍 Find", "📁 Browse", "💬 Ask Your Vault", "📅 Upcoming", "⚙️ Settings"]):
         await state.clear()
         from squares_vault.bot.handlers.base import handle_menu_buttons
         await handle_menu_buttons(message, state)
@@ -259,13 +259,17 @@ async def on_view_record(cq: CallbackQuery, state: FSMContext = None) -> None:
             rem_row = await cur.fetchone()
             has_pending_reminders = rem_row["cnt"] > 0 if rem_row else False
 
-    kb_buttons.append([
-        InlineKeyboardButton(text="✏️ Edit", callback_data=f"edit_record:{record_id}"),
-        InlineKeyboardButton(text="🔄 Renew", callback_data=f"renew_record:{record_id}"),
-        InlineKeyboardButton(text="🗑️ Delete", callback_data=f"del_record:{record_id}")
-    ])
-    if has_pending_reminders:
-        kb_buttons.append([InlineKeyboardButton(text="🔕 Cancel Reminders", callback_data=f"cancel_record_rem:{record_id}:{origin}")])
+    is_owner = (row["user_id"] == cq.from_user.id)
+    if is_owner:
+        kb_buttons.append([
+            InlineKeyboardButton(text="✏️ Edit", callback_data=f"edit_record:{record_id}"),
+            InlineKeyboardButton(text="🔄 Renew", callback_data=f"renew_record:{record_id}"),
+            InlineKeyboardButton(text="🗑️ Delete", callback_data=f"del_record:{record_id}")
+        ])
+        if has_pending_reminders:
+            kb_buttons.append([InlineKeyboardButton(text="🔕 Cancel Reminders", callback_data=f"cancel_record_rem:{record_id}:{origin}")])
+    else:
+        lines.insert(2, f"👥 _Shared via Family Access by Member `{row['user_id']}`_")
 
     if origin == "ask":
         kb_buttons.append([InlineKeyboardButton(text="⬅️ Back to Chat", callback_data="ask_vault_return")])

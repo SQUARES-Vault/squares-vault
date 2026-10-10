@@ -114,14 +114,20 @@ async def on_draft_save(cq: CallbackQuery) -> None:
     reminders_set = False
     if dt and is_expiry:
         reminders = generate_reminders(record_db_id, cq.from_user.id, record.category, dt)
+        from datetime import datetime, timezone
+        now_iso = datetime.now(timezone.utc).isoformat() + "Z"
+        has_future_reminders = False
         async with get_db() as db:
             for rm in reminders:
+                st = "skipped" if rm["fire_at"] < now_iso else "pending"
+                if st == "pending":
+                    has_future_reminders = True
                 await db.execute(
                     "INSERT INTO reminders (id, record_id, user_id, kind, offset_days, fire_at, state) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    (rm["id"], rm["record_id"], rm["user_id"], rm["kind"], rm["offset_days"], rm["fire_at"], rm["state"])
+                    (rm["id"], rm["record_id"], rm["user_id"], rm["kind"], rm["offset_days"], rm["fire_at"], st)
                 )
             await db.commit()
-        reminders_set = True
+        reminders_set = has_future_reminders
             
     async with get_db() as db:
         await db.execute("UPDATE drafts SET state = 'saved' WHERE id = ?", (draft_id,))

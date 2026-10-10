@@ -112,8 +112,17 @@ async def cb_consent_yes(call: CallbackQuery, state: FSMContext) -> None:
         await db.commit()
     
     await call.answer()
-    await state.set_state(Onboarding.invite_code)
-    await call.message.answer(t("onboarding_invite_prompt"), parse_mode="Markdown")
+    try:
+        await call.message.edit_reply_markup(reply_markup=None)
+    except Exception:
+        pass
+
+    if user_id in config.settings.admin_user_ids:
+        await state.set_state(Onboarding.timezone)
+        await call.message.answer(t("onboarding_tz_prompt"), parse_mode="Markdown")
+    else:
+        await state.set_state(Onboarding.invite_code)
+        await call.message.answer(t("onboarding_invite_prompt"), parse_mode="Markdown")
 
 
 @router.message(Onboarding.consent, F.text.in_([t("btn_consent_no"), "❌ Decline", "❌ No", "No", "decline"]))

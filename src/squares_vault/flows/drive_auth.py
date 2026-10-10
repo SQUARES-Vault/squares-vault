@@ -25,7 +25,12 @@ async def cmd_connect_drive(message: Message, user_id_override: int | None = Non
     user_id = user_id_override or message.from_user.id
     
     # 1. Get device code
-    flow_info = await start_device_flow()
+    try:
+        flow_info = await start_device_flow()
+    except Exception as e:
+        log.exception("Error starting Google Drive device flow: %s", e)
+        await message.answer("⚠️ Unable to initiate Google Drive connection right now. Please try again later.")
+        return
     
     # 2. Tell user with Copy button
     kb = InlineKeyboardMarkup(inline_keyboard=[

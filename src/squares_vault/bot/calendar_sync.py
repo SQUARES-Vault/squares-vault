@@ -3,7 +3,7 @@ from datetime import datetime
 
 def generate_ics(title: str, date_str: str, description: str = "") -> io.BytesIO:
     """Generate an iCalendar (.ics) file for an all-day event."""
-    dt = datetime.strptime(date_str, "%Y-%m-%d")
+    dt = datetime.strptime(date_str[:10], "%Y-%m-%d")
     dt_str = dt.strftime("%Y%m%d")
     
     # Next day for all-day event end

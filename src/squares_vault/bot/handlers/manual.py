@@ -177,6 +177,14 @@ def _cancel_kb() -> InlineKeyboardMarkup:
 @router.callback_query(F.data.startswith("add_manual_fail:"))
 @router.callback_query(F.data.startswith("draft:edit:"))
 async def on_add_manual(cq: CallbackQuery, state: FSMContext) -> None:
+    user_id = cq.from_user.id
+    async with get_db() as db:
+        async with db.execute("SELECT id FROM users WHERE id = ?", (user_id,)) as cur:
+            exists = await cur.fetchone()
+    if not exists:
+        await cq.answer("Please send /start to set up your Vault first.", show_alert=True)
+        return
+
     draft_id = None
     draft_data = {}
     if ":" in cq.data:
@@ -844,18 +852,23 @@ async def on_man_save(cq: CallbackQuery, state: FSMContext) -> None:
     reminders_set = False
     if key_date_type == "expiry" and key_date and not data.get("no_reminders"):
         try:
-            from datetime import datetime
+            from datetime import datetime, timezone
             from squares_vault.reminders.schedule import generate_reminders
             dt_obj = datetime.strptime(key_date, "%Y-%m-%d")
             reminders = generate_reminders(record_db_id, cq.from_user.id, category, dt_obj)
+            now_iso = datetime.now(timezone.utc).isoformat() + "Z"
+            has_future = False
             async with get_db() as db:
                 for rm in reminders:
+                    st = "skipped" if rm["fire_at"] < now_iso else "pending"
+                    if st == "pending":
+                        has_future = True
                     await db.execute(
                         "INSERT INTO reminders (id, record_id, user_id, kind, offset_days, fire_at, state) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                        (rm["id"], record_db_id, cq.from_user.id, rm["kind"], rm["offset_days"], rm["fire_at"], "pending")
+                        (rm["id"], record_db_id, cq.from_user.id, rm["kind"], rm["offset_days"], rm["fire_at"], st)
                     )
                 await db.commit()
-            reminders_set = True
+            reminders_set = has_future
         except Exception as e:
             import logging
             logging.getLogger(__name__).error(f"Failed to generate reminders in manual: {e}")
@@ -1210,18 +1223,23 @@ async def on_renew_save(cq: CallbackQuery, state: FSMContext) -> None:
     reminders_set = False
     if end_date and not data.get("no_reminders"):
         try:
-            from datetime import datetime
+            from datetime import datetime, timezone
             from squares_vault.reminders.schedule import generate_reminders
             dt_obj = datetime.strptime(end_date[:10], "%Y-%m-%d")
             reminders = generate_reminders(record_db_id, cq.from_user.id, category, dt_obj)
+            now_iso = datetime.now(timezone.utc).isoformat() + "Z"
+            has_future = False
             async with get_db() as db:
                 for rm in reminders:
+                    st = "skipped" if rm["fire_at"] < now_iso else "pending"
+                    if st == "pending":
+                        has_future = True
                     await db.execute(
                         "INSERT INTO reminders (id, record_id, user_id, kind, offset_days, fire_at, state) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                        (rm["id"], record_db_id, cq.from_user.id, rm["kind"], rm["offset_days"], rm["fire_at"], "pending")
+                        (rm["id"], record_db_id, cq.from_user.id, rm["kind"], rm["offset_days"], rm["fire_at"], st)
                     )
                 await db.commit()
-            reminders_set = True
+            reminders_set = has_future
         except Exception as e:
             import logging
             logging.getLogger(__name__).error(f"Failed to generate reminders in renew: {e}")
@@ -1555,14 +1573,16 @@ async def _apply_new_edit_date(target, state: FSMContext, new_date: str, is_msg:
     async with get_db() as db:
         await db.execute("UPDATE reminders SET state = 'cancelled' WHERE record_id = ? AND user_id = ? AND state = 'pending'", (rid, user_id))
         try:
-            from datetime import datetime
+            from datetime import datetime, timezone
             from squares_vault.reminders.schedule import generate_reminders
             dt_obj = datetime.strptime(new_date[:10], "%Y-%m-%d")
             reminders = generate_reminders(rid, user_id, category, dt_obj)
+            now_iso = datetime.now(timezone.utc).isoformat() + "Z"
             for rm in reminders:
+                st = "skipped" if rm["fire_at"] < now_iso else "pending"
                 await db.execute(
                     "INSERT INTO reminders (id, record_id, user_id, kind, offset_days, fire_at, state) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    (rm["id"], rid, user_id, rm["kind"], rm["offset_days"], rm["fire_at"], "pending")
+                    (rm["id"], rid, user_id, rm["kind"], rm["offset_days"], rm["fire_at"], st)
                 )
         except Exception:
             pass
