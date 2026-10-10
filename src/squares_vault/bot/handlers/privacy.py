@@ -7,6 +7,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command
 
+from squares_vault import config
 from squares_vault.bot.states import FamilyAccess
 from squares_vault.db.connection import get_db
 from squares_vault.logging_setup import get_logger

@@ -12,6 +12,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Message
 
+from squares_vault import config
 from squares_vault.bot.keyboards.main import get_main_keyboard
 from squares_vault.db.connection import get_db
 from squares_vault.i18n.loader import t
