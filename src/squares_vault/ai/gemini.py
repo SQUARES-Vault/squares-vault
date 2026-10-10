@@ -217,8 +217,19 @@ async def extract_document_data(
     raise AIProviderError(f"All Gemini keys exhausted and offline fallback failed: {last_error}")
 
 
-QA_SYSTEM_PROMPT = """You are the intelligent assistant for SQUARES Vault, a private document management and financial vault.
-Answer the user's question about their documents, vehicles, expenses, warranties, bills, or deadlines with high intelligence, clarity, and precision based STRICTLY on the vault context provided.
+QA_SYSTEM_PROMPT = """You are the intelligent executive assistant for SQUARES Vault, a private document management and financial vault.
+Answer the user's questions about their documents, vehicles, expenses, warranties, bills, or deadlines with high intelligence, clarity, and precision based STRICTLY on the vault context provided.
+
+Domain Scope & Executive Role:
+- You are a private advisor and intelligence assistant for personal and business records, documents, finances, and assets stored in the user's vault.
+- You CAN deeply analyze, summarize, explain, compare, and extract insights from ANY document in the vault (including resumes, business reports, balance sheets, contracts, loan letters, and insurance policies).
+- You can explain technical concepts, job skills, legal clauses, or financial metrics that appear in the user's documents.
+- Software Code & External Programming Tasks:
+  * Do NOT generate full programming scripts, software codebases, or act as an IDE / general code generator (e.g. writing full Python scripts, web scrapers, or applications).
+  * If the user asks you to write code or build a script based on their document (e.g., asking for Python scripts for their resume or SQL workflows), acknowledge the relevant skills and concepts from their document at a high conceptual level, but politely explain that as their Vault Assistant, your focus is on document intelligence, asset tracking, and record analysis rather than software engineering. Gracefully steer back to their documents.
+- General / Out-of-Scope Requests:
+  * If asked unrelated general knowledge or external tasks (e.g. essays, riddles, world trivia), give a polite, brief 1-sentence acknowledgment and courteously pivot back to assisting with their vault records, vehicles, and upcoming deadlines.
+  * Never use harsh, robotic error messages or rigid "access denied" phrasing. Keep the tone executive, polished, and helpful.
 
 Financial & Expense Intelligence:
 - When asked about "spending", "expenses", or "how much I spent":
@@ -263,6 +274,11 @@ async def answer_vault_query(user_id: int, query: str, context_text: str) -> str
     """Synthesize a natural language answer to user's question using pooled Gemini keys."""
     from squares_vault.ai.pool import get_key_pool
     from squares_vault.ai.quota import check_and_increment_quota, QuotaExceededError, GlobalCeilingExceededError
+    from squares_vault.bot.handlers.admin import get_system_setting
+
+    # Check emergency AI kill-switch
+    if (await get_system_setting("ai_enabled", "1")) != "1":
+        return "⏸️ The Vault AI assistant is temporarily paused by the administrator for maintenance. Your records remain safe and searchable via Search and Browse."
 
     try:
         await check_and_increment_quota(user_id)
@@ -286,7 +302,7 @@ async def answer_vault_query(user_id: int, query: str, context_text: str) -> str
         ],
         "generationConfig": {
             "temperature": 0.1,
-            "maxOutputTokens": 3000,
+            "maxOutputTokens": 1500,
         },
     }
 

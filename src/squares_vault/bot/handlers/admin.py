@@ -226,4 +226,4 @@ async def cmd_admin_ai(message: Message) -> None:
     new_val = "1" if parts[1].lower() == "on" else "0"
     await set_system_setting("ai_enabled", new_val)
     status_str = "🟢 ACTIVE" if new_val == "1" else "🔴 PAUSED"
-    await message.answer(f"✅ AI document extraction pipeline is now *{status_str}*.", parse_mode="Markdown")
+    await message.answer(f"✅ AI services (Document Scanning & Ask Your Vault Assistant) are now *{status_str}*.", parse_mode="Markdown")

@@ -204,6 +204,17 @@ def _format_assistant_msg(content: str) -> str:
 @router.message(Command("ask"))
 async def cmd_ask_vault_start(message: Message, state: FSMContext) -> None:
     """Enter Ask Your Vault interactive chat mode."""
+    from squares_vault.bot.handlers.admin import get_system_setting
+    if (await get_system_setting("ai_enabled", "1")) != "1":
+        await message.answer(
+            "⏸️ **Vault AI Assistant is Temporarily Paused**\n\n"
+            "The AI assistant is currently paused by the administrator for maintenance. "
+            "Your stored records remain completely secure.\n\n"
+            "You can still access and view all your documents using 🔍 **Search** or 📁 **Browse**.",
+            parse_mode="Markdown",
+        )
+        return
+
     await state.set_state(AskVault.chatting)
     kb = _get_end_chat_kb()
 
@@ -286,6 +297,17 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
             else:
                 await cmd_help(message)
             return
+
+    from squares_vault.bot.handlers.admin import get_system_setting
+    if (await get_system_setting("ai_enabled", "1")) != "1":
+        await message.answer(
+            "⏸️ **Vault AI Assistant is Temporarily Paused**\n\n"
+            "The AI assistant is currently paused by the administrator for maintenance. "
+            "Please try again later or use 🔍 **Search** / 📁 **Browse**.",
+            reply_markup=_get_end_chat_kb(),
+            parse_mode="Markdown",
+        )
+        return
 
     await message.bot.send_chat_action(message.chat.id, "typing")
 

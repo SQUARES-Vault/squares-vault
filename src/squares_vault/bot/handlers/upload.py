@@ -37,6 +37,22 @@ async def _process_media_group_after_delay(group_id: str, user_id: int) -> None:
             await msg.reply("👋 Welcome! Please send /start to set up your Vault before adding documents.")
         return
 
+    from squares_vault.bot.handlers.admin import get_system_setting
+    from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+    if (await get_system_setting("ai_enabled", "1")) != "1":
+        kb = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="✏️ Add Manually", callback_data="add_manual")]
+        ])
+        if msg:
+            await msg.reply(
+                "⏸️ **AI Document Scanning is Temporarily Paused**\n\n"
+                "Automated document reading is currently paused by the administrator. "
+                "You can add this record manually right now, or upload again once AI is resumed.",
+                reply_markup=kb,
+                parse_mode="Markdown",
+            )
+        return
+
     if len(files) == 1:
         await queue_document(user_id, files[0]["file_id"], files[0]["file_id"])
     else:
@@ -107,6 +123,21 @@ async def _handle_file(message: Message, file_id: str) -> None:
             exists = await cur.fetchone()
     if not exists:
         await message.reply("👋 Welcome! Please send /start to set up your Vault before adding documents.")
+        return
+
+    from squares_vault.bot.handlers.admin import get_system_setting
+    from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+    if (await get_system_setting("ai_enabled", "1")) != "1":
+        kb = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="✏️ Add Manually", callback_data="add_manual")]
+        ])
+        await message.reply(
+            "⏸️ **AI Document Scanning is Temporarily Paused**\n\n"
+            "Automated document reading is currently paused by the administrator. "
+            "You can add this record manually right now, or upload again once AI is resumed.",
+            reply_markup=kb,
+            parse_mode="Markdown",
+        )
         return
 
     await queue_document(user_id, file_id, file_id)
