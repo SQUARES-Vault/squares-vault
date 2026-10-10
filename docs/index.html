@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQUARES Vault – Private Life-Admin & Document Assistant</title>
-  <meta name="description" content="A private, zero-custodian document management bot in Telegram. Stores files directly in your own Google Drive with intelligent deadline reminders.">
+  <title>SQUARES Vault – Private Life-Admin & Intelligent Document Assistant</title>
+  <meta name="description" content="A private, zero-custodian document management assistant in Telegram. Ingests documents, extracts deadlines via private Gemini AI, stores files directly in your own Google Drive, and alerts you before renewals.">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%2232%22%20%2232%22><text y=%2226%22 font-size=%2226%22>🛡️</text></svg>">
 </head>
 <body>
 
+  <!-- Navigation -->
   <header>
     <div class="nav-container">
       <a href="index.html" class="brand">
@@ -17,91 +18,319 @@
         <span>SQUARES Vault</span>
       </a>
       <nav>
-        <a href="index.html" class="active">Overview</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#features">Features</a>
+        <a href="#comparison">Comparison</a>
+        <a href="#faq">FAQ</a>
         <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://t.me/squaresvaultbot" target="_blank" class="nav-cta">Open Bot ↗</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
+    <!-- Hero Section -->
     <section class="hero">
-      <div class="badge">Zero-Custodian Privacy • AI-Powered</div>
-      <h1>Your Private Life-Admin Vault in Telegram</h1>
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Zero-Custodian Privacy • AI-Powered Life-Admin
+      </div>
+      <h1>Your Private Life-Admin Vault — Right Inside Telegram</h1>
       <p>
-        Snap a photo or forward a PDF of your vehicle registration, insurance, warranties, or bills. 
-        SQUARES Vault indexes key dates and stores everything directly in <strong>your own Google Drive</strong>.
+        Snap a photo or forward a PDF of your vehicle registration, insurance, appliance warranties, or utility bills. 
+        SQUARES Vault indexes key dates, connects cross-document identifiers, and stores your original files directly in <strong>your own Google Drive</strong>.
       </p>
-      <a href="https://t.me/squaresvaultbot" target="_blank" class="cta-btn">
-        <span>Open in Telegram</span>
+
+      <div class="hero-actions">
+        <a href="https://t.me/squaresvaultbot" target="_blank" class="cta-btn">
+          <span>Launch in Telegram</span>
+          <span>→</span>
+        </a>
+        <a href="#how-it-works" class="secondary-btn">
+          <span>See How It Works</span>
+          <span>↓</span>
+        </a>
+      </div>
+
+      <!-- Telegram Live Card Mockup -->
+      <div class="mockup-wrapper">
+        <div class="mockup-header">
+          <div class="mockup-title">
+            <span>🤖</span>
+            <span>SQUARES Vault Bot</span>
+          </div>
+          <div class="mockup-dot-group">
+            <div class="mockup-dot"></div>
+            <div class="mockup-dot"></div>
+            <div class="mockup-dot"></div>
+          </div>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-user-bubble">
+            List all documents related to my Venue car
+          </div>
+          <div class="mockup-bot-bubble">
+            <div class="mockup-bot-header">🤖 Vault Assistant</div>
+            <div class="mockup-divider">━━━━━━━━━━━━━━━━━━━━</div>
+            <p style="font-size: 0.9rem; margin-bottom: 8px;">
+              Based on your vault records, your vehicle registration number is <span class="mockup-plate">UP15EB3113</span> <em>(Hyundai Venue)</em>:
+            </p>
+
+            <div class="mockup-card-item">
+              <div class="mockup-card-title">• Traffic Challan Rohini - UP15EB3113</div>
+              <div class="mockup-card-meta">📅 05 Jan 2026 &nbsp;•&nbsp; 💰 ₹300.00 &nbsp;•&nbsp; 🏷️ Vehicle</div>
+            </div>
+
+            <div class="mockup-card-item">
+              <div class="mockup-card-title">• Hyundai RSA & Warranty Certificate</div>
+              <div class="mockup-card-meta">📅 10 Oct 2026 &nbsp;•&nbsp; 🏷️ Vehicle</div>
+            </div>
+
+            <div class="mockup-buttons">
+              <div class="mockup-btn">📎 View Documents (2)</div>
+              <div class="mockup-btn" style="background: rgba(255,255,255,0.05); color: #94a3b8; border-color: rgba(255,255,255,0.1);">🚪 End Chat</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section" id="how-it-works">
+      <div class="section-header">
+        <div class="section-tag">Zero Hassle</div>
+        <h2 class="section-title">How To Use SQUARES Vault</h2>
+        <p class="section-desc">Get started in seconds. No complex app downloads or logins required — everything works seamlessly inside Telegram.</p>
+      </div>
+
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h4>One-Click Connect</h4>
+          <p>Tap <code>/start</code> in Telegram and connect your Google Drive account in 15 seconds using a secure Google Device Code.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h4>Drop Any Document</h4>
+          <p>Snap a photo or forward a PDF of your vehicle papers, warranties, invoices, or insurance. EXIF GPS data is stripped automatically.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h4>Private AI Extraction</h4>
+          <p>Private Gemini 3.5 AI automatically detects key dates, amounts, renewal deadlines, and vehicle plates without human review.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h4>Automated Alerts & Q&A</h4>
+          <p>Relax as SQUARES Vault sends timely 10-day, 2-day, and same-day alerts, and answers conversational questions on demand.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+      <div class="section-header">
+        <div class="section-tag">Next-Gen Intelligence</div>
+        <h2 class="section-title">Engineered For Total Life-Admin Peace of Mind</h2>
+        <p class="section-desc">More than a file manager — a secure personal intelligence engine for your household assets and documents.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-box">🔗</div>
+          <h3>Multi-Hop Entity & Vehicle Linking</h3>
+          <p>
+            Upload your car RC with number <code>UP15EB3113</code>, and later upload a challan or insurance policy. When you ask about your <em>"Venue"</em>, SQUARES Vault links all associated documents through its plate number automatically!
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🧠</div>
+          <h3>"Ask Your Vault" Conversational Brain</h3>
+          <p>
+            Ask arbitrary dynamic questions: <em>"What is due between 1 Jan 2027 and 31 Dec 2027?"</em> or <em>"How much did I spend on maintenance?"</em>. Instant financial totals and tap-to-copy monospace vehicle registration numbers.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">⏰</div>
+          <h3>Triple-Tier Precision Reminders</h3>
+          <p>
+            Never suffer from expired car insurance, lapsed pollution certificates (PUC), or unpaid bills. Automated alerts fire at <strong>10 days, 2 days, and on the due date</strong> at 11:00 AM & 6:00 PM IST with 1-tap Snooze and Renewal.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">📂</div>
+          <h3>Zero-Custodian Google Drive Storage</h3>
+          <p>
+            Your original files are <strong>never stored on our servers</strong>. Documents transfer directly into your private Google Drive account under a dedicated folder. You retain 100% legal ownership and control at all times.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🔐</div>
+          <h3>Cryptographic Envelope Security</h3>
+          <p>
+            Google OAuth tokens are protected via AES-256-GCM envelope encryption using per-user Data Encryption Keys. The master cryptographic key lives strictly outside the database, and sensitive numbers are masked by default.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🗓️</div>
+          <h3>1-Tap Calendar Export & Instant Purge</h3>
+          <p>
+            Export all deadlines directly to Google Calendar or Apple Calendar using a single <code>.ics</code> file. If you ever want to leave, <code>/deletemydata</code> executes an immediate, irreversible 7-step cryptographic wipe.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="section" id="comparison">
+      <div class="section-header">
+        <div class="section-tag">Why We Are Different</div>
+        <h2 class="section-title">SQUARES Vault vs Traditional Cloud Storage</h2>
+        <p class="section-desc">See why managing your documents in Telegram with private AI beats generic cloud storage every time.</p>
+      </div>
+
+      <div class="comparison-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th class="highlight-col">🛡️ SQUARES Vault</th>
+              <th>📁 Google Drive / Dropbox Alone</th>
+              <th>🏛️ Government Portals</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>File Ownership</strong></td>
+              <td class="highlight-col"><strong>Your own Google Drive (Zero-Custodian)</strong></td>
+              <td>Their servers</td>
+              <td>Government cloud</td>
+            </tr>
+            <tr>
+              <td><strong>Automatic Expiry Alerts</strong></td>
+              <td class="highlight-col"><strong>Automated 10d / 2d / 0d Telegram alerts</strong></td>
+              <td>❌ None (Manual)</td>
+              <td>❌ Inconsistent</td>
+            </tr>
+            <tr>
+              <td><strong>Conversational AI Assistant</strong></td>
+              <td class="highlight-col"><strong>Natural Language Q&A ("Ask Your Vault")</strong></td>
+              <td>❌ None</td>
+              <td>❌ None</td>
+            </tr>
+            <tr>
+              <td><strong>Cross-Document Linking</strong></td>
+              <td class="highlight-col"><strong>Auto-links Plates, Policies & Challans</strong></td>
+              <td>❌ None</td>
+              <td>❌ Isolated silos</td>
+            </tr>
+            <tr>
+              <td><strong>AI Model Privacy</strong></td>
+              <td class="highlight-col"><strong>Enterprise API (Zero Model Training)</strong></td>
+              <td>Varies</td>
+              <td>N/A</td>
+            </tr>
+            <tr>
+              <td><strong>Instant Data Erasure</strong></td>
+              <td class="highlight-col"><strong>Single command (<code>/deletemydata</code>)</strong></td>
+              <td>Manual hunting</td>
+              <td>Impossible</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section" id="faq">
+      <div class="section-header">
+        <div class="section-tag">Frequently Asked Questions</div>
+        <h2 class="section-title">Everything You Need To Know</h2>
+        <p class="section-desc">Clear, honest answers about our security, privacy, and architecture.</p>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-card">
+          <h4>🔒 Can anyone see my uploaded documents?</h4>
+          <p>
+            No. Uploaded files transfer straight into your personal Google Drive folder. They are processed in volatile memory for AI date extraction and immediately purged from the server. We never keep permanent copies of your files.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <h4>🤖 Are my documents used to train AI models?</h4>
+          <p>
+            No. Optical parsing and question answering run exclusively via Google's enterprise Gemini API. Under enterprise terms, your documents are processed strictly in transit and are never retained or used to train public AI models.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <h4>📁 What Google permissions do you require?</h4>
+          <p>
+            We only request <code>drive.file</code> (which only allows accessing files created by SQUARES Vault itself) and <code>drive.appdata</code> (for configuration sync). We cannot see, read, or modify any other files in your personal Google Drive.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <h4>🚗 Which document types can I store?</h4>
+          <p>
+            Everything you need for life-admin: Vehicle RCs, Pollution Certificates (PUC), Traffic Challans, Car/Health/Term Insurance, Electronic Appliance Warranties, Bills, Passports, and Home Contracts.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <h4>⚖️ Is SQUARES Vault legally compliant?</h4>
+          <p>
+            Yes. The service is built to comply from day one with India's <strong>Digital Personal Data Protection Act (DPDP Act 2023)</strong>, the European Union's <strong>GDPR</strong>, and California's <strong>CCPA</strong>.
+          </p>
+        </div>
+
+        <div class="faq-card">
+          <h4>🗑️ What happens if I want to delete my data?</h4>
+          <p>
+            Simply type <code>/deletemydata</code> in Telegram. SQUARES Vault immediately initiates an irreversible 7-step cryptographic wipe: revoking OAuth tokens, purging all database rows, and clearing search indexes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+      <h2>Take Control of Your Life-Admin Today</h2>
+      <p>Never lose a warranty, miss a vehicle renewal, or pay a late fee again. Safe, private, and always on your phone.</p>
+      <a href="https://t.me/squaresvaultbot" target="_blank" class="cta-btn" style="font-size: 1.15rem; padding: 18px 42px;">
+        <span>Launch SQUARES Vault in Telegram</span>
         <span>→</span>
       </a>
-    </section>
-
-    <section class="grid">
-      <div class="card">
-        <div class="card-icon">📂</div>
-        <h3>Your Personal Google Drive</h3>
-        <p>
-          We never store your actual document files on our servers. Uploaded files transfer directly into your private Google Drive account. You retain 100% ownership at all times.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">⏰</div>
-        <h3>Intelligent Deadlines</h3>
-        <p>
-          Universal 10-day, 2-day, and same-day alerts so you never get caught with an expired vehicle insurance policy, overdue utility bill, or expired product warranty.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">💬</div>
-        <h3>Ask Your Vault</h3>
-        <p>
-          Ask questions naturally like <em>"What is due next month?"</em> or <em>"Show me all documents related to my car"</em>. Instant dynamic answers backed by structured metadata.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🔐</div>
-        <h3>Envelope Encryption</h3>
-        <p>
-          OAuth tokens and sensitive data are encrypted with AES-256-GCM using per-user Data Encryption Keys. The master cryptographic key lives outside the database.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🚫</div>
-        <h3>No AI Model Training</h3>
-        <p>
-          Document understanding runs strictly via Google's enterprise Gemini API. Your documents and queries are processed privately and are never used to train public AI models.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🗑️</div>
-        <h3>Full Data Sovereignty</h3>
-        <p>
-          A single <code>/deletemydata</code> command performs an immediate 7-step cryptographic wipe: revokes OAuth tokens, deletes database records, and purges search indexes.
-        </p>
+      <div style="color: var(--text-dim); font-size: 0.9rem; margin-top: 18px;">
+        Free to use • 100% Zero-Custodian • Private Google Drive Storage
       </div>
     </section>
-
-    <div class="doc-callout">
-      <strong>Built for India & Worldwide:</strong> SQUARES Vault is designed from the ground up to comply with India's <strong>Digital Personal Data Protection Act (DPDP Act 2023)</strong>, the <strong>General Data Protection Regulation (GDPR)</strong>, and the <strong>California Consumer Privacy Act (CCPA)</strong>.
-    </div>
   </main>
 
+  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-links">
-        <a href="index.html">Home</a>
+        <a href="index.html">Overview</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#features">Features</a>
+        <a href="#comparison">Comparison</a>
+        <a href="#faq">FAQ</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
         <a href="https://t.me/squaresvaultbot" target="_blank">Telegram Bot</a>
       </div>
-      <p>© 2026 SQUARES Vault. All rights reserved. Zero-custodian document management.</p>
+      <p>© 2026 SQUARES Vault. Zero-custodian document management. Designed for India & Global privacy.</p>
     </div>
   </footer>
 
