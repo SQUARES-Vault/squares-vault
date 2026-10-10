@@ -1,25 +1,19 @@
-# SQUARES Vault
+# SQUARES Vault 🛡️
 
-A Telegram bot for personal life-admin: vehicle papers, warranties, bills, insurance, IDs, birthdays, health docs, and home contracts — stored in **your own** Google Drive, reminded at the right time, retrieved on demand.
+A private, zero-custodian document management assistant in Telegram.
 
-## Quick start (development)
+Keep your vehicle registration papers, insurance policies, warranties, and bills organized. Files are stored directly in **your own Google Drive**, with automated deadline alerts dispatched via Telegram.
 
-```bash
-python -m venv .venv && source .venv/bin/activate   # Linux/macOS
-# or: .venv\Scripts\Activate.ps1                    # Windows
-pip install -e ".[dev]"
-cp .env.example .env    # fill in your secrets
-pytest
-```
+## ✨ Key Features
+- **Zero-Custodian Storage**: Your documents transfer directly into your private Google Drive account. We never store your original files.
+- **Intelligent Reminders**: Automated 10-day, 2-day, and same-day notifications for renewals and expiries.
+- **Ask Your Vault**: Natural language queries powered by private AI synthesis (no public model training).
+- **Client-Side Security**: Envelope encryption (AES-256-GCM) with masked identifiers.
 
-## Production deploy
+## 🌐 Compliance & Legal
+- [Landing Page](https://squares-vault.github.io/squares-vault/)
+- [Privacy Policy](https://squares-vault.github.io/squares-vault/privacy.html)
+- [Terms of Service](https://squares-vault.github.io/squares-vault/terms.html)
 
-See [`deploy/install.sh`](deploy/install.sh) and [`docs/RUNBOOK.md`](docs/RUNBOOK.md).
-
-## Architecture
-
-See [`SQUARES_Vault_Architecture_Blueprint.md`](../SQUARES_Vault_Architecture_Blueprint.md) and [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
-
-## Changelog
-
-See [`CHANGELOG.md`](CHANGELOG.md).
+## 💬 Get Started
+Connect with the assistant on Telegram: [@squaresvaultbot](https://t.me/squaresvaultbot).
