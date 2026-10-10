@@ -82,8 +82,8 @@ async def test_m7_e2e_flow(setup_db, monkeypatch):
             record_id = record_row["id"]
             
         async with db.execute("SELECT count(*) as c FROM reminders WHERE record_id = ?", (record_id,)) as cur:
-            # Vehicle schedule generates 5 reminders
-            assert (await cur.fetchone())["c"] == 5
+            # Vehicle schedule generates 6 reminders (3 offsets x 2 times/day)
+            assert (await cur.fetchone())["c"] == 6
             
     # 5. Undo
     cq_undo_mock = AsyncMock(spec=CallbackQuery)

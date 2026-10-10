@@ -37,7 +37,10 @@ def test_m6_golden_json_warranty():
 
 @pytest.mark.asyncio
 async def test_m6_cap_and_ceiling(setup_db, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEYS", "fake_key")
+    monkeypatch.setenv("GEMINI_API_KEY", "fake_key")
     monkeypatch.setenv("AI_GLOBAL_DAILY_QUOTA", "5")
+    monkeypatch.setenv("AI_KEY_DAILY_LIMIT", "5")
     monkeypatch.setenv("AI_PER_USER_DAILY_CAP", "2")
     
     from squares_vault.config import init_settings

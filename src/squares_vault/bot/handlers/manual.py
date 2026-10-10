@@ -192,7 +192,6 @@ async def on_add_manual(cq: CallbackQuery, state: FSMContext) -> None:
 
     await state.clear()
     if draft_id:
-        from squares_vault.db.connection import get_db
         import json
         async with get_db() as db:
             async with db.execute("SELECT ai_json, temp_paths FROM drafts WHERE id = ?", (draft_id,)) as cur:

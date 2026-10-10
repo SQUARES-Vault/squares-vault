@@ -20,4 +20,4 @@ htmlcov/
 .ruff_cache/
 .pytest_cache/
 scratch/
-test_*.py
+/test_*.py
