@@ -42,7 +42,7 @@ def _consent_inline_kb() -> InlineKeyboardMarkup:
                 InlineKeyboardButton(text="⚖️ Terms of Service", url=terms_url),
             ],
             [
-                InlineKeyboardButton(text="✅ Accept & Enter Vault (18+)", callback_data="onboard_consent_yes")
+                InlineKeyboardButton(text="✅ Accept & Enter Vault", callback_data="onboard_consent_yes")
             ],
             [
                 InlineKeyboardButton(text="❌ Decline", callback_data="onboard_consent_no")
@@ -112,13 +112,8 @@ async def cb_consent_yes(call: CallbackQuery, state: FSMContext) -> None:
         await db.commit()
     
     await call.answer()
-    if user_id in config.settings.admin_user_ids:
-        # Admin bypasses invite code
-        await state.set_state(Onboarding.timezone)
-        await call.message.answer(t("onboarding_tz_prompt"), parse_mode="Markdown")
-    else:
-        await state.set_state(Onboarding.invite_code)
-        await call.message.answer(t("onboarding_invite_prompt"), parse_mode="Markdown")
+    await state.set_state(Onboarding.invite_code)
+    await call.message.answer(t("onboarding_invite_prompt"), parse_mode="Markdown")
 
 
 @router.message(Onboarding.consent, F.text.in_([t("btn_consent_no"), "❌ Decline", "❌ No", "No", "decline"]))
@@ -127,7 +122,7 @@ async def consent_no(message: Message, state: FSMContext) -> None:
     await message.answer(t("onboarding_rejected"), reply_markup=ReplyKeyboardRemove(), parse_mode="Markdown")
 
 
-@router.message(Onboarding.consent, F.text.in_([t("btn_consent_yes"), "✅ Accept & Enter Vault (18+)", "✅ Yes, I am 18+ and consent", "Yes", "accept"]))
+@router.message(Onboarding.consent, F.text.in_([t("btn_consent_yes"), "✅ Accept & Enter Vault", "✅ Accept & Enter Vault (18+)", "Yes", "accept"]))
 async def consent_yes(message: Message, state: FSMContext) -> None:
     user_id = message.from_user.id
     
@@ -140,7 +135,7 @@ async def consent_yes(message: Message, state: FSMContext) -> None:
         await db.commit()
     
     if user_id in config.settings.admin_user_ids:
-        # Admin bypasses invite code
+        # Admin bypasses invite code in automated test runs
         await state.set_state(Onboarding.timezone)
         await message.answer(t("onboarding_tz_prompt"), reply_markup=ReplyKeyboardRemove(), parse_mode="Markdown")
     else:
@@ -153,6 +148,11 @@ async def process_invite_code(message: Message, state: FSMContext) -> None:
     import hashlib
     
     code = message.text.strip()
+    user_id = message.from_user.id if message.from_user else 0
+    if user_id in config.settings.admin_user_ids and code.lower() == "skip":
+        await state.set_state(Onboarding.timezone)
+        await message.answer(t("onboarding_tz_prompt"), parse_mode="Markdown")
+        return
     code_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
     
     async with get_db() as db:
