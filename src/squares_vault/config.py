@@ -151,7 +151,9 @@ class Settings:
     # App settings
     max_users: int
     policy_version: str
+    portal_url: str
     privacy_policy_url: str
+    terms_url: str
     default_tz: str
     default_remind_time: str  # HH:MM local
 
@@ -206,7 +208,9 @@ def load_settings() -> Settings:
         # App
         max_users=_int("MAX_USERS", 100),
         policy_version=_opt("POLICY_VERSION", "1.0"),
-        privacy_policy_url=_opt("PRIVACY_POLICY_URL", "https://squaresvault.github.io/privacy.html"),
+        portal_url=_opt("PORTAL_URL", "https://squares-vault.github.io/squares-vault/"),
+        privacy_policy_url=_opt("PRIVACY_POLICY_URL", "https://squares-vault.github.io/squares-vault/privacy.html"),
+        terms_url=_opt("TERMS_URL", "https://squares-vault.github.io/squares-vault/terms.html"),
         default_tz=_opt("DEFAULT_TZ", "Asia/Kolkata"),
         default_remind_time=_opt("DEFAULT_REMIND_TIME", "09:00"),
     )

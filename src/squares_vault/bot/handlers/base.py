@@ -135,6 +135,7 @@ async def handle_menu_buttons(message: Message, state: FSMContext) -> None:
                 [InlineKeyboardButton(text="🔗 Connections", callback_data="settings_connections")],
                 [InlineKeyboardButton(text="👥 Family / Co-Pilot Access", callback_data="settings_access")],
                 [InlineKeyboardButton(text="💾 Export Data", callback_data="settings_export")],
+                [InlineKeyboardButton(text="🌐 Official Web Portal ↗", url=config.settings.portal_url)],
                 [InlineKeyboardButton(text="📜 Privacy Policy & Terms", url=config.settings.privacy_policy_url)],
                 [InlineKeyboardButton(text="🚨 Delete Account", callback_data="settings_delete")],
                 [InlineKeyboardButton(text="⬅️ Back", callback_data="settings_close")],

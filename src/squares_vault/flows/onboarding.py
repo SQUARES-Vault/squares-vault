@@ -9,7 +9,15 @@ import dateparser
 from aiogram import Router, F
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
+from aiogram.types import (
+    CallbackQuery,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    KeyboardButton,
+    Message,
+    ReplyKeyboardMarkup,
+    ReplyKeyboardRemove,
+)
 
 from squares_vault import config
 from squares_vault.bot.states import Onboarding
@@ -20,13 +28,26 @@ from squares_vault.i18n.loader import t
 router = Router(name="onboarding")
 
 
-def _consent_kb() -> ReplyKeyboardMarkup:
-    return ReplyKeyboardMarkup(
-        keyboard=[
-            [KeyboardButton(text=t("btn_consent_yes"))],
-            [KeyboardButton(text=t("btn_consent_no"))],
-        ],
-        resize_keyboard=True,
+def _consent_inline_kb() -> InlineKeyboardMarkup:
+    portal_url = getattr(config.settings, "portal_url", "https://squares-vault.github.io/squares-vault/")
+    privacy_url = getattr(config.settings, "privacy_policy_url", "https://squares-vault.github.io/squares-vault/privacy.html")
+    terms_url = getattr(config.settings, "terms_url", "https://squares-vault.github.io/squares-vault/terms.html")
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text="🌐 Explore Web Portal ↗", url=portal_url)
+            ],
+            [
+                InlineKeyboardButton(text="📜 Privacy Policy", url=privacy_url),
+                InlineKeyboardButton(text="⚖️ Terms of Service", url=terms_url),
+            ],
+            [
+                InlineKeyboardButton(text="✅ Accept & Enter Vault (18+)", callback_data="onboard_consent_yes")
+            ],
+            [
+                InlineKeyboardButton(text="❌ Decline", callback_data="onboard_consent_no")
+            ],
+        ]
     )
 
 
@@ -45,7 +66,13 @@ async def start_onboarding(message: Message, state: FSMContext) -> None:
     if row:
         # User already exists
         await state.clear()
-        await message.answer(t("start_welcome"), reply_markup=get_main_keyboard())
+        portal_url = getattr(config.settings, "portal_url", "https://squares-vault.github.io/squares-vault/")
+        await message.answer(
+            t("start_welcome", portal_url=portal_url),
+            reply_markup=get_main_keyboard(),
+            parse_mode="Markdown",
+            disable_web_page_preview=True,
+        )
         return
 
     # Check if signups are enabled
@@ -58,19 +85,49 @@ async def start_onboarding(message: Message, state: FSMContext) -> None:
     # New user: start consent flow
     await state.set_state(Onboarding.consent)
     await message.answer(
-        t("onboarding_consent", url=config.settings.privacy_policy_url),
-        reply_markup=_consent_kb(),
+        t("onboarding_consent"),
+        reply_markup=_consent_inline_kb(),
         parse_mode="Markdown",
+        disable_web_page_preview=True,
     )
 
 
-@router.message(Onboarding.consent, F.text == t("btn_consent_no"))
+@router.callback_query(F.data == "onboard_consent_no")
+async def cb_consent_no(call: CallbackQuery, state: FSMContext) -> None:
+    await state.clear()
+    await call.message.edit_text(t("onboarding_rejected"), parse_mode="Markdown")
+    await call.answer()
+
+
+@router.callback_query(F.data == "onboard_consent_yes")
+async def cb_consent_yes(call: CallbackQuery, state: FSMContext) -> None:
+    user_id = call.from_user.id
+    
+    # Log consent (S9 requirement)
+    async with get_db() as db:
+        await db.execute(
+            "INSERT INTO consent_log (user_id, policy_version) VALUES (?, ?)",
+            (user_id, config.settings.policy_version)
+        )
+        await db.commit()
+    
+    await call.answer()
+    if user_id in config.settings.admin_user_ids:
+        # Admin bypasses invite code
+        await state.set_state(Onboarding.timezone)
+        await call.message.answer(t("onboarding_tz_prompt"), parse_mode="Markdown")
+    else:
+        await state.set_state(Onboarding.invite_code)
+        await call.message.answer(t("onboarding_invite_prompt"), parse_mode="Markdown")
+
+
+@router.message(Onboarding.consent, F.text.in_([t("btn_consent_no"), "❌ Decline", "❌ No", "No", "decline"]))
 async def consent_no(message: Message, state: FSMContext) -> None:
     await state.clear()
-    await message.answer(t("onboarding_rejected"), reply_markup=ReplyKeyboardRemove())
+    await message.answer(t("onboarding_rejected"), reply_markup=ReplyKeyboardRemove(), parse_mode="Markdown")
 
 
-@router.message(Onboarding.consent, F.text == t("btn_consent_yes"))
+@router.message(Onboarding.consent, F.text.in_([t("btn_consent_yes"), "✅ Accept & Enter Vault (18+)", "✅ Yes, I am 18+ and consent", "Yes", "accept"]))
 async def consent_yes(message: Message, state: FSMContext) -> None:
     user_id = message.from_user.id
     
@@ -85,10 +142,10 @@ async def consent_yes(message: Message, state: FSMContext) -> None:
     if user_id in config.settings.admin_user_ids:
         # Admin bypasses invite code
         await state.set_state(Onboarding.timezone)
-        await message.answer(t("onboarding_tz_prompt"), reply_markup=ReplyKeyboardRemove())
+        await message.answer(t("onboarding_tz_prompt"), reply_markup=ReplyKeyboardRemove(), parse_mode="Markdown")
     else:
         await state.set_state(Onboarding.invite_code)
-        await message.answer(t("onboarding_invite_prompt"), reply_markup=ReplyKeyboardRemove())
+        await message.answer(t("onboarding_invite_prompt"), reply_markup=ReplyKeyboardRemove(), parse_mode="Markdown")
 
 
 @router.message(Onboarding.invite_code, F.text)
@@ -103,15 +160,13 @@ async def process_invite_code(message: Message, state: FSMContext) -> None:
             row = await cur.fetchone()
             
         if not row:
-            await message.answer(t("onboarding_invite_invalid"))
+            await message.answer(t("onboarding_invite_invalid"), parse_mode="Markdown")
             return
             
-        # Code is valid, mark as used temporarily in state so it can't be stolen?
-        # Better to mark it used at final step. Pass it to next state.
         await state.update_data(invite_code=row["id"])
         
     await state.set_state(Onboarding.timezone)
-    await message.answer(t("onboarding_tz_prompt"))
+    await message.answer(t("onboarding_tz_prompt"), parse_mode="Markdown")
 
 
 @router.message(Onboarding.timezone, F.text)
@@ -144,14 +199,13 @@ async def process_timezone(message: Message, state: FSMContext) -> None:
                 valid = True
 
         if not valid:
-            await message.answer(t("onboarding_tz_invalid"))
+            await message.answer(t("onboarding_tz_invalid"), parse_mode="Markdown")
             return
 
     # Finalize onboarding
     data = await state.get_data()
     invite_id = data.get("invite_code")
     user_id = message.from_user.id
-    username = message.from_user.username or ""
     
     async with get_db() as db:
         # Check hard cap (100 users) if not admin
@@ -182,4 +236,4 @@ async def process_timezone(message: Message, state: FSMContext) -> None:
         await db.commit()
 
     await state.clear()
-    await message.answer(t("onboarding_done"), reply_markup=get_main_keyboard())
+    await message.answer(t("onboarding_done"), reply_markup=get_main_keyboard(), parse_mode="Markdown")

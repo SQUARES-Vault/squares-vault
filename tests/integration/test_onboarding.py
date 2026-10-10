@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock, MagicMock, ANY
 
 import pytest
 from aiogram.fsm.context import FSMContext
@@ -60,8 +60,12 @@ async def test_onboarding_flow():
     msg = _mock_msg(user_id=555, text="/start")
     await start_onboarding(msg, state)
     state.set_state.assert_called_with(Onboarding.consent)
-    from unittest.mock import ANY
-    msg.answer.assert_called_with(t("onboarding_consent"), reply_markup=ANY)
+    msg.answer.assert_called_with(
+        t("onboarding_consent"),
+        reply_markup=ANY,
+        parse_mode="Markdown",
+        disable_web_page_preview=True,
+    )
     
     # 2. Consent YES -> wait invite code
     msg = _mock_msg(user_id=555, text=t("btn_consent_yes"))
