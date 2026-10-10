@@ -221,6 +221,32 @@ class DriveAPI:
         """Delete a file from Google Drive."""
         await self._request("DELETE", f"files/{file_id}")
 
+    async def update_file_content(self, file_id: str, mime_type: str, data: bytes) -> None:
+        """Update existing file content on Google Drive."""
+        tokens = await get_token(self.user_id)
+        if not tokens:
+            raise DriveAuthError("No tokens available.")
+
+        url = f"{UPLOAD_API_BASE}/files/{file_id}?uploadType=media"
+        headers = {
+            "Authorization": f"Bearer {tokens[0]}",
+            "Content-Type": mime_type
+        }
+        async with aiohttp.ClientSession(headers=headers) as session:
+            async with session.patch(url, data=data) as resp:
+                if resp.status == 401:
+                    new_token = await refresh_access_token(tokens[1])
+                    if not new_token:
+                        await delete_token(self.user_id)
+                        raise DriveAuthError("Token refresh failed.")
+                    ref_token_to_save = new_token.refresh_token or tokens[1]
+                    await save_token(self.user_id, new_token.access_token, ref_token_to_save, new_token.expires_in)
+                    headers["Authorization"] = f"Bearer {new_token.access_token}"
+                    async with session.patch(url, data=data, headers=headers) as retry_resp:
+                        retry_resp.raise_for_status()
+                        return
+                resp.raise_for_status()
+
 
 
     async def create_calendar_event(self, title: str, date_str: str, description: str = "") -> str:

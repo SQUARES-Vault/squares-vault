@@ -35,6 +35,32 @@ async def create_record(user_id: int, category: str, title: str, code: str, **kw
     from squares_vault.search.index import sync_fts_for_record
     await sync_fts_for_record(record_id, user_id, title, category, kwargs.get("tags"), kwargs.get("notes"))
     
+    try:
+        from squares_vault.drive.manifest import append_to_manifest
+        await append_to_manifest(
+            user_id=user_id,
+            action="INSERT",
+            collection="records",
+            data={
+                "id": record_id,
+                "user_id": user_id,
+                "category": category,
+                "title": title,
+                "code": code,
+                "amount_minor": kwargs.get("amount_minor"),
+                "currency": kwargs.get("currency", "INR"),
+                "notes": kwargs.get("notes"),
+                "tags": kwargs.get("tags"),
+                "extra_json": extra_json,
+                "key_date": kwargs.get("key_date"),
+                "key_date_type": kwargs.get("key_date_type"),
+                "parent_record_id": kwargs.get("parent_record_id"),
+                "status": "active"
+            }
+        )
+    except Exception:
+        pass
+
     return record_id
 
 
@@ -65,6 +91,28 @@ async def update_record(
     from squares_vault.search.index import sync_fts_for_record
     await sync_fts_for_record(record_id, user_id, title, category, tags, notes)
 
+    try:
+        from squares_vault.drive.manifest import append_to_manifest
+        await append_to_manifest(
+            user_id=user_id,
+            action="UPDATE",
+            collection="records",
+            data={
+                "id": record_id,
+                "user_id": user_id,
+                "category": category,
+                "title": title,
+                "amount_minor": amount_minor,
+                "currency": currency,
+                "key_date": key_date,
+                "key_date_type": key_date_type,
+                "notes": notes,
+                "tags": tags
+            }
+        )
+    except Exception:
+        pass
+
 
 async def add_file(record_id: str, user_id: int, drive_file_id: str, coded_name: str, mime: str, size: int) -> str:
     """Attach a file to a record."""
@@ -78,6 +126,26 @@ async def add_file(record_id: str, user_id: int, drive_file_id: str, coded_name:
             (file_id, record_id, user_id, drive_file_id, coded_name, mime, size)
         )
         await db.commit()
+
+    try:
+        from squares_vault.drive.manifest import append_to_manifest
+        await append_to_manifest(
+            user_id=user_id,
+            action="INSERT",
+            collection="files",
+            data={
+                "id": file_id,
+                "record_id": record_id,
+                "user_id": user_id,
+                "drive_file_id": drive_file_id,
+                "coded_name": coded_name,
+                "mime": mime,
+                "size_bytes": size
+            }
+        )
+    except Exception:
+        pass
+
     return file_id
 
 
@@ -96,3 +164,14 @@ async def soft_delete_record(user_id: int, record_id: str) -> None:
             (record_id, user_id)
         )
         await db.commit()
+
+    try:
+        from squares_vault.drive.manifest import append_to_manifest
+        await append_to_manifest(
+            user_id=user_id,
+            action="DELETE",
+            collection="records",
+            data={"id": record_id, "user_id": user_id}
+        )
+    except Exception:
+        pass

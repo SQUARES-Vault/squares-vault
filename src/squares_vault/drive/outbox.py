@@ -87,7 +87,22 @@ async def drive_outbox_loop(bot) -> None:
                     log.info("synced_to_drive", file_id=row["id"], drive_id=new_drive_id)
                 except Exception as e:
                     log.error("drive_outbox_failed", error=str(e), file_id=row["id"])
-                    
+
+            # Sync pending manifest outbox records
+            try:
+                async with get_db() as db:
+                    async with db.execute("SELECT DISTINCT user_id FROM manifest_outbox WHERE attempts < 5") as cur:
+                        m_users = await cur.fetchall()
+
+                for u_row in m_users:
+                    try:
+                        from squares_vault.drive.manifest import sync_manifest_outbox
+                        await sync_manifest_outbox(u_row["user_id"])
+                    except Exception as me:
+                        log.warning("manifest_sync_error", user_id=u_row["user_id"], error=str(me))
+            except Exception as e:
+                log.warning("manifest_poll_error", error=str(e))
+
         except asyncio.CancelledError:
             break
         except Exception as e:
