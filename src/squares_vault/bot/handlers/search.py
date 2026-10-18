@@ -337,43 +337,44 @@ async def on_get_file(cq: CallbackQuery) -> None:
         return
         
     file_id = row['drive_file_id']
-    try:
-        if len(file_id) > 45:
-            # Telegram file ID
-            try:
-                tg_file = await cq.bot.get_file(file_id)
-                f_bytes = await cq.bot.download_file(tg_file.file_path)
-                raw = f_bytes.getvalue()
-                ext = ".jpg"
-                if raw[:4] == b"%PDF":
-                    ext = ".pdf"
-                elif raw[:8] == b"\x89PNG\r\n\x1a\n":
-                    ext = ".png"
-                elif "pdf" in (row['mime'] or "").lower():
-                    ext = ".pdf"
-                elif "png" in (row['mime'] or "").lower():
-                    ext = ".png"
-                safe_title = "".join(c for c in row['title'] if c.isalnum() or c in " _-").strip()
-                filename = f"{safe_title}{ext}" if safe_title else f"Document{ext}"
-                from aiogram.types import BufferedInputFile
-                await cq.message.answer_document(
-                    BufferedInputFile(raw, filename=filename),
-                    caption="Here is your requested attachment."
-                )
-            except Exception:
-                try:
-                    await cq.message.answer_document(file_id)
-                except Exception:
-                    await cq.message.answer_photo(file_id)
-            await cq.answer()
-        else:
-            # Google Drive ID
-            msg = await cq.message.answer("⏳ Fetching securely from Google Drive...")
-            from squares_vault.drive.api import DriveAPI
+    if len(file_id) > 45:
+        # Telegram file ID
+        try:
+            tg_file = await cq.bot.get_file(file_id)
+            f_bytes = await cq.bot.download_file(tg_file.file_path)
+            raw = f_bytes.getvalue()
+            ext = ".jpg"
+            if raw[:4] == b"%PDF":
+                ext = ".pdf"
+            elif raw[:8] == b"\x89PNG\r\n\x1a\n":
+                ext = ".png"
+            elif "pdf" in (row['mime'] or "").lower():
+                ext = ".pdf"
+            elif "png" in (row['mime'] or "").lower():
+                ext = ".png"
+            safe_title = "".join(c for c in row['title'] if c.isalnum() or c in " _-").strip()
+            filename = f"{safe_title}{ext}" if safe_title else f"Document{ext}"
             from aiogram.types import BufferedInputFile
-            drive = DriveAPI(row["owner_user_id"])
+            await cq.message.answer_document(
+                BufferedInputFile(raw, filename=filename),
+                caption="Here is your requested attachment."
+            )
+        except Exception:
+            try:
+                await cq.message.answer_document(file_id)
+            except Exception:
+                await cq.message.answer_photo(file_id)
+        await cq.answer()
+    else:
+        # Google Drive ID
+        from squares_vault.drive.api import DriveAPI, DriveAuthError
+        from aiogram.types import BufferedInputFile, InlineKeyboardMarkup, InlineKeyboardButton
+        msg = await cq.message.answer("⏳ Fetching securely from Google Drive...")
+        owner_id = row["owner_user_id"]
+        try:
+            drive = DriveAPI(owner_id)
             file_bytes = await drive.download_file(file_id)
-            
+
             ext = ".jpg"
             if file_bytes[:4] == b"%PDF":
                 ext = ".pdf"
@@ -392,17 +393,38 @@ async def on_get_file(cq: CallbackQuery) -> None:
 
             safe_title = "".join(c for c in row['title'] if c.isalnum() or c in " _-").strip()
             filename = f"{safe_title}{ext}" if safe_title else f"Document{ext}"
-            
+
             await cq.message.answer_document(
                 BufferedInputFile(file_bytes, filename=filename),
-                caption="Here is your requested attachment."
+                caption="📎 Here is your requested attachment."
             )
             await msg.delete()
             await cq.answer()
-    except Exception as e:
-        import logging
-        logging.getLogger(__name__).exception("Error fetching file")
-        await cq.answer(f"Failed to fetch file: {str(e)}", show_alert=True)
+
+        except DriveAuthError:
+            # Google Drive not connected or token expired for document owner
+            await msg.delete()
+            kb = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text="🔗 Reconnect Google Drive", callback_data="drive_reconnect")]
+            ])
+            await cq.message.answer(
+                "⚠️ **Google Drive Connection Required**\n\n"
+                "Your Google Drive session has expired or is not connected. "
+                "The attachment could not be fetched.\n\n"
+                "Tap below to reconnect your Google Drive account to restore access to all your attachments.",
+                reply_markup=kb,
+                parse_mode="Markdown",
+            )
+            await cq.answer()
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).exception("Error fetching file")
+            try:
+                await msg.delete()
+            except Exception:
+                pass
+            await cq.answer(f"Failed to fetch file: {str(e)}", show_alert=True)
+
 
 
 
@@ -637,3 +659,11 @@ async def on_edit_record(cq: CallbackQuery, state: FSMContext) -> None:
     record_id = cq.data.split(":")[1]
     from squares_vault.bot.handlers.manual import start_edit_flow
     await start_edit_flow(cq, record_id, state)
+
+
+@router.callback_query(F.data == "drive_reconnect")
+async def on_drive_reconnect(cq: CallbackQuery) -> None:
+    """Trigger Google Drive reconnect flow from attachment error prompt."""
+    await cq.answer()
+    from squares_vault.flows.drive_auth import cmd_connect_drive
+    await cmd_connect_drive(cq.message, user_id_override=cq.from_user.id)
