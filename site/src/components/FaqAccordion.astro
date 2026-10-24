@@ -11,16 +11,16 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="faq-accordion-stack">
+<div class="faq-stack-custom">
   {items.map((item) => (
-    <details class="faq-apple-item">
+    <details class="faq-item-custom">
       <summary>
-        <span class="faq-apple-question">{item.q}</span>
-        <svg class="faq-apple-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <span>{item.q}</span>
+        <svg class="faq-chevron-custom" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </summary>
-      <div class="faq-apple-content">
+      <div class="faq-content-custom">
         <p set:html={item.a} />
       </div>
     </details>

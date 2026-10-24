@@ -19,76 +19,76 @@ const jsonLd = {
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/about/" jsonLd={jsonLd}>
-  <div class="container" style="padding: 40px 0 80px;">
+  <div class="container" style="padding: 48px 0 80px;">
     <!-- Breadcrumb -->
-    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
-      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+    <nav aria-label="Breadcrumb" style="font-size: 13px; color: var(--muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--muted); text-decoration: none;">Home</a>
       <span style="margin: 0 8px;">/</span>
-      <span style="color: var(--ink-primary); font-weight: 500;">About</span>
+      <span style="color: var(--text); font-weight: 500;">About</span>
     </nav>
 
     <!-- Header Block -->
-    <header style="margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid var(--border-hairline);">
-      <div style="display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px;">
-        <span class="badge-status active">Creator & Purpose</span>
+    <header style="margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--hairline);">
+      <div style="display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;">
+        <span class="badge-status active">Creator &amp; Purpose</span>
       </div>
-      <h1 style="margin-bottom: 14px;">Why SQUARES Vault Exists</h1>
-      <p style="font-size: 1.18rem; color: var(--ink-secondary); max-width: var(--text-max-width);">
+      <h1 style="font-size: clamp(32px, 5vw, 52px); margin-bottom: 14px;">Why SQUARES Vault Exists</h1>
+      <p style="font-size: 19px; color: var(--muted); max-width: var(--text-max-width); line-height: 1.5;">
         A zero-custodian document assistant built on the conviction that your household records belong in your personal storage, not inside someone else's walled garden.
       </p>
     </header>
 
     <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
-      <article class="text-container" style="font-size: 1.05rem; line-height: 1.75;">
+      <article class="text-container" style="font-size: 16.5px; line-height: 1.65;">
         <!-- The Origin Story -->
-        <section style="margin-bottom: 36px;">
-          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">The Origin</h2>
-          <p>
-            Like millions of Indian families, my household managed documents across a disorganized web of physical plastic accordion folders, family WhatsApp groups, and unlabelled Google Drive folders.
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 24px; margin-bottom: 14px;">The Origin</h2>
+          <p style="margin-bottom: 16px;">
+            Like millions of families, my household managed documents across a disorganized web of physical plastic accordion folders, family messaging groups, and unlabelled cloud folders.
           </p>
-          <p>
+          <p style="margin-bottom: 16px;">
             The inevitable consequences followed:
           </p>
-          <ul style="margin-left: 20px; display: flex; flex-direction: column; gap: 8px;">
-            <li>Paying a ₹10,000 traffic fine because a roadside PUC certificate expired without anyone noticing.</li>
-            <li>Losing an accumulated 50% No Claim Bonus discount on car insurance because a renewal deadline slipped past 90 days.</li>
-            <li>Paying out of pocket for a refrigerator repair because the thermal paper warranty receipt had faded into complete illegibility.</li>
+          <ul style="margin: 0 0 20px 24px; display: flex; flex-direction: column; gap: 8px; color: var(--text);">
+            <li>Paying hefty traffic citations because a periodic vehicle inspection certificate expired without anyone noticing.</li>
+            <li>Losing an accumulated 50% No Claim Bonus discount on auto insurance because a renewal deadline slipped past 90 days.</li>
+            <li>Paying out of pocket for an appliance repair because the thermal receipt had faded into complete illegibility.</li>
           </ul>
-          <p>
+          <p style="margin-bottom: 16px;">
             The existing solutions had major flaws: generic cloud storage (Google Drive, Dropbox) is passive and requires tedious manual filing; specialized document apps lock your files into proprietary servers that you cannot easily export or control; and government apps like DigiLocker only store official state credentials, completely ignoring household bills, warranties, and service invoices.
           </p>
           <p>
-            I built SQUARES Vault to solve this problem once and for all: a bot in Telegram that reads any document with modern AI, extracts the dates that matter, schedules proactive reminders, and saves every original file directly into your personal Google Drive.
+            I built SQUARES Vault to solve this problem once and for all: an assistant in Telegram that reads any document with modern AI, extracts the dates that matter, schedules proactive reminders, and saves every original file directly into your personal Google Drive.
           </p>
         </section>
 
         <!-- Core Architectural Principles -->
-        <section style="margin-bottom: 40px;">
-          <h2 style="font-size: 1.4rem; margin-bottom: 16px;">Core Architectural Principles</h2>
-          <div style="display: flex; flex-direction: column; gap: 20px;">
-            <div class="card-paper" style="padding: 22px;">
-              <strong style="color: var(--ink-primary); font-size: 1.08rem; display: block; margin-bottom: 6px;">
+        <section style="margin-bottom: 44px;">
+          <h2 style="font-size: 24px; margin-bottom: 18px;">Core Architectural Principles</h2>
+          <div style="display: flex; flex-direction: column; gap: 18px;">
+            <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 24px;">
+              <strong style="color: var(--text); font-size: 17px; display: block; margin-bottom: 8px;">
                 1. Zero-Custodian Storage
               </strong>
-              <p style="margin: 0; font-size: 0.94rem; color: var(--ink-secondary); line-height: 1.6;">
+              <p style="margin: 0; font-size: 14.5px; color: var(--muted); line-height: 1.55;">
                 We never store your original files permanently on our application servers. When you send a document, it is uploaded directly to your own Google Drive using the tightly scoped <code>drive.file</code> permission. You retain 100% legal ownership and physical custody.
               </p>
             </div>
 
-            <div class="card-paper" style="padding: 22px;">
-              <strong style="color: var(--ink-primary); font-size: 1.08rem; display: block; margin-bottom: 6px;">
+            <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 24px;">
+              <strong style="color: var(--text); font-size: 17px; display: block; margin-bottom: 8px;">
                 2. Transparent AI Processing
               </strong>
-              <p style="margin: 0; font-size: 0.94rem; color: var(--ink-secondary); line-height: 1.6;">
+              <p style="margin: 0; font-size: 14.5px; color: var(--muted); line-height: 1.55;">
                 Documents are processed through Google's Gemini API for optical text extraction and structured parsing. Processing files exist only in volatile server memory during the analysis call and are purged immediately after ingestion.
               </p>
             </div>
 
-            <div class="card-paper" style="padding: 22px;">
-              <strong style="color: var(--ink-primary); font-size: 1.08rem; display: block; margin-bottom: 6px;">
+            <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 24px;">
+              <strong style="color: var(--text); font-size: 17px; display: block; margin-bottom: 8px;">
                 3. Total Data Sovereignty
               </strong>
-              <p style="margin: 0; font-size: 0.94rem; color: var(--ink-secondary); line-height: 1.6;">
+              <p style="margin: 0; font-size: 14.5px; color: var(--muted); line-height: 1.55;">
                 If you ever wish to leave, typing <code>/deletemydata</code> in Telegram halts all reminders, revokes your Google OAuth token, and permanently deletes all database rows and index records. Your files in Google Drive remain completely yours.
               </p>
             </div>
@@ -96,9 +96,9 @@ const jsonLd = {
         </section>
 
         <!-- Builder Bio -->
-        <section style="margin-bottom: 40px;">
-          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">The Builder</h2>
-          <p>
+        <section style="margin-bottom: 44px;">
+          <h2 style="font-size: 24px; margin-bottom: 14px;">The Builder</h2>
+          <p style="margin-bottom: 16px;">
             SQUARES Vault is designed, engineered, and maintained by <strong>{siteConfig.builderName}</strong>.
           </p>
           <p>
@@ -107,22 +107,22 @@ const jsonLd = {
         </section>
 
         <!-- Contact & Support -->
-        <section style="background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); padding: 28px;">
-          <h3 style="font-size: 1.25rem; margin-bottom: 10px;">Contact & Grievance Redressal</h3>
-          <p style="font-size: 0.95rem; color: var(--ink-secondary); line-height: 1.6; margin-bottom: 16px;">
+        <section style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 28px;">
+          <h3 style="font-size: 20px; margin-bottom: 10px;">Contact &amp; Grievance Redressal</h3>
+          <p style="font-size: 14.5px; color: var(--muted); line-height: 1.55; margin-bottom: 18px;">
             Whether you have questions about privacy, need help connecting your Google Drive, or have feedback on document parsing accuracy, you can reach out directly:
           </p>
-          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.95rem;">
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 14.5px; margin-bottom: 20px;">
             <div>
               <strong>Email:</strong> <a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--accent); text-decoration: underline;">{siteConfig.contactEmail}</a>
             </div>
           </div>
 
-          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--hairline);">
-            <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="font-size: 15px; padding: 10px 20px;">
+          <div style="padding-top: 18px; border-top: 1px solid var(--hairline);">
+            <a href={siteConfig.inviteEmailUrl} class="btn-primary" style="font-size: 14px; padding: 10px 22px;">
               <span>Request Free Invite Code</span>
             </a>
-            <div style="font-size: 13px; color: var(--muted); margin-top: 8px;">
+            <div style="font-size: 12.5px; color: var(--muted); margin-top: 10px;">
               {siteConfig.inviteNotice}
             </div>
           </div>
@@ -130,23 +130,23 @@ const jsonLd = {
       </article>
 
       <!-- Sidebar -->
-      <aside style="position: sticky; top: 90px; display: flex; flex-direction: column; gap: 24px;">
-        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 24px;">
-          <strong style="color: var(--text); font-size: 1rem; display: block; margin-bottom: 8px;">
+      <aside style="position: sticky; top: 80px; display: flex; flex-direction: column; gap: 24px;">
+        <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 24px;">
+          <strong style="color: var(--text); font-size: 16px; display: block; margin-bottom: 12px;">
             Quick Facts
           </strong>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--muted);">
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; color: var(--muted);">
             <li><strong style="color: var(--text);">Builder:</strong> {siteConfig.builderName}</li>
             <li><strong style="color: var(--text);">Primary Platform:</strong> Telegram bot</li>
             <li><strong style="color: var(--text);">Storage Provider:</strong> User's Google Drive</li>
             <li><strong style="color: var(--text);">AI Engine:</strong> Google Gemini API</li>
-            <li><strong style="color: var(--text);">Status:</strong> Invite-only early access beta</li>
+            <li><strong style="color: var(--text);">Status:</strong> Early access beta</li>
           </ul>
-          <hr style="border: 0; border-top: 1px solid var(--hairline); margin: 16px 0;" />
-          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="width: 100%; font-size: 15px; padding: 10px 18px;">
+          <hr style="border: 0; border-top: 1px solid var(--hairline); margin: 18px 0;" />
+          <a href={siteConfig.inviteEmailUrl} class="btn-primary" style="width: 100%; font-size: 14px; padding: 10px 18px;">
             <span>Request Invite Code</span>
           </a>
-          <div style="font-size: 12px; color: var(--muted); margin-top: 8px; text-align: center;">
+          <div style="font-size: 12px; color: var(--muted); margin-top: 10px; text-align: center;">
             {siteConfig.inviteNotice}
           </div>
         </div>

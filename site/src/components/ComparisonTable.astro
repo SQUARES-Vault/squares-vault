@@ -1,59 +1,66 @@
 ---
 ---
 
-<div class="table-wrapper-apple">
-  <table class="comparison-table-apple">
-    <thead>
-      <tr>
-        <th style="width: 25%;">Capability</th>
-        <th style="width: 29%; color: var(--accent); font-weight: 600;">SQUARES Vault</th>
-        <th style="width: 23%;">Cloud Folders (Drive / Dropbox)</th>
-        <th style="width: 23%;">Government Portals (e.g. DigiLocker)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="col-feature">Primary Purpose</td>
-        <td class="col-vault"><span class="check-accent">✓</span> Proactive life-admin & automated expiry alerts</td>
-        <td><span class="dash-muted">—</span> Passive file storage & manual backup</td>
-        <td><span class="dash-muted">—</span> Official government credential repository</td>
-      </tr>
-      <tr>
-        <td class="col-feature">Document Scope</td>
-        <td class="col-vault"><span class="check-accent">✓</span> Any paper or PDF: warranties, private insurance, leases, bills, titles</td>
-        <td><span class="dash-muted">—</span> Any file uploaded manually</td>
-        <td><span class="dash-muted">—</span> Limited strictly to state-issued IDs & certificates</td>
-      </tr>
-      <tr>
-        <td class="col-feature">AI Extraction & Indexing</td>
-        <td class="col-vault"><span class="check-accent">✓</span> In-memory Gemini AI reading of dates, amounts, policy numbers</td>
-        <td><span class="dash-muted">—</span> Manual renaming / keyword search only</td>
-        <td><span class="dash-muted">—</span> Read-only issuer metadata via government APIs</td>
-      </tr>
-      <tr>
-        <td class="col-feature">Automated Expiry Alerts</td>
-        <td class="col-vault"><span class="check-accent">✓</span> Multi-stage 10-day, 2-day & same-day Telegram reminders</td>
-        <td><span class="dash-muted">—</span> None (Requires manual calendar entries)</td>
-        <td><span class="dash-muted">—</span> None or platform-dependent</td>
-      </tr>
-      <tr>
-        <td class="col-feature">Original File Storage</td>
-        <td class="col-vault"><span class="check-accent">✓</span> Stored directly in your own Google Drive (Zero server custody)</td>
-        <td><span class="check-accent">✓</span> Stored in your own cloud account</td>
-        <td><span class="dash-muted">—</span> Stored in government cloud infrastructure</td>
-      </tr>
-      <tr>
-        <td class="col-feature">Vehicle Multi-Hop Linking</td>
-        <td class="col-vault"><span class="check-accent">✓</span> Auto-links registration, insurance, inspections & tickets by plate</td>
-        <td><span class="dash-muted">—</span> Manual folder sorting required</td>
-        <td><span class="dash-muted">—</span> Separate unlinked document cards</td>
-      </tr>
-      <tr>
-        <td class="col-feature">Interactive Querying</td>
-        <td class="col-vault"><span class="check-accent">✓</span> Conversational Q&A in Telegram ("What is due this month?")</td>
-        <td><span class="dash-muted">—</span> Basic keyword search only</td>
-        <td><span class="dash-muted">—</span> None</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="table-wrapper-responsive">
+  <div class="comparison-card-wrapper">
+    <table class="comparison-table-custom">
+      <thead>
+        <tr>
+          <th style="width: 26%;">Capability</th>
+          <th class="col-vault-highlight-header" style="width: 32%;">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span>SQUARES Vault</span>
+              <span style="font-size: 10px; font-weight: 700; background: var(--accent); color: #fff; padding: 2px 7px; border-radius: 980px; text-transform: uppercase;">Recommended</span>
+            </div>
+          </th>
+          <th style="width: 21%;">Cloud Folders (Drive Alone)</th>
+          <th style="width: 21%;">Government Portals (e.g. DigiLocker)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-feature">Primary Purpose</td>
+          <td class="col-vault-highlight"><span class="check-accent">✓</span> Proactive life-admin & automated expiry alerts</td>
+          <td><span class="dash-muted">—</span> Passive file storage & manual backup</td>
+          <td><span class="dash-muted">—</span> Official government credential repository</td>
+        </tr>
+        <tr>
+          <td class="col-feature">Document Scope</td>
+          <td class="col-vault-highlight"><span class="check-accent">✓</span> Any paper or PDF: warranties, private insurance, leases, bills, titles</td>
+          <td><span class="dash-muted">—</span> Any file uploaded manually</td>
+          <td><span class="dash-muted">—</span> Limited strictly to state-issued IDs & certificates</td>
+        </tr>
+        <tr>
+          <td class="col-feature">AI Extraction & Indexing</td>
+          <td class="col-vault-highlight"><span class="check-accent">✓</span> In-memory Gemini AI reading of dates, amounts, policy numbers</td>
+          <td><span class="dash-muted">—</span> Manual renaming / keyword search only</td>
+          <td><span class="dash-muted">—</span> Read-only issuer metadata via government APIs</td>
+        </tr>
+        <tr>
+          <td class="col-feature">Automated Expiry Alerts</td>
+          <td class="col-vault-highlight"><span class="check-accent">✓</span> Multi-stage 10-day, 2-day & same-day Telegram reminders</td>
+          <td><span class="dash-muted">—</span> None (Requires manual calendar entries)</td>
+          <td><span class="dash-muted">—</span> None or platform-dependent</td>
+        </tr>
+        <tr>
+          <td class="col-feature">Original File Storage</td>
+          <td class="col-vault-highlight"><span class="check-accent">✓</span> Stored directly in your own Google Drive (Zero server custody)</td>
+          <td><span class="check-accent">✓</span> Stored in your own cloud account</td>
+          <td><span class="dash-muted">—</span> Stored in government cloud infrastructure</td>
+        </tr>
+        <tr>
+          <td class="col-feature">Vehicle Multi-Hop Linking</td>
+          <td class="col-vault-highlight"><span class="check-accent">✓</span> Auto-links registration, insurance, inspections & tickets by plate</td>
+          <td><span class="dash-muted">—</span> Manual folder sorting required</td>
+          <td><span class="dash-muted">—</span> Separate unlinked document cards</td>
+        </tr>
+        <tr>
+          <td class="col-feature">Interactive Querying</td>
+          <td class="col-vault-highlight"><span class="check-accent">✓</span> Conversational Q&A in Telegram ("What is due this month?")</td>
+          <td><span class="dash-muted">—</span> Basic keyword search only</td>
+          <td><span class="dash-muted">—</span> None</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -11,13 +11,15 @@ const { currentLang = 'en' } = Astro.props;
 <header class="site-header">
   <div class="container header-inner">
     <a href={getAssetUrl(currentLang === 'hi' ? '/hi/' : '/')} class="header-brand" aria-label="SQUARES Vault Home">
-      <img src={getAssetUrl('/logo-icon.png')} alt="" class="brand-emblem" width="20" height="20" loading="eager" />
+      <img src={getAssetUrl('/logo-icon.png')} alt="" class="brand-emblem" width="24" height="24" loading="eager" />
       <span class="brand-title">{siteConfig.siteName}</span>
+      <span class="brand-badge">Beta</span>
     </a>
 
     <nav class="header-nav" aria-label="Main Navigation">
       <a href={getAssetUrl('#how-it-works')}>{currentLang === 'hi' ? 'यह कैसे काम करता है' : 'How It Works'}</a>
-      <a href={getAssetUrl('#features')}>{currentLang === 'hi' ? 'विशेषताएं' : 'Features'}</a>
+      <a href={getAssetUrl('#features')}>{currentLang === 'hi' ? 'विशेषताएं' : 'Capabilities'}</a>
+      <a href={getAssetUrl('#documents')}>{currentLang === 'hi' ? 'दस्तावेज़' : 'Documents'}</a>
       <a href={getAssetUrl('#comparison')}>{currentLang === 'hi' ? 'तुलना' : 'Compare'}</a>
       <a href={getAssetUrl('/guides/')}>{currentLang === 'hi' ? 'मार्गदर्शिका' : 'Guides'}</a>
       <a href={getAssetUrl('/privacy.html')}>{currentLang === 'hi' ? 'गोपनीयता' : 'Privacy'}</a>
@@ -35,11 +37,11 @@ const { currentLang = 'en' } = Astro.props;
       )}
 
       <a href={siteConfig.inviteEmailUrl} class="header-invite-btn" title={currentLang === 'hi' ? siteConfig.inviteNoticeHi : siteConfig.inviteNotice}>
-        <span>{currentLang === 'hi' ? 'इनवाइट कोड मांगें' : 'Request Invite'}</span>
+        <span>{currentLang === 'hi' ? 'इनवाइट मांगें' : 'Request Invite'}</span>
       </a>
 
-      <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="header-link-right">
-        <span>{currentLang === 'hi' ? 'टेलीग्राम खोलें ›' : 'Open in Telegram ›'}</span>
+      <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="header-link-bot">
+        <span>{currentLang === 'hi' ? 'बॉट ↗' : 'Telegram Bot ↗'}</span>
       </a>
     </div>
   </div>
