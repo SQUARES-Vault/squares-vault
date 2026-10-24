@@ -29,10 +29,8 @@ function staticHtmlAliases() {
 
         // Ensure .nojekyll exists in outDir
         const nojekyllPath = path.join(outDir, '.nojekyll');
-        if (!fs.existsSync(nojekyllPath)) {
-          fs.writeFileSync(nojekyllPath, '');
-          console.log('[static-html-aliases] Created .nojekyll in outDir');
-        }
+        fs.writeFileSync(nojekyllPath, '# Disable Jekyll processing on GitHub Pages\n');
+        console.log('[static-html-aliases] Created .nojekyll in outDir');
       },
     },
   };
@@ -45,6 +43,16 @@ export default defineConfig({
   trailingSlash: 'ignore',
   build: {
     assets: 'assets',
+    inlineStylesheets: 'always',
+  },
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          sanitizeFileName: (name) => name.replace(/^_+/, '').replace(/[\x00-\x1F\x7F<>*#"{}|^[\]`;?:&=+$,]/g, '-'),
+        },
+      },
+    },
   },
   integrations: [
     sitemap({
