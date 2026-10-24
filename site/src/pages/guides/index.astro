@@ -9,27 +9,27 @@ const description = 'Practical, step-by-step guides on tracking vehicle RC and P
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/guides/">
-  <div class="container" style="padding: 40px 0 80px;">
+  <div class="container container-subpage" style="padding: 40px 0 80px;">
     <!-- Breadcrumb -->
-    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
-      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--muted); text-decoration: none;">Home</a>
       <span style="margin: 0 8px;">/</span>
-      <span style="color: var(--ink-primary); font-weight: 500;">Guides</span>
+      <span style="color: var(--text); font-weight: 500;">Guides</span>
     </nav>
 
     <!-- Header Block -->
-    <header style="margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid var(--border-hairline);">
-      <h1 style="margin-bottom: 14px;">Guides & Checklists</h1>
-      <p style="font-size: 1.18rem; color: var(--ink-secondary); max-width: var(--text-max-width);">
+    <header style="margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid var(--hairline);">
+      <h1 style="margin-bottom: 14px; font-size: clamp(30px, 4vw, 44px);">Guides & Checklists</h1>
+      <p style="font-size: 1.18rem; color: var(--muted); line-height: 1.5;">
         Factual, straightforward routines for managing vehicle papers, appliance warranties, insurance renewals, and household administration in India.
       </p>
     </header>
 
-    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
+    <div class="subpage-layout">
       <!-- Guides List -->
-      <div style="display: flex; flex-direction: column; gap: 24px;">
+      <div class="subpage-main" style="display: flex; flex-direction: column; gap: 24px;">
         {guides.map((guide) => (
-          <article style="background-color: var(--surface); border-radius: var(--radius-card); padding: 32px; display: flex; flex-direction: column; gap: 12px;">
+          <article style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-card); padding: 32px; display: flex; flex-direction: column; gap: 12px;">
             <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted);">
               <span class="badge-status active">{guide.category}</span>
               <span>·</span>
@@ -59,15 +59,15 @@ const description = 'Practical, step-by-step guides on tracking vehicle RC and P
       </div>
 
       <!-- Sidebar -->
-      <aside style="position: sticky; top: 70px; display: flex; flex-direction: column; gap: 24px;">
-        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 28px;">
+      <aside class="subpage-sidebar" style="display: flex; flex-direction: column; gap: 24px;">
+        <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-card); padding: 28px;">
           <strong style="color: var(--text); font-size: 16px; display: block; margin-bottom: 8px;">
             Automate with SQUARES Vault
           </strong>
           <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
             Instead of tracking dates on wall calendars, forward your documents to our Telegram assistant. Expiry reminders run on your schedule, and original files live in your Google Drive.
           </p>
-          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="width: 100%; margin-bottom: 12px; font-size: 15px; padding: 10px 18px;">
+          <a href={siteConfig.inviteEmailUrl} class="btn-primary" style="width: 100%; margin-bottom: 12px; font-size: 15px; padding: 10px 18px; text-align: center;">
             <span>Request Invite Code</span>
           </a>
           <div style="text-align: center; margin-bottom: 12px;">
@@ -81,7 +81,7 @@ const description = 'Practical, step-by-step guides on tracking vehicle RC and P
           </div>
         </div>
 
-        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 24px;">
+        <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-card); padding: 24px;">
           <h3 style="font-size: 15px; margin-bottom: 12px;">Browse by Document Type</h3>
           <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
             <li><a href={getAssetUrl('/documents/vehicle-rc/')} class="link-apple"><span>Vehicle Registration Guide</span> <span class="chevron">›</span></a></li>
@@ -96,11 +96,3 @@ const description = 'Practical, step-by-step guides on tracking vehicle RC and P
     </div>
   </div>
 </BaseLayout>
-
-<style>
-@media (max-width: 900px) {
-  div[style*="grid-template-columns: 1fr 340px"] {
-    grid-template-columns: 1fr !important;
-  }
-}
-</style>

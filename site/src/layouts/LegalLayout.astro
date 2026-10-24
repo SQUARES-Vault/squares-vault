@@ -14,7 +14,7 @@ const { title, description, version, effectiveDate, canonicalPath } = Astro.prop
 ---
 
 <BaseLayout title={title} description={description} canonicalPath={canonicalPath}>
-  <div class="container" style="padding: 48px 0 80px;">
+  <div class="container" style="max-width: 860px; margin: 0 auto; padding: 48px 0 80px;">
     <!-- Breadcrumb -->
     <nav aria-label="Breadcrumb" style="font-size: 13px; color: var(--muted); margin-bottom: 24px;">
       <a href={getAssetUrl('/')} style="color: var(--muted); text-decoration: none;">Home</a>
@@ -31,7 +31,7 @@ const { title, description, version, effectiveDate, canonicalPath } = Astro.prop
       </div>
     </header>
 
-    <div class="text-container legal-body" style="font-size: 16px; line-height: 1.65;">
+    <div class="legal-body" style="font-size: 16px; line-height: 1.65;">
       <slot />
     </div>
   </div>

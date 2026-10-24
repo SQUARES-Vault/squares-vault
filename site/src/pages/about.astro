@@ -19,7 +19,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/about/" jsonLd={jsonLd}>
-  <div class="container" style="padding: 48px 0 80px;">
+  <div class="container container-subpage" style="padding: 40px 0 80px;">
     <!-- Breadcrumb -->
     <nav aria-label="Breadcrumb" style="font-size: 13px; color: var(--muted); margin-bottom: 24px;">
       <a href={getAssetUrl('/')} style="color: var(--muted); text-decoration: none;">Home</a>
@@ -28,18 +28,18 @@ const jsonLd = {
     </nav>
 
     <!-- Header Block -->
-    <header style="margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--hairline);">
+    <header style="margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--hairline);">
       <div style="display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;">
         <span class="badge-status active">Creator &amp; Purpose</span>
       </div>
-      <h1 style="font-size: clamp(32px, 5vw, 52px); margin-bottom: 14px;">Why SQUARES Vault Exists</h1>
-      <p style="font-size: 19px; color: var(--muted); max-width: var(--text-max-width); line-height: 1.5;">
+      <h1 style="font-size: clamp(30px, 4vw, 48px); margin-bottom: 12px;">Why SQUARES Vault Exists</h1>
+      <p style="font-size: 18px; color: var(--muted); line-height: 1.5;">
         A zero-custodian document assistant built on the conviction that your household records belong in your personal storage, not inside someone else's walled garden.
       </p>
     </header>
 
-    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
-      <article class="text-container" style="font-size: 16.5px; line-height: 1.65;">
+    <div class="subpage-layout">
+      <article class="subpage-main" style="font-size: 16.5px; line-height: 1.65;">
         <!-- The Origin Story -->
         <section style="margin-bottom: 40px;">
           <h2 style="font-size: 24px; margin-bottom: 14px;">The Origin</h2>
@@ -130,9 +130,9 @@ const jsonLd = {
       </article>
 
       <!-- Sidebar -->
-      <aside style="position: sticky; top: 80px; display: flex; flex-direction: column; gap: 24px;">
-        <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 24px;">
-          <strong style="color: var(--text); font-size: 16px; display: block; margin-bottom: 12px;">
+      <aside class="subpage-sidebar">
+        <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 24px; display: flex; flex-direction: column; gap: 14px;">
+          <strong style="color: var(--text); font-size: 16px; display: block;">
             Quick Facts
           </strong>
           <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; color: var(--muted);">
@@ -142,11 +142,11 @@ const jsonLd = {
             <li><strong style="color: var(--text);">AI Engine:</strong> Google Gemini API</li>
             <li><strong style="color: var(--text);">Status:</strong> Early access (Invite-only)</li>
           </ul>
-          <hr style="border: 0; border-top: 1px solid var(--hairline); margin: 18px 0;" />
-          <a href={siteConfig.inviteEmailUrl} class="btn-primary" style="width: 100%; font-size: 14px; padding: 10px 18px;">
+          <hr style="border: 0; border-top: 1px solid var(--hairline); margin: 6px 0;" />
+          <a href={siteConfig.inviteEmailUrl} class="btn-primary" style="width: 100%; font-size: 14px; padding: 10px 18px; text-align: center;">
             <span>Request Invite Code</span>
           </a>
-          <div style="font-size: 12px; color: var(--muted); margin-top: 10px; text-align: center;">
+          <div style="font-size: 12px; color: var(--muted); text-align: center;">
             {siteConfig.inviteNotice}
           </div>
         </div>
@@ -154,11 +154,3 @@ const jsonLd = {
     </div>
   </div>
 </BaseLayout>
-
-<style>
-@media (max-width: 900px) {
-  div[style*="grid-template-columns: 1fr 340px"] {
-    grid-template-columns: 1fr !important;
-  }
-}
-</style>

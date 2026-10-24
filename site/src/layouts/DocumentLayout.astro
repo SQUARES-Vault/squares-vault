@@ -29,7 +29,7 @@ const jsonLd = {
   canonicalPath={`/documents/${doc.slug}/`}
   jsonLd={jsonLd}
 >
-  <div class="container" style="padding: 48px 0 80px;">
+  <div class="container container-subpage" style="padding: 40px 0 80px;">
     <!-- Breadcrumb -->
     <nav aria-label="Breadcrumb" style="font-size: 13px; color: var(--muted); margin-bottom: 24px;">
       <a href={getAssetUrl('/')} style="color: var(--muted); text-decoration: none;">Home</a>
@@ -40,19 +40,19 @@ const jsonLd = {
     </nav>
 
     <!-- Header Block -->
-    <header style="margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--hairline);">
+    <header style="margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--hairline);">
       <div style="display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;">
         <span class="badge-status active">{doc.category}</span>
       </div>
-      <h1 style="font-size: clamp(32px, 5vw, 56px); margin-bottom: 14px;">{doc.name}</h1>
-      <p style="font-size: 19px; color: var(--muted); max-width: var(--text-max-width); line-height: 1.45;">
+      <h1 style="font-size: clamp(30px, 4vw, 48px); margin-bottom: 12px;">{doc.name}</h1>
+      <p style="font-size: 18px; color: var(--muted); line-height: 1.45;">
         {doc.summary}
       </p>
     </header>
 
-    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
+    <div class="subpage-layout">
       <!-- Main Content -->
-      <article class="text-container">
+      <article class="subpage-main">
         <!-- What It Is -->
         <section style="margin-bottom: 40px;">
           <h2 style="font-size: 24px; margin-bottom: 12px;">What It Is</h2>
@@ -60,7 +60,7 @@ const jsonLd = {
         </section>
 
         <!-- Where People Lose It -->
-        <section style="margin-bottom: 40px; background-color: var(--surface); border-radius: var(--radius-sm); padding: 22px 26px;">
+        <section style="margin-bottom: 40px; background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 22px 26px;">
           <strong style="color: var(--text); display: block; font-size: 16px; margin-bottom: 6px;">
             Where people usually lose it:
           </strong>
@@ -72,7 +72,7 @@ const jsonLd = {
           <h2 style="font-size: 24px; margin-bottom: 16px;">Critical Dates That Matter</h2>
           <div style="display: flex; flex-direction: column; gap: 14px;">
             {doc.criticalDates.map((cd: any) => (
-              <div style="background-color: var(--surface); border-radius: var(--radius-sm); padding: 20px 24px;">
+              <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 20px 24px;">
                 <strong style="color: var(--text); font-size: 16px; display: block; margin-bottom: 6px;">
                   {cd.name}
                 </strong>
@@ -85,7 +85,7 @@ const jsonLd = {
         <!-- What SQUARES Vault Extracts -->
         <section style="margin-bottom: 40px;">
           <h2 style="font-size: 24px; margin-bottom: 16px;">What SQUARES Vault Extracts</h2>
-          <div style="background-color: var(--surface); border-radius: var(--radius-sm); padding: 22px 26px;">
+          <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-sm); padding: 22px 26px;">
             <ul style="margin: 0 0 0 20px; color: var(--text); font-size: 15px; display: flex; flex-direction: column; gap: 8px;">
               {doc.whatVaultExtracts.map((item: string) => (
                 <li>{item}</li>
@@ -122,8 +122,8 @@ const jsonLd = {
       </article>
 
       <!-- Sidebar Sticky Card -->
-      <aside style="position: sticky; top: 70px;">
-        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 28px;">
+      <aside class="subpage-sidebar">
+        <div style="background-color: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-card); padding: 28px;">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: var(--accent);">
             <LucideIcon name="shield-check" size={20} />
             <strong style="color: var(--text); font-size: 15px;">Zero-Custodian Storage</strong>
@@ -132,7 +132,7 @@ const jsonLd = {
             Forward your {doc.name} to SQUARES Vault in Telegram. The original file goes straight to your personal Google Drive.
           </p>
 
-          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="width: 100%; margin-bottom: 12px; font-size: 15px; padding: 10px 18px;">
+          <a href={siteConfig.inviteEmailUrl} class="btn-primary" style="width: 100%; margin-bottom: 12px; font-size: 15px; padding: 10px 18px; text-align: center;">
             <span>Request Free Invite Code</span>
           </a>
 
@@ -151,11 +151,3 @@ const jsonLd = {
     </div>
   </div>
 </BaseLayout>
-
-<style>
-@media (max-width: 900px) {
-  div[style*="grid-template-columns: 1fr 340px"] {
-    grid-template-columns: 1fr !important;
-  }
-}
-</style>
