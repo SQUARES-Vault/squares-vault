@@ -41,52 +41,54 @@ const homeFaqs = [
   canonicalPath="/"
   hreflangHi="/hi/"
 >
-  <!-- ═══════════════════ 1. HERO (Apple Centered Display) ═══════════════════ -->
+  <!-- ═══════════════════ 1. HERO (Expansive 2-Column Split) ═══════════════════ -->
   <section class="section hero-apple">
-    <div class="container">
-      <div class="hero-eyebrow">Personal Life-Admin · Telegram Assistant</div>
-      <h1 class="hero-title">
-        <span class="hero-line">Your vital documents, organised.</span>
-        <span class="hero-line">Expiries tracked before they cost you.</span>
-      </h1>
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Personal Life-Admin · Telegram Assistant</div>
+        <h1 class="hero-title">
+          <span class="hero-line">Your vital documents, organised.</span>
+          <span class="hero-line">Expiries tracked before they cost you.</span>
+        </h1>
 
-      <p class="hero-subhead">
-        Forward your vehicle titles & registrations, auto and medical insurance, appliance warranties, rental leases, and utility bills in Telegram.
-        Gemini AI extracts key renewal dates, saves the original files directly into <strong>your personal Google Drive</strong>, and alerts you before anything expires.
-      </p>
+        <p class="hero-subhead">
+          Forward your vehicle titles & registrations, auto and medical insurance, appliance warranties, rental leases, and utility bills in Telegram.
+          Gemini AI extracts key renewal dates, saves the original files directly into <strong>your personal Google Drive</strong>, and alerts you before anything expires.
+        </p>
 
-      <div class="hero-cta-cluster">
-        <div class="hero-buttons-row">
-          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary">
-            <span>Request Free Invite Code</span>
-          </a>
-          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="link-apple">
-            <span>Open in Telegram</span>
-            <span class="chevron">›</span>
-          </a>
-          <a href="#how-it-works" class="link-apple">
-            <span>See How It Works</span>
-            <span class="chevron">›</span>
-          </a>
-        </div>
+        <div class="hero-cta-cluster">
+          <div class="hero-buttons-row">
+            <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary">
+              <span>Request Free Invite Code</span>
+            </a>
+            <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="link-apple">
+              <span>Open in Telegram</span>
+              <span class="chevron">›</span>
+            </a>
+            <a href="#how-it-works" class="link-apple">
+              <span>See How It Works</span>
+              <span class="chevron">›</span>
+            </a>
+          </div>
 
-        <div class="hero-invite-notice">
-          Early access is currently invite-only · {siteConfig.inviteNotice}
-        </div>
+          <div class="hero-invite-notice">
+            Early access is currently invite-only · {siteConfig.inviteNotice}
+          </div>
 
-        <div class="hero-chips-row">
-          <span>10+ Types</span>
-          <span class="sep">·</span>
-          <span>Your Google Drive</span>
-          <span class="sep">·</span>
-          <span>10d / 2d / 0d Alerts</span>
+          <div class="hero-chips-row">
+            <span>10+ Types</span>
+            <span class="sep">·</span>
+            <span>Your Google Drive</span>
+            <span class="sep">·</span>
+            <span>10d / 2d / 0d Alerts</span>
+          </div>
         </div>
       </div>
 
-      <!-- Telegram Chat Mockup Centered with Parallax & Video Placeholder -->
-      <div class="hero-mockup-wrapper reveal">
+      <!-- Telegram Chat Mockup & Video Placeholder (Right Column on Desktop) -->
+      <div class="hero-visual reveal">
         <TelegramMockup />
-        <div style="margin-top: 24px; width: 100%; max-width: 420px;">
+        <div class="hero-video-slot">
           <VideoPlaceholder />
         </div>
       </div>

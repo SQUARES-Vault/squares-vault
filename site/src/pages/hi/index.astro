@@ -47,52 +47,54 @@ const hindiFaqs = [
   hreflangEn="/"
   hreflangHi="/hi/"
 >
-  <!-- ═══════════════════ 1. HERO (Apple Centered Display) ═══════════════════ -->
+  <!-- ═══════════════════ 1. HERO (Expansive 2-Column Split) ═══════════════════ -->
   <section class="section hero-apple">
-    <div class="container">
-      <div class="hero-eyebrow">निजी लाइफ़-एडमिन · टेलीग्राम असिस्टेंट</div>
-      <h1 class="hero-title">
-        <span class="hero-line">आपके सभी ज़रूरी दस्तावेज़ व्यवस्थित।</span>
-        <span class="hero-line">एक्सपायरी तारीख़ से पहले समय पर अलर्ट।</span>
-      </h1>
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-eyebrow">निजी लाइफ़-एडमिन · टेलीग्राम असिस्टेंट</div>
+        <h1 class="hero-title">
+          <span class="hero-line">आपके सभी ज़रूरी दस्तावेज़ व्यवस्थित।</span>
+          <span class="hero-line">एक्सपायरी तारीख़ से पहले समय पर अलर्ट।</span>
+        </h1>
 
-      <p class="hero-subhead">
-        गाड़ी का रजिस्ट्रेशन व टाइटल, मोटर व स्वास्थ्य बीमा, होम अप्लायंस वारंटी, रेंटल लीज़ और बिल टेलीग्राम में फॉरवर्ड करें।
-        Gemini AI मुख्य तारीख़ें पढ़ता है, मूल फ़ाइलें सीधे <strong>आपके निजी Google Drive</strong> में सहेजता है, और किसी भी तारीख़ के ख़त्म होने से पहले आपको अलर्ट करता है।
-      </p>
+        <p class="hero-subhead">
+          गाड़ी का रजिस्ट्रेशन व टाइटल, मोटर व स्वास्थ्य बीमा, होम अप्लायंस वारंटी, रेंटल लीज़ और बिल टेलीग्राम में फॉरवर्ड करें।
+          Gemini AI मुख्य तारीख़ें पढ़ता है, मूल फ़ाइलें सीधे <strong>आपके निजी Google Drive</strong> में सहेजता है, और किसी भी तारीख़ के ख़त्म होने से पहले आपको अलर्ट करता है।
+        </p>
 
-      <div class="hero-cta-cluster">
-        <div class="hero-buttons-row">
-          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary">
-            <span>मुफ़्त इनवाइट कोड मांगें</span>
-          </a>
-          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="link-apple">
-            <span>टेलीग्राम में खोलें</span>
-            <span class="chevron">›</span>
-          </a>
-          <a href="#how-it-works" class="link-apple">
-            <span>देखें कैसे काम करता है</span>
-            <span class="chevron">›</span>
-          </a>
-        </div>
+        <div class="hero-cta-cluster">
+          <div class="hero-buttons-row">
+            <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary">
+              <span>मुफ़्त इनवाइट कोड मांगें</span>
+            </a>
+            <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="link-apple">
+              <span>टेलीग्राम में खोलें</span>
+              <span class="chevron">›</span>
+            </a>
+            <a href="#how-it-works" class="link-apple">
+              <span>देखें कैसे काम करता है</span>
+              <span class="chevron">›</span>
+            </a>
+          </div>
 
-        <div class="hero-invite-notice">
-          अर्ली एक्सेस केवल इनवाइट कोड द्वारा उपलब्ध है · {siteConfig.inviteNoticeHi}
-        </div>
+          <div class="hero-invite-notice">
+            अर्ली एक्सेस केवल इनवाइट कोड द्वारा उपलब्ध है · {siteConfig.inviteNoticeHi}
+          </div>
 
-        <div class="hero-chips-row">
-          <span>10+ प्रकार</span>
-          <span class="sep">·</span>
-          <span>आपका Google Drive</span>
-          <span class="sep">·</span>
-          <span>10d / 2d / 0d अलर्ट</span>
+          <div class="hero-chips-row">
+            <span>10+ प्रकार</span>
+            <span class="sep">·</span>
+            <span>आपका Google Drive</span>
+            <span class="sep">·</span>
+            <span>10d / 2d / 0d अलर्ट</span>
+          </div>
         </div>
       </div>
 
-      <!-- Telegram Chat Mockup Centered with Parallax & Video Placeholder -->
-      <div class="hero-mockup-wrapper reveal">
+      <!-- Telegram Chat Mockup & Video Placeholder (Right Column on Desktop) -->
+      <div class="hero-visual reveal">
         <TelegramMockup />
-        <div style="margin-top: 24px; width: 100%; max-width: 420px;">
+        <div class="hero-video-slot">
           <VideoPlaceholder />
         </div>
       </div>

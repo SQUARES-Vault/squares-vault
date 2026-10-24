@@ -49,8 +49,8 @@
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
 
   /* Layout Widths */
-  --content-max-width: 980px;
-  --bento-max-width: 1200px;
+  --content-max-width: 1200px;
+  --bento-max-width: 1240px;
   --text-max-width: 68ch;
 
   /* Radii */
@@ -117,7 +117,7 @@ main {
 
 /* ── Containers ─────────────────────────────────────────────── */
 .container {
-  width: 90%;
+  width: 92%;
   max-width: var(--content-max-width);
   margin-left: auto;
   margin-right: auto;
@@ -477,11 +477,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   margin: 0 auto;
 }
 
-/* ── Hero Section (Centered Display, Fit-to-Page Balanced) ──── */
+/* ── Hero Section (Expansive 2-Column Split on Laptop/Desktop) ──── */
 .hero-apple {
-  text-align: center;
-  padding-top: clamp(24px, 3vh, 38px);
-  padding-bottom: clamp(32px, 4.5vh, 50px);
+  padding-top: clamp(28px, 4.5vh, 56px);
+  padding-bottom: clamp(36px, 5vh, 68px);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.14fr 0.86fr;
+  gap: clamp(36px, 4.5vw, 68px);
+  align-items: center;
+}
+
+.hero-content {
+  text-align: left;
 }
 
 .hero-eyebrow {
@@ -491,17 +501,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--muted);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .hero-title {
-  font-size: clamp(28px, 3.6vw, 46px);
+  font-size: clamp(30px, 3.2vw, 48px);
   font-weight: 600;
   letter-spacing: -0.022em;
-  line-height: 1.16;
+  line-height: 1.15;
   color: var(--text);
-  max-width: 980px;
-  margin: 0 auto 14px;
+  margin-bottom: 16px;
   text-wrap: balance;
 }
 
@@ -511,25 +520,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 }
 
 .hero-subhead {
-  font-size: clamp(15px, 1.15vw, 17px);
-  line-height: 1.48;
+  font-size: 16.5px;
+  line-height: 1.54;
   color: var(--muted);
-  max-width: 680px;
-  margin: 0 auto 18px;
+  max-width: 580px;
+  margin-bottom: 22px;
 }
 
 .hero-cta-cluster {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .hero-buttons-row {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
 }
@@ -542,20 +549,26 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .hero-chips-row {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
   font-size: 13px;
   color: var(--muted);
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .hero-chips-row span.sep {
   opacity: 0.5;
 }
 
-/* Centered Telegram Mockup with Floating Shadow & Parallax */
+/* Telegram Mockup & Video Visual Column */
+.hero-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .hero-mockup-wrapper {
-  margin-top: 24px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -563,7 +576,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 
 .hero-mockup-floating {
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   border-radius: 22px;
   box-shadow: 0 24px 50px -15px rgba(0, 0, 0, 0.12);
   transform: translate3d(0, calc(var(--scroll, 0) * -0.04px), 0);
@@ -571,6 +584,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   background-color: #ffffff;
   overflow: hidden;
   border: 1px solid var(--hairline);
+}
+
+.hero-video-slot {
+  margin-top: 18px;
+  width: 100%;
+  max-width: 440px;
 }
 
 /* ── Apple-Style Features Bento Grid ────────────────────────── */
@@ -1135,6 +1154,36 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   }
 }
 
+@media (max-width: 991px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .hero-content {
+    text-align: center;
+  }
+  .hero-title {
+    font-size: clamp(28px, 4.5vw, 42px);
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 720px;
+  }
+  .hero-subhead {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 620px;
+  }
+  .hero-cta-cluster {
+    align-items: center;
+  }
+  .hero-buttons-row {
+    justify-content: center;
+  }
+  .hero-chips-row {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
   /* Navigation & Header */
   .header-nav {
@@ -1175,11 +1224,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
     padding-top: 20px;
     padding-bottom: 36px;
   }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .hero-content {
+    text-align: center;
+  }
   .hero-title {
     font-size: clamp(24px, 6.2vw, 32px);
     line-height: 1.22;
     margin-bottom: 12px;
     padding: 0 4px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .hero-line {
     display: inline;
@@ -1190,11 +1248,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
     line-height: 1.5;
     margin-bottom: 18px;
     padding: 0 4px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-cta-cluster {
+    align-items: center;
   }
   .hero-buttons-row {
     flex-direction: column;
     gap: 12px;
     width: 100%;
+    justify-content: center;
   }
   .btn-apple-primary {
     width: 100%;
@@ -1206,14 +1270,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
     flex-wrap: wrap;
     font-size: 12px;
     gap: 6px 8px;
+    justify-content: center;
+  }
+  .hero-visual {
+    width: 100%;
   }
   .hero-mockup-wrapper {
-    margin-top: 20px;
+    margin-top: 0;
     width: 100%;
   }
   .hero-mockup-floating {
     max-width: 100%;
     border-radius: 18px;
+  }
+  .hero-video-slot {
+    max-width: 100%;
   }
   .chat-stream {
     padding: 14px 12px;
