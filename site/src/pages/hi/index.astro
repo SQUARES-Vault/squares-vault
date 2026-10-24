@@ -37,11 +37,6 @@ const hindiFaqs = [
     a: 'नहीं, जब तक आप खुद अनुमति न दें। डिफ़ॉल्ट रूप से आपके दस्तावेज़ केवल आपके टेलीग्राम खाते से जुड़े होते हैं। यदि आप चाहें, तो फ़ैमिली एक्सेस शेयरिंग के ज़रिए अपने जीवनसाथी या परिवार के सदस्यों को विशिष्ट श्रेणियों (जैसे स्वास्थ्य बीमा या वारंटी) को देखने की अनुमति दे सकते हैं।',
   },
 ];
-
-// Categorize documents for structured display
-const vehicleDocs = documents.filter(d => ['vehicle-rc', 'puc-certificate', 'car-insurance', 'traffic-challans'].includes(d.slug));
-const homeDocs = documents.filter(d => ['appliance-invoices', 'extended-warranty', 'utility-bills'].includes(d.slug));
-const identityDocs = documents.filter(d => ['health-insurance', 'passport', 'rental-agreements'].includes(d.slug));
 ---
 
 <BaseLayout
@@ -52,132 +47,93 @@ const identityDocs = documents.filter(d => ['health-insurance', 'passport', 'ren
   hreflangEn="/"
   hreflangHi="/hi/"
 >
-  <!-- ═══════════════════ 1. HERO (2-Column Showcase) ═══════════════════ -->
-  <section class="section hero-custom">
+  <!-- ═══════════════════ 1. HERO (Apple Centered Display) ═══════════════════ -->
+  <section class="section hero-apple">
     <div class="container">
-      <div class="hero-grid">
-        <!-- Left: Content & Action Cluster -->
-        <div class="reveal">
-          <div class="hero-badge-tag">
-            <span class="hero-pulse-dot"></span>
-            <span>ज़ीरो-कस्टोडियन टेलीग्राम असिस्टेंट</span>
-          </div>
+      <div class="hero-eyebrow">निजी लाइफ़-एडमिन · टेलीग्राम असिस्टेंट</div>
+      <h1 class="hero-title">आपके सभी ज़रूरी दस्तावेज़ व्यवस्थित।<br />एक्सपायरी तारीख़ से पहले समय पर अलर्ट।</h1>
 
-          <h1 class="hero-title">
-            आपके सभी ज़रूरी दस्तावेज़ व्यवस्थित।<br />
-            एक्सपायरी तारीख़ से पहले समय पर अलर्ट।
-          </h1>
+      <p class="hero-subhead">
+        गाड़ी का रजिस्ट्रेशन व टाइटल, मोटर व स्वास्थ्य बीमा, होम अप्लायंस वारंटी, रेंटल लीज़ और बिल टेलीग्राम में फॉरवर्ड करें।
+        Gemini AI मुख्य तारीख़ें पढ़ता है, मूल फ़ाइलें सीधे <strong>आपके निजी Google Drive</strong> में सहेजता है, और किसी भी तारीख़ के ख़त्म होने से पहले आपको अलर्ट करता है।
+      </p>
 
-          <p class="hero-subhead">
-            गाड़ी का रजिस्ट्रेशन व टाइटल, मोटर व स्वास्थ्य बीमा, होम अप्लायंस वारंटी, रेंटल लीज़ और बिल टेलीग्राम में फॉरवर्ड करें।
-            Gemini AI मुख्य तारीख़ें पढ़ता है, मूल फ़ाइलें सीधे <strong>आपके निजी Google Drive</strong> में सहेजता है, और किसी भी तारीख़ के ख़त्म होने से पहले आपको अलर्ट करता है।
-          </p>
-
-          <div class="hero-cta-cluster">
-            <div class="hero-buttons-row">
-              <a href={siteConfig.inviteEmailUrl} class="btn-primary">
-                <span>मुफ़्त इनवाइट कोड मांगें</span>
-              </a>
-              <a href="#how-it-works" class="btn-secondary">
-                <span>देखें कैसे काम करता है ↓</span>
-              </a>
-            </div>
-
-            <div class="hero-invite-notice">
-              <span>🔒 सेवा केवल इनवाइट कोड द्वारा उपलब्ध है · {siteConfig.inviteNoticeHi}</span>
-            </div>
-          </div>
-
-          <div class="hero-trust-bar">
-            <div class="trust-chip">
-              <LucideIcon name="shield" size={15} />
-              <span>ज़ीरो सर्वर कस्टडी</span>
-            </div>
-            <div class="trust-chip">
-              <LucideIcon name="file-text" size={15} />
-              <span>सीधे आपके Google Drive में</span>
-            </div>
-            <div class="trust-chip">
-              <LucideIcon name="bell" size={15} />
-              <span>10d / 2d / 0d स्मार्ट अलर्ट</span>
-            </div>
-          </div>
+      <div class="hero-cta-cluster">
+        <div class="hero-buttons-row">
+          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary">
+            <span>मुफ़्त इनवाइट कोड मांगें</span>
+          </a>
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="link-apple">
+            <span>टेलीग्राम में खोलें</span>
+            <span class="chevron">›</span>
+          </a>
+          <a href="#how-it-works" class="link-apple">
+            <span>देखें कैसे काम करता है</span>
+            <span class="chevron">›</span>
+          </a>
         </div>
 
-        <!-- Right: Interactive Telegram Live Dossier Mockup -->
-        <div class="hero-showcase-column reveal">
-          <TelegramMockup />
-          
-          <div class="hero-showcase-footnote">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="badge-status active">लाइव डॉक्युमेंट डॉसियर</span>
-              <span>वाहन मल्टी-हॉप: Hyundai VENUE</span>
-            </div>
-            <span class="badge-plate">UP15EB3XX3</span>
-          </div>
+        <div class="hero-invite-notice">
+          अर्ली एक्सेस केवल इनवाइट कोड द्वारा उपलब्ध है · {siteConfig.inviteNoticeHi}
+        </div>
 
-          <div style="margin-top: 16px; width: 100%; max-width: 440px;">
-            <VideoPlaceholder />
-          </div>
+        <div class="hero-chips-row">
+          <span>10+ प्रकार</span>
+          <span class="sep">·</span>
+          <span>आपका Google Drive</span>
+          <span class="sep">·</span>
+          <span>10d / 2d / 0d अलर्ट</span>
+        </div>
+      </div>
+
+      <!-- Telegram Chat Mockup Centered with Parallax & Video Placeholder -->
+      <div class="hero-mockup-wrapper reveal">
+        <TelegramMockup />
+        <div style="margin-top: 24px; width: 100%; max-width: 420px;">
+          <VideoPlaceholder />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ 2. HOW IT WORKS (Connected Pipeline Ribbon) ═══════════════════ -->
+  <!-- ═══════════════════ 2. HOW IT WORKS (Surface #F5F5F7) ═══════════════════ -->
   <section class="section section-surface" id="how-it-works">
     <div class="container reveal">
       <div class="section-header">
-        <span class="section-eyebrow">घर्षण-रहित 4 चरण</span>
+        <span class="section-eyebrow">सरल और घर्षण-रहित</span>
         <h2>SQUARES Vault कैसे काम करता है</h2>
         <p>कोई अलग ऐप डाउनलोड करने की ज़रूरत नहीं। कोई नया पासवर्ड नहीं। सब कुछ आपके मौजूदा टेलीग्राम में काम करता है।</p>
       </div>
 
-      <div class="workflow-pipeline">
-        <!-- Step 1 -->
-        <div class="workflow-step-card">
-          <div class="workflow-step-top">
-            <span class="workflow-step-num">01</span>
-            <span class="workflow-step-chip">Google डिवाइस फ़्लो</span>
-          </div>
-          <h3 class="workflow-step-title">15 सेकंड में कनेक्ट करें</h3>
-          <p class="workflow-step-text">
-            टेलीग्राम में <code>/start</code> भेजें। Google के आधिकारिक डिवाइस फ़्लो से अपना Google Drive कनेक्ट करें। SQUARES Vault को केवल अपने द्वारा बनाई गई फ़ाइलों को प्रबंधित करने की अनुमति मिलती है (<code>drive.file</code>)।
+      <div class="steps-cards-grid">
+        <div class="apple-step-card">
+          <div class="apple-step-num">01</div>
+          <h3 class="apple-step-title">15 सेकंड में कनेक्ट करें</h3>
+          <p class="apple-step-text">
+            टेलीग्राम में <code>/start</code> भेजें। Google के आधिकारिक डिवाइस फ़्लो से अपना Google Drive कनेक्ट करें। SQUARES Vault को केवल अपने द्वारा बनाई गई फ़ाइलों को प्रबंधित करने की अनुमति मिलती है।
           </p>
         </div>
 
-        <!-- Step 2 -->
-        <div class="workflow-step-card">
-          <div class="workflow-step-top">
-            <span class="workflow-step-num">02</span>
-            <span class="workflow-step-chip">PDF और फ़ोटो बैच</span>
-          </div>
-          <h3 class="workflow-step-title">फ़ोटो या PDF भेजें</h3>
-          <p class="workflow-step-text">
+        <div class="apple-step-card">
+          <div class="apple-step-num">02</div>
+          <h3 class="apple-step-title">फ़ोटो या PDF भेजें</h3>
+          <p class="apple-step-text">
             ईमेल से बीमा पॉलिसी की PDF फॉरवर्ड करें या गाड़ी के कागज़ात, उपकरण इनवॉइस या रसीद की तस्वीर खींचकर भेजें। मल्टी-पेज दस्तावेज़ भी एक साथ भेजे जा सकते हैं।
           </p>
         </div>
 
-        <!-- Step 3 -->
-        <div class="workflow-step-card">
-          <div class="workflow-step-top">
-            <span class="workflow-step-num">03</span>
-            <span class="workflow-step-chip">Gemini AI OCR</span>
-          </div>
-          <h3 class="workflow-step-title">इन-मेमोरी AI रीडिंग</h3>
-          <p class="workflow-step-text">
-            Gemini AI श्रेणी, शीर्षक, एक्सपायरी तारीख़, प्रोवाइडर और विवरण पढ़ लेता है। संवेदनशील पहचान संख्याएँ मास्क कर दी जाती हैं (<code>••••3113</code>)। ड्राफ़्ट की पुष्टि एक टैप में करें।
+        <div class="apple-step-card">
+          <div class="apple-step-num">03</div>
+          <h3 class="apple-step-title">इन-मेमोरी AI रीडिंग</h3>
+          <p class="apple-step-text">
+            Gemini AI श्रेणी, शीर्षक, एक्सपायरी तारीख़, प्रोवाइडर और विवरण पढ़ लेता है। चैट में बने ड्राफ़्ट रिकॉर्ड की समीक्षा करें और एक टैप में पुष्टि करें।
           </p>
         </div>
 
-        <!-- Step 4 -->
-        <div class="workflow-step-card">
-          <div class="workflow-step-top">
-            <span class="workflow-step-num">04</span>
-            <span class="workflow-step-chip">सुबह 9:00 बजे अलर्ट</span>
-          </div>
-          <h3 class="workflow-step-title">स्वचालित रिन्यूअल शील्ड</h3>
-          <p class="workflow-step-text">
+        <div class="apple-step-card">
+          <div class="apple-step-num">04</div>
+          <h3 class="apple-step-title">स्वचालित रिन्यूअल अलर्ट</h3>
+          <p class="apple-step-text">
             एक्सपायरी से 10 दिन पहले, 2 दिन पहले और उसी दिन सुबह 9:00 बजे रिमाइंडर पाएं। 'स्नूज़' करें, 'रिन्यू' करें, या जब भी ज़रूरत हो सामान्य भाषा में सवाल पूछें।
           </p>
         </div>
@@ -185,288 +141,182 @@ const identityDocs = documents.filter(d => ['health-insurance', 'passport', 'ren
     </div>
   </section>
 
-  <!-- ═══════════════════ 3. SYSTEM CAPABILITIES SHOWCASE ═══════════════════ -->
+  <!-- ═══════════════════ 3. FEATURES BENTO GRID (White Surface) ═══════════════════ -->
   <section class="section" id="features">
-    <div class="container reveal">
+    <div class="container-bento reveal">
       <div class="section-header">
         <span class="section-eyebrow">घरेलू शांति के लिए तैयार</span>
-        <h2>आपकी ज़िंदगी को व्यवस्थित रखने वाली सुविधाएं</h2>
-        <p>एक सुव्यवस्थित डिजिटल फ़ाइलिंग असिस्टेंट जो आपके कागज़ात की समय-सीमा का ध्यान रखती है बिना आपकी फ़ाइलें अपने पास रखे।</p>
+        <h2>आपकी ज़िंदगी को व्यवस्थित रखने वाली सुविधाएँ</h2>
+        <p>एक सुव्यवस्थित डिजिटल फ़ाइलिंग कैबिनेट जो आपके सभी कागज़ात की समय-सीमा का ध्यान रखती है।</p>
       </div>
 
-      <!-- Part 1: Dual Feature Spotlight Banner -->
-      <div class="spotlight-banner">
-        <!-- Spotlight 1: Vehicle Multi-Hop -->
-        <div class="spotlight-card">
-          <div class="spotlight-header">
-            <div class="spotlight-icon-box">
-              <LucideIcon name="car" size={24} />
-            </div>
-            <h3 class="spotlight-title">गाड़ी के दस्तावेज़ों की मल्टी-हॉप लिंकिंग</h3>
-            <p class="spotlight-desc">
-              गाड़ी का रजिस्ट्रेशन एक बार जोड़ें। SQUARES Vault बीमा पॉलिसी, प्रदूषण जांच (PUC), सर्विस रसीद और चालान को वाहन नंबर से अपने आप जोड़ देता है। बस <em>"Venue"</em> बोलें और सब कुछ एक साथ सामने आ जाता है।
+      <div class="bento-grid">
+        <!-- Tile 1: 2x2 Hero Tile -->
+        <div class="bento-tile bento-tile-hero">
+          <div>
+            <div class="bento-icon"><LucideIcon name="car" size={32} /></div>
+            <h3 class="bento-title">गाड़ी मल्टी-हॉप लिंकिंग</h3>
+            <p class="bento-desc">
+              अपनी गाड़ी का रजिस्ट्रेशन एक बार जोड़ें। इसके बाद उस गाड़ी का कोई भी बीमा, इंस्पेक्शन सर्टिफ़िकेट या सर्विस रसीद अपने-आप उस नंबर प्लेट से जुड़ जाती है।
             </p>
           </div>
-
-          <div class="spotlight-preview-box">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-              <span style="font-size: 13px; font-weight: 600; color: var(--text);">जुड़े हुए कागज़ात: Hyundai VENUE</span>
-              <span class="badge-plate">UP15EB3XX3</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-              <div style="display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0; border-bottom: 1px solid var(--hairline-subtle);">
-                <span>1. गाड़ी का रजिस्ट्रेशन (RC)</span>
-                <span class="badge-status active">सक्रिय</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0; border-bottom: 1px solid var(--hairline-subtle);">
-                <span>2. मोटर बीमा पॉलिसी</span>
-                <span class="badge-status expiring">17 दिन शेष</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0;">
-                <span>3. सुरक्षा व प्रदूषण प्रमाण पत्र</span>
-                <span class="badge-status active">मान्य</span>
-              </div>
-            </div>
+          <div style="margin-top: 24px; padding: 14px 18px; background-color: #ffffff; border-radius: 14px; border: 1px solid var(--hairline); display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-size: 13px; font-weight: 500; color: var(--text);">संबद्ध नंबर प्लेट: UP15EB3XX3</div>
+            <span class="badge-status active">3 जुड़े दस्तावेज़</span>
           </div>
         </div>
 
-        <!-- Spotlight 2: Ask Your Vault -->
-        <div class="spotlight-card">
-          <div class="spotlight-header">
-            <div class="spotlight-icon-box">
-              <LucideIcon name="file-text" size={24} />
-            </div>
-            <h3 class="spotlight-title">"Ask Your Vault" आम भाषा में सवाल पूछें</h3>
-            <p class="spotlight-desc">
-              अपनी भाषा में सवाल पूछें: <em>"अगले महीने कौन से बिल भरने हैं?"</em> या <em>"गाड़ी का बीमा कब ख़त्म हो रहा है?"</em>। बॉट आपके सुरक्षित इंडेक्स को खोजकर तुरंत जवाब और Drive लिंक देता है।
+        <!-- Tile 2: 2x1 Wide Tile -->
+        <div class="bento-tile bento-tile-wide">
+          <div>
+            <div class="bento-icon"><LucideIcon name="shield" size={28} /></div>
+            <h3 class="bento-title">आपके अपने Google Drive में स्टोरेज</h3>
+            <p class="bento-desc">
+              हम सर्वर पर शून्य फ़ाइल कस्टडी के सिद्धांत पर काम करते हैं। मूल फ़ाइलें सीधे आपके निजी Google Drive में सहेजी जाती हैं और उनका पूर्ण स्वामित्व हमेशा आपके पास रहता है।
             </p>
           </div>
+        </div>
 
-          <div class="spotlight-preview-box">
-            <div style="font-size: 12.5px; color: var(--muted); margin-bottom: 6px;">उदाहरण बातचीत</div>
-            <div style="background-color: var(--surface); padding: 8px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px;">
-              💬 "नवंबर में कौन से रिन्यूअल बाकी हैं?"
-            </div>
-            <div style="background-color: var(--surface); padding: 8px 12px; border-radius: 6px; font-size: 12.5px; color: var(--text); border-left: 3px solid var(--accent);">
-              🤖 2 रिकॉर्ड मिले: 1) Venue कार बीमा (10 नवंबर), 2) बिजली का बिल (15 नवंबर)।
-            </div>
+        <!-- Tile 3: 2x1 Wide Tile -->
+        <div class="bento-tile bento-tile-wide">
+          <div>
+            <div class="bento-icon"><LucideIcon name="file-text" size={28} /></div>
+            <h3 class="bento-title">"वॉल्ट से पूछें" स्वाभाविक भाषा Q&amp;A</h3>
+            <p class="bento-desc">
+              अपनी सामान्य भाषा में पूछें: <em>"अगले महीने क्या एक्सपायर हो रहा है?"</em> या <em>"गाड़ी का बीमा कब रिन्यू होना है?"</em>। बॉट तुरंत सटीक जवाब और फ़ाइल लिंक प्रस्तुत करता है।
+            </p>
           </div>
         </div>
-      </div>
 
-      <!-- Part 2: 4 Engineering Pillars -->
-      <div class="pillars-grid">
-        <div class="pillar-card">
-          <div class="pillar-icon"><LucideIcon name="shield" size={24} /></div>
-          <h3 class="pillar-title">ज़ीरो सर्वर कस्टडी</h3>
-          <p class="pillar-text">
-            मूल फ़ाइलें सीधे आपके Google Drive में सुरक्षित रहती हैं (<code>drive.file</code>)। पूरा मालिकाना हक केवल आपका रहता है।
-          </p>
+        <!-- Tile 4: 1x1 Single Tile -->
+        <div class="bento-tile bento-tile-single">
+          <div>
+            <div class="bento-icon"><LucideIcon name="home" size={26} /></div>
+            <h3 class="bento-title" style="font-size: 20px;">परिवार के साथ शेयरिंग</h3>
+            <p class="bento-desc" style="font-size: 14px;">
+              अस्पताल या सर्विस सेंटर पर खड़े होकर कागज़ात ढूँढने की ज़रूरत नहीं। परिवार को सुरक्षित व्यू एक्सेस दें।
+            </p>
+          </div>
         </div>
 
-        <div class="pillar-card">
-          <div class="pillar-icon"><LucideIcon name="bell" size={24} /></div>
-          <h3 class="pillar-title">मल्टी-स्टेज रिन्यूअल अलर्ट</h3>
-          <p class="pillar-text">
-            तारीख़ से 10 दिन, 2 दिन और उसी दिन सुबह 9:00 बजे सूचनाएं मिलती हैं। 1-टैप स्नूज़ और रिन्यूअल लिंक के साथ।
-          </p>
+        <!-- Tile 5: 1x1 Single Tile -->
+        <div class="bento-tile bento-tile-single">
+          <div>
+            <div class="bento-icon"><LucideIcon name="calendar" size={26} /></div>
+            <h3 class="bento-title" style="font-size: 20px;">कैलेंडर एक्सपोर्ट व सर्च</h3>
+            <p class="bento-desc" style="font-size: 14px;">
+              सभी अंतिम तारीख़ों को <code>.ics</code> फ़ाइल के रूप में Google Calendar या Apple Calendar में एक्सपोर्ट करें।
+            </p>
+          </div>
         </div>
 
-        <div class="pillar-card">
-          <div class="pillar-icon"><LucideIcon name="home" size={24} /></div>
-          <h3 class="pillar-title">फ़ैमिली एक्सेस शेयरिंग</h3>
-          <p class="pillar-text">
-            आपातकाल में परिवार के सदस्यों को चुनिंदा श्रेणियों (जैसे स्वास्थ्य बीमा) को देखने की अनुमति दें बिना फ़ाइल डुप्लीकेट किए।
-          </p>
-        </div>
-
-        <div class="pillar-card">
-          <div class="pillar-icon"><LucideIcon name="receipt" size={24} /></div>
-          <h3 class="pillar-title">मैन्युअल एंट्री विज़ार्ड</h3>
-          <p class="pillar-text">
-            AI के बिना जोड़ना चाहते हैं? हमारे चरण-दर-चरण विज़ार्ड और स्मार्ट डेट शॉर्टकट (+6 महीने, +1 साल, +2 साल) का उपयोग करें।
-          </p>
+        <!-- Tile 6: 2x1 Double Tile -->
+        <div class="bento-tile bento-tile-double">
+          <div>
+            <div class="bento-icon"><LucideIcon name="receipt" size={26} /></div>
+            <h3 class="bento-title" style="font-size: 20px;">मैन्युअल एंट्री व रिन्यूअल विज़ार्ड</h3>
+            <p class="bento-desc" style="font-size: 14px;">
+              बिना AI के दस्तावेज़ जोड़ना चाहते हैं? चरण-दर-चरण विज़ार्ड और स्मार्ट तारीख़ शॉर्टकट (+6 महीने, +1 साल, +2 साल) का उपयोग करें। वार्षिक रिन्यूअल सेकंडों में दर्ज करें।
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ 4. ZERO-CUSTODIAN BLUEPRINT (Dark Contrast Section) ═══════════════════ -->
+  <!-- ═══════════════════ 4. PRIVACY BY ARCHITECTURE (Dramatic Black) ═══════════════════ -->
   <section class="section section-dark reveal" id="privacy">
     <div class="container">
       <div class="section-header">
-        <span class="section-eyebrow" style="background-color: rgba(41, 151, 255, 0.15); color: var(--accent);">आर्किटेक्चर सुरक्षा</span>
-        <h2 style="color: #f5f5f7;">आर्किटेक्चर द्वारा गोपनीयता, खोखले वादे नहीं</h2>
-        <p style="color: #8e8e93;">पारदर्शी विवरण कि आपकी फ़ाइलें, टोकन और डेटा कैसे सुरक्षित रखे जाते हैं।</p>
+        <span class="section-eyebrow" style="color: var(--accent);">ईमानदार और स्पष्ट गोपनीयता</span>
+        <h2 style="color: #f5f5f7;">सुरक्षा नीति, नारों में नहीं बल्कि बनावट में</h2>
+        <p style="color: #86868b;">आपकी फ़ाइलों, टोकन और डेटा के उपयोग का पारदर्शी विवरण।</p>
       </div>
 
-      <!-- Top Visual Data Flow Bar -->
-      <div class="blueprint-pipeline-bar">
-        <div class="blueprint-stage">
-          <span>📱 टेलीग्राम पारगमन</span>
-        </div>
-        <div class="blueprint-arrow">──►</div>
-        <div class="blueprint-stage">
-          <span>🧠 इन-मेमोरी AI OCR (Gemini API)</span>
-        </div>
-        <div class="blueprint-arrow">──►</div>
-        <div class="blueprint-stage">
-          <span>📁 आपका निजी Google Drive</span>
-        </div>
-        <div class="blueprint-arrow">──►</div>
-        <div class="blueprint-stage" style="color: var(--accent);">
-          <span>0% सर्वर फ़ाइल स्टोरेज</span>
-        </div>
-      </div>
-
-      <div class="blueprint-grid">
-        <div class="blueprint-card">
-          <div class="blueprint-card-header">
-            <strong>1. सर्वर पर शून्य फ़ाइल कस्टडी</strong>
-          </div>
+      <div class="privacy-grid">
+        <div class="privacy-tile">
+          <strong>1. सर्वर पर शून्य फ़ाइल स्टोरेज</strong>
           <p>
-            आपकी मूल फ़ाइलें सीधे आपके Google Drive में अपलोड होती हैं। हम अपने सर्वर पर आपकी कोई भी मूल प्रति स्थायी रूप से नहीं रखते।
+            आपकी मूल फ़ाइलें सीधे आपके निजी Google Drive में अपलोड होती हैं। हम अपने सर्वर पर आपके दस्तावेज़ों की कोई स्थायी प्रति नहीं रखते।
           </p>
         </div>
 
-        <div class="blueprint-card">
-          <div class="blueprint-card-header">
-            <strong>2. केवल <code>drive.file</code> सीमित अनुमति</strong>
-          </div>
+        <div class="privacy-tile">
+          <strong>2. सीमित <code>drive.file</code> अनुमति</strong>
           <p>
-            हम केवल अपने द्वारा बनाई गई फ़ाइलों को प्रबंधित करने की अनुमति लेते हैं। आपके Google Drive की कोई अन्य फ़ाइल हम कभी नहीं देख सकते।
+            हम केवल उन फ़ाइलों की अनुमति माँगते हैं जो SQUARES Vault द्वारा बनाई गई हैं। हम आपके Drive की किसी अन्य पहले से मौजूद फ़ाइल को न देख सकते हैं, न बदल सकते हैं।
           </p>
         </div>
 
-        <div class="blueprint-card">
-          <div class="blueprint-card-header">
-            <strong>3. Google Gemini API प्रोसेसिंग पारदर्शिता</strong>
-          </div>
+        <div class="privacy-tile">
+          <strong>3. Google Gemini API प्रोसेसिंग</strong>
           <p>
-            दस्तावेज़ पढ़ने का काम Google के Gemini API के माध्यम से होता है। Google की नीतियों के विवरण के लिए <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google Gemini API Terms</a> देखें।
+            दस्तावेज़ पढ़ने और तारीख़ निकालने का काम इन-ट्रांज़िट Google Gemini API द्वारा होता है। डेटा उपयोग के बारे में अधिक जानकारी के लिए <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google Gemini API Terms</a> देखें।
           </p>
         </div>
 
-        <div class="blueprint-card">
-          <div class="blueprint-card-header">
-            <strong>4. <code>/deletemydata</code> द्वारा तुरंत संपूर्ण विलोपन</strong>
-          </div>
+        <div class="privacy-tile">
+          <strong>4. <code>/deletemydata</code> से तुरंत निष्कासन</strong>
           <p>
-            <code>/deletemydata</code> लिखने पर डेटाबेस से आपकी सारी जानकारी तुरंत मिट जाती है, टोकन रद्द हो जाते हैं और रिमाइंडर रुक जाते हैं। Google Drive की फ़ाइलें आपके पास सुरक्षित रहती हैं।
+            टेलीग्राम में <code>/deletemydata</code> टाइप करते ही हमारा डेटाबेस आपका सारा डेटा हमेशा के लिए मिटा देता है और OAuth अनुमति रद्द हो जाती है। Drive की फ़ाइलें आपकी ही रहती हैं।
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ 5. CATEGORIZED DOCUMENT DIRECTORY ═══════════════════ -->
-  <section class="section section-surface reveal" id="documents">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-eyebrow">दस्तावेज़ सूची</span>
-        <h2>आधुनिक परिवारों के 10 सबसे ज़रूरी दस्तावेज़</h2>
-        <p>3 मुख्य घरेलू क्षेत्रों में विभाजित: वाहन, घरेलू संपत्तियां और व्यक्तिगत पहचान।</p>
-      </div>
-
-      <div class="doc-categories-wrapper">
-        <!-- Category 1: Vehicle & Mobility -->
-        <div class="doc-category-block">
-          <div class="doc-category-header">
-            <div class="doc-category-title">
-              <LucideIcon name="car" size={20} />
-              <span>वाहन और यातायात (Vehicle &amp; Transport)</span>
-            </div>
-            <span class="doc-category-count">4 दस्तावेज़</span>
-          </div>
-          <div class="doc-category-grid">
-            {vehicleDocs.map((doc) => (
-              <DocumentCard
-                title={doc.name}
-                category={doc.category}
-                iconName={doc.icon}
-                slug={doc.slug}
-                summary={doc.summary}
-              />
-            ))}
-          </div>
-        </div>
-
-        <!-- Category 2: Home & Assets -->
-        <div class="doc-category-block">
-          <div class="doc-category-header">
-            <div class="doc-category-title">
-              <LucideIcon name="home" size={20} />
-              <span>घर और घरेलू संपत्तियां (Home &amp; Assets)</span>
-            </div>
-            <span class="doc-category-count">3 दस्तावेज़</span>
-          </div>
-          <div class="doc-category-grid">
-            {homeDocs.map((doc) => (
-              <DocumentCard
-                title={doc.name}
-                category={doc.category}
-                iconName={doc.icon}
-                slug={doc.slug}
-                summary={doc.summary}
-              />
-            ))}
-          </div>
-        </div>
-
-        <!-- Category 3: Health & Identity -->
-        <div class="doc-category-block">
-          <div class="doc-category-header">
-            <div class="doc-category-title">
-              <LucideIcon name="shield" size={20} />
-              <span>स्वास्थ्य और कानूनी पहचान (Health &amp; Identity)</span>
-            </div>
-            <span class="doc-category-count">3 दस्तावेज़</span>
-          </div>
-          <div class="doc-category-grid">
-            {identityDocs.map((doc) => (
-              <DocumentCard
-                title={doc.name}
-                category={doc.category}
-                iconName={doc.icon}
-                slug={doc.slug}
-                summary={doc.summary}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ 6. COMPARISON MATRIX ═══════════════════ -->
+  <!-- ═══════════════════ 5. COMPARISON TABLE (White Surface) ═══════════════════ -->
   <section class="section reveal" id="comparison">
     <div class="container">
       <div class="section-header">
-        <span class="section-eyebrow">तथ्यात्मक तुलना</span>
-        <h2>सिर्फ़ क्लाउड फ़ोल्डर या सरकारी पोर्टल ही काफ़ी क्यों नहीं?</h2>
-        <p>अलग-अलग टूल अलग काम के लिए बने हैं। यहाँ एक निष्पक्ष और तथ्यात्मक तुलना दी गई है।</p>
+        <span class="section-eyebrow">निष्पक्ष तुलना</span>
+        <h2>क्लाउड फ़ोल्डर या सरकारी पोर्टल से अलग क्यों?</h2>
+        <p>अलग-अलग टूल अलग-अलग उद्देश्यों के लिए होते हैं। यहाँ एक निष्पक्ष और तथ्यपरक तुलना है।</p>
       </div>
 
       <ComparisonTable />
 
-      <div style="margin-top: 28px; font-size: 14px; color: var(--muted); text-align: center;">
-        मार्गदर्शिकाएँ पढ़ें: <a href={getAssetUrl('/vs/digilocker/')} style="font-weight: 500;">SQUARES Vault बनाम सरकारी पोर्टल →</a> · <a href={getAssetUrl('/vs/google-drive/')} style="font-weight: 500;">SQUARES Vault बनाम सिर्फ़ Google Drive →</a>
+      <div style="margin-top: 32px; font-size: 14px; color: var(--muted); text-align: center;">
+        विस्तृत तुलना मार्गदर्शिका पढ़ें: <a href={getAssetUrl('/vs/digilocker/')} class="link-apple"><span>SQUARES Vault बनाम सरकारी पोर्टल</span><span class="chevron">›</span></a> · <a href={getAssetUrl('/vs/google-drive/')} class="link-apple"><span>SQUARES Vault बनाम केवल Google Drive</span><span class="chevron">›</span></a>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ 7. AUDIENCE SOLUTIONS ═══════════════════ -->
-  <section class="section section-surface reveal" id="audiences">
-    <div class="container">
+  <!-- ═══════════════════ 6. DOCUMENT TYPES DIRECTORY (Surface #F5F5F7) ═══════════════════ -->
+  <section class="section section-surface reveal" id="documents">
+    <div class="container docs-horizontal-container">
       <div class="section-header">
-        <span class="section-eyebrow">समाधान</span>
-        <h2>SQUARES Vault किसके लिए उपयोगी है?</h2>
-        <p>वास्तविक घरेलू ज़रूरतों को ध्यान में रखकर तैयार किए गए समाधान।</p>
+        <span class="section-eyebrow">समर्थित दस्तावेज़</span>
+        <h2>आधुनिक परिवारों के लिए 10 आवश्यक दस्तावेज़ प्रकार</h2>
+        <p>विस्तृत गाइड, रिन्यूअल नियम और महत्वपूर्ण तारीख़ों की जानकारी देखें।</p>
       </div>
 
-      <div class="audiences-grid-custom">
+      <div class="docs-grid-apple">
+        {documents.map((doc) => (
+          <DocumentCard
+            title={doc.name}
+            category={doc.category}
+            iconName={doc.icon}
+            slug={doc.slug}
+            summary={doc.summary}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ 7. AUDIENCE SOLUTIONS (White Surface) ═══════════════════ -->
+  <section class="section reveal" id="audiences">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-eyebrow">विशेष समाधान</span>
+        <h2>SQUARES Vault किसके लिए उपयोगी है?</h2>
+        <p>रोज़मर्रा की वास्तविक ज़रूरतों को ध्यान में रखकर तैयार किए गए समाधान।</p>
+      </div>
+
+      <div class="audiences-grid-apple">
         {audiences.map((aud) => (
-          <div class="audience-card-custom">
+          <div class="audience-card-apple">
             <div>
               <h3>
                 <a href={getAssetUrl(`/for/${aud.slug}/`)}>
@@ -477,8 +327,9 @@ const identityDocs = documents.filter(d => ['health-insurance', 'passport', 'ren
                 {aud.subtitle}
               </p>
             </div>
-            <a href={getAssetUrl(`/for/${aud.slug}/`)} style="font-size: 14px; font-weight: 600;">
-              <span>समाधान गाइड पढ़ें →</span>
+            <a href={getAssetUrl(`/for/${aud.slug}/`)} class="link-apple">
+              <span>समाधान गाइड पढ़ें</span>
+              <span class="chevron">›</span>
             </a>
           </div>
         ))}
@@ -489,35 +340,35 @@ const identityDocs = documents.filter(d => ['health-insurance', 'passport', 'ren
   <!-- ═══════════════════ 8. TESTIMONIALS (CONDITIONAL) ═══════════════════ -->
   <Testimonials />
 
-  <!-- ═══════════════════ 9. FAQ ACCORDION ═══════════════════ -->
+  <!-- ═══════════════════ 9. FAQS (White Surface) ═══════════════════ -->
   <section class="section reveal" id="faq">
     <div class="container">
       <div class="section-header">
         <span class="section-eyebrow">अक्सर पूछे जाने वाले सवाल</span>
-        <h2>सामान्य प्रश्नोत्तरी</h2>
-        <p>अनुमतियों, Google Gemini API और डेटा सुरक्षा पर स्पष्ट जवाब।</p>
+        <h2>सच्चे और स्पष्ट जवाब</h2>
+        <p>गोपनीयता, Google Gemini API और सुरक्षा से जुड़े मुख्य सवालों के उत्तर।</p>
       </div>
 
       <FaqAccordion items={hindiFaqs} />
     </div>
   </section>
 
-  <!-- ═══════════════════ 10. FINAL CALL TO ACTION (Dark Contrast) ═══════════════════ -->
-  <section class="section section-dark final-cta-custom reveal">
+  <!-- ═══════════════════ 10. FINAL CALL TO ACTION (Dramatic Black) ═══════════════════ -->
+  <section class="section section-dark final-cta-apple reveal">
     <div class="container text-container">
-      <h2>अपने घरेलू दस्तावेज़ों को तनाव-मुक्त बनाएं।</h2>
+      <h2>अपने सभी कागज़ात आज ही व्यवस्थित करें।</h2>
       <p>
-        टेलीग्राम में अपने ज़रूरी कागज़ात व्यवस्थित करने के लिए मुफ़्त इनवाइट कोड का अनुरोध करें।
+        टेलीग्राम में अपने दस्तावेज़ व्यवस्थित करने के लिए मुफ़्त इनवाइट कोड का अनुरोध करें।
       </p>
 
       <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
-        <a href={siteConfig.inviteEmailUrl} class="btn-dark">
+        <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="padding: 14px 32px; font-size: 18px;">
           <span>मुफ़्त इनवाइट कोड मांगें</span>
         </a>
       </div>
 
-      <div style="font-size: 13.5px; color: #8e8e93; line-height: 1.6;">
-        {siteConfig.inviteNoticeHi} · {siteConfig.pricingNotice} · ज़ीरो सर्वर फ़ाइल कस्टडी
+      <div style="font-size: 14px; color: #86868b; line-height: 1.6;">
+        {siteConfig.inviteNoticeHi} · {siteConfig.pricingNotice} · आपके अपने Google Drive में सुरक्षित स्टोरेज
       </div>
     </div>
   </section>
