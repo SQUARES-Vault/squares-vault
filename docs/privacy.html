@@ -1,229 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy – SQUARES Vault</title>
-  <meta name="description" content="Privacy Policy for SQUARES Vault. Compliant with India's DPDP Act 2023, EU GDPR, and Google API Services User Data Policy.">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="logo-icon.png">
-  <link rel="apple-touch-icon" href="logo-icon.png">
-</head>
-<body>
-
-  <header>
-    <div class="container">
-      <div class="nav-wrap">
-        <a href="index.html" class="brand">
-          <img src="logo-icon.png" alt="SQUARES" class="brand-logo">
-          <span>SQUARES Vault</span>
-        </a>
-        <nav>
-          <a href="index.html">Overview</a>
-          <a href="privacy.html" class="active">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="https://t.me/squaresvaultbot" target="_blank" class="btn-nav">Launch Bot ↗</a>
-        </nav>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <div class="doc-header">
-      <h1>Privacy Policy</h1>
-      <div class="doc-meta">
-        <strong>Policy Version:</strong> 1.0 &nbsp;|&nbsp; 
-        <strong>Effective Date:</strong> October 10, 2026 &nbsp;|&nbsp; 
-        <strong>Scope:</strong> Global (including India DPDP Act 2023, EU/UK GDPR, California CCPA)
-      </div>
-    </div>
-
-    <div class="doc-content">
-      <div class="doc-callout success">
-        <strong>Core Commitment — Zero-Custodian Architecture:</strong><br>
-        SQUARES Vault operates on a zero-custodian principle. We <strong>do not store your original document files</strong> on our servers. Uploaded documents are saved directly into your personal Google Drive account. You retain 100% ownership and control over your files at all times.
-      </div>
-
-      <h2>1. Introduction & Overview</h2>
-      <p>
-        This Privacy Policy explains how <strong>SQUARES Vault</strong> ("we", "us", or "the Service"), operated via Telegram (<code>@squaresvaultbot</code>), collects, processes, and protects your personal data when you interact with our automated life-admin assistant.
-      </p>
-      <p>
-        We are committed to respecting your privacy in strict compliance with applicable global data protection laws, including:
-      </p>
-      <ul>
-        <li><strong>India:</strong> The Digital Personal Data Protection Act, 2023 (DPDP Act) and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011.</li>
-        <li><strong>European Union & United Kingdom:</strong> General Data Protection Regulation (Regulation (EU) 2016/679 - GDPR) and the UK GDPR.</li>
-        <li><strong>United States:</strong> California Consumer Privacy Act of 2018, as amended by the California Privacy Rights Act (CCPA/CPRA).</li>
-        <li><strong>Google User Data Policy:</strong> The Google API Services User Data Policy, specifically the Limited Use requirements.</li>
-      </ul>
-
-      <h2>2. What Personal Data We Process</h2>
-      <p>
-        In accordance with the principle of data minimization, we process only the strictly necessary information required to operate the service:
-      </p>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Category of Data</th>
-            <th>Specific Items</th>
-            <th>Storage Location & Safeguards</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Telegram Identity</strong></td>
-            <td>Telegram User ID, Chat ID, and display first name. We do <em>not</em> collect your phone number, contacts, or passwords.</td>
-            <td>Local SQLite database, indexed by numeric ID.</td>
-          </tr>
-          <tr>
-            <td><strong>Google OAuth Tokens</strong></td>
-            <td>Access and refresh tokens granted during the Google Device Flow.</td>
-            <td>Encrypted at rest using AES-256-GCM envelope encryption. Per-user Data Encryption Keys (DEKs) derived from a hardware-isolated master key.</td>
-          </tr>
-          <tr>
-            <td><strong>Document Metadata</strong></td>
-            <td>Category, extracted title, key dates (expiry/due dates), currency, amounts, and notes. Full policy or identification numbers are permanently <strong>masked</strong> (e.g. <code>••••3113</code>).</td>
-            <td>Encrypted local database and FTS5 search index.</td>
-          </tr>
-          <tr>
-            <td><strong>Ephemeral Processing Files</strong></td>
-            <td>Temporary document images and PDF attachments sent for optical parsing.</td>
-            <td>Held in volatile server temporary directories only during active AI processing. Permanently deleted immediately after ingestion.</td>
-          </tr>
-          <tr>
-            <td><strong>Original Documents</strong></td>
-            <td>Your actual vehicle registrations, insurance policies, bills, receipts, and identity documents.</td>
-            <td><strong>Your own Google Drive account.</strong> Never permanently stored on our servers.</td>
-          </tr>
-          <tr>
-            <td><strong>Consent & Audit Logs</strong></td>
-            <td>Version of policy consented to, timestamp, action logs (e.g., agreed, deleted).</td>
-            <td>Local SQLite audit tables. Retained for 12 months for compliance verification.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2>3. Lawful Basis and Purposes of Processing</h2>
-      <p>We process your data exclusively for the following specific purposes:</p>
-      <ol>
-        <li><strong>Providing the Service:</strong> To ingest, categorize, and extract deadlines from your documents upon your instruction.</li>
-        <li><strong>Sending Deadline Alerts:</strong> To dispatch automated Telegram notifications before deadlines (10 days, 2 days, and same-day).</li>
-        <li><strong>Interactive Vault Querying ("Ask Your Vault"):</strong> To synthesize answers to your dynamic questions (e.g., "What bills are due this month?") using private AI models.</li>
-        <li><strong>Google Drive Synchronization:</strong> To upload files directly to your designated <code>SQUARES Vault</code> Google Drive folder and maintain a recoverable metadata index.</li>
-      </ol>
-      <p>
-        The lawful basis under GDPR Article 6(1) is <strong>Contract Performance</strong> (operating the service requested by you) and <strong>Explicit Consent</strong> provided during onboarding. Under the India DPDP Act 2023, processing is carried out based on your explicit, informed consent.
-      </p>
-
-      <h2>4. Google API Limited Use Disclosure</h2>
-      <div class="doc-callout">
-        <p><strong>Mandatory Google User Data Policy Compliance Statement:</strong></p>
-        <p>
-          SQUARES Vault's use and transfer to any other app of information received from Google APIs adheres to the 
-          <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" style="color: #60a5fa;">Google API Services User Data Policy</a>, including the Limited Use requirements.
-        </p>
-      </div>
-      <p>Specifically:</p>
-      <ul>
-        <li>We only request access to two Google scopes:
-          <ul>
-            <li><code>https://www.googleapis.com/auth/drive.file</code> — Permits viewing and managing only the files that SQUARES Vault itself creates. We cannot read or alter other documents in your Drive.</li>
-            <li><code>https://www.googleapis.com/auth/drive.appdata</code> — Allows saving a private, non-public configuration backup.</li>
-          </ul>
-        </li>
-        <li>We do not sell, rent, or transfer your Google data to third parties for advertising or profiling.</li>
-        <li>We do not use data obtained through Google APIs to train, retrain, or improve generalized artificial intelligence or machine learning models.</li>
-      </ul>
-
-      <h2>5. AI Processing & Third-Party Sub-Processors</h2>
-      <p>
-        To provide intelligent document extraction and natural language assistance, we engage specific third-party infrastructure sub-processors under strict contractual data protection terms:
-      </p>
-      <ul>
-        <li><strong>Google Cloud (Gemini API):</strong> Document text recognition and question-answering are executed via Google's enterprise API. Under enterprise API terms, inputs and outputs are processed privately and are <strong>never used to train Google's public AI models</strong>.</li>
-        <li><strong>Telegram Messenger Inc.:</strong> Provides the user-interface transport layer. Message transit is governed by Telegram's Terms and Privacy Policy.</li>
-        <li><strong>Cloudflare R2 & Backblaze B2:</strong> Encrypted secondary disaster recovery backups. All database snapshots are client-side encrypted using <code>age</code> (X25519) cryptographic envelopes before leaving the server.</li>
-        <li><strong>Oracle Cloud Infrastructure:</strong> Cloud virtual machine hosting our application runtime.</li>
-      </ul>
-
-      <h2>6. Security Architecture & Safeguards</h2>
-      <p>
-        We employ multi-layered technical and organizational safeguards:
-      </p>
-      <ul>
-        <li><strong>AES-256-GCM Encryption:</strong> All sensitive tokens and keys are encrypted at rest with authenticated AES-GCM ciphers.</li>
-        <li><strong>Key Separation:</strong> The master encryption key is stored outside the database directory in an isolated, restricted file.</li>
-        <li><strong>EXIF Stripping:</strong> All photos sent to the bot have GPS coordinates, camera metadata, and device identifiers stripped prior to processing.</li>
-        <li><strong>Masking of Sensitive Identifiers:</strong> Document numbers, PAN cards, passport numbers, and account numbers are masked by default in the database (retaining only the last 4 characters).</li>
-      </ul>
-
-      <h2>7. Your Rights (India DPDP, GDPR & Global)</h2>
-      <p>
-        Regardless of your geographic location, you enjoy full sovereignty over your personal data:
-      </p>
-      <ul>
-        <li><strong>Right to Access & Portability:</strong> You can view all indexed records at any time directly in the bot. You can also export an <code>.ics</code> calendar file containing all your deadlines via Settings.</li>
-        <li><strong>Right to Correction:</strong> You can edit record titles, dates, amounts, categories, and notes at any time using the interactive editing wizard.</li>
-        <li><strong>Right to Erasure ("Right to be Forgotten"):</strong> Typing <code>/deletemydata</code> executes an immediate, irreversible 7-step cryptographic wipe:
-          <ol>
-            <li>Halts all active reminders and scheduled jobs.</li>
-            <li>Revokes your Google OAuth token with Google servers.</li>
-            <li>Deletes all user rows from SQLite databases and search indexes.</li>
-            <li>Deletes the app folder and files in your Google Drive (if selected).</li>
-            <li>Generates a salted cryptographic tombstone to ensure deletion persists through disaster recovery replays.</li>
-          </ol>
-        </li>
-        <li><strong>Right to Withdraw Consent:</strong> You can revoke consent at any time via Settings or by disconnecting SQUARES Vault in your <a href="https://myaccount.google.com/permissions" target="_blank" style="color: #60a5fa;">Google Account Permissions</a>.</li>
-      </ul>
-
-      <h2>8. Data Retention</h2>
-      <ul>
-        <li><strong>Active Users:</strong> Record metadata is retained while your account is active to provide reminders.</li>
-        <li><strong>Inactive Accounts:</strong> If an account remains unused for 11 months, an inactivity reminder is dispatched. If no action is taken by month 12, all database records are permanently deleted (files in your personal Google Drive remain unaffected).</li>
-        <li><strong>Encrypted Backups:</strong> Automated server backup snapshots roll off and are automatically purged after <strong>30 days</strong>.</li>
-      </ul>
-
-      <h2>9. Age Restriction (18+ Only)</h2>
-      <p>
-        SQUARES Vault is strictly intended for individuals aged <strong>18 years and above</strong>. We do not knowingly collect, process, or solicit personal data from children or individuals under the age of 18. If we discover that a user is under 18, their account and associated metadata will be deleted immediately.
-      </p>
-
-      <h2>10. Grievance Redressal & Contact Information</h2>
-      <p>
-        In accordance with the India Digital Personal Data Protection Act 2023 and the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules 2021, as well as global regulatory requirements, we have appointed a dedicated Grievance Officer:
-      </p>
-
-      <div class="doc-callout">
-        <strong>Grievance & Support Redressal:</strong><br>
-        All user queries, data sovereignty requests, and grievance redressals are handled directly through the official Telegram interface via <strong><a href="https://t.me/squaresvaultbot" target="_blank" style="color: #60a5fa;">@squaresvaultbot</a></strong> (use <code>/help</code> or contact the administrator).<br>
-        <strong>Statutory Turnaround Time:</strong> Grievance requests are acknowledged within 48 hours and resolved within 30 calendar days.
-      </div>
-
-      <h2>11. Updates to this Policy</h2>
-      <p>
-        We may update this Privacy Policy from time to time. When significant updates occur, the <code>policy_version</code> in the bot configuration will increment, and users will be prompted in Telegram to review and re-consent before proceeding.
-      </p>
-    </div>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-        <a href="https://t.me/squaresvaultbot" target="_blank">Telegram Bot</a>
-      </div>
-      <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px;">
-        <img src="logo-icon.png" alt="SQUARES" style="width: 28px; height: 28px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.35);">
-        <span style="font-weight: 700; color: #f8fafc; font-size: 1.05rem; letter-spacing: -0.01em;">SQUARES Vault</span>
-      </div>
-      <p>© 2026 SQUARES Vault. Compliant with India DPDP Act 2023, EU GDPR, and Google User Data Policies.</p>
-    </div>
-  </footer>
-
-</body>
-</html>
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Privacy Policy</title><meta name="description" content="Privacy Policy for SQUARES Vault. Compliant with India’s DPDP Act 2023, EU GDPR, and Google API Services User Data Policy."><link rel="canonical" href="https://squares-vault.github.io/squares-vault/privacy.html"><meta name="google-site-verification" content="nhyGz_6hp1YBNQgTZzzW-jW0_WXk9VBi-8D8xBNEja4"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:title" content="Privacy Policy"><meta property="og:description" content="Privacy Policy for SQUARES Vault. Compliant with India’s DPDP Act 2023, EU GDPR, and Google API Services User Data Policy."><meta property="og:url" content="https://squares-vault.github.io/squares-vault/privacy.html"><meta property="og:site_name" content="SQUARES Vault"><meta property="og:image" content="https://squares-vault.github.io/squares-vault/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_IN"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Privacy Policy"><meta name="twitter:description" content="Privacy Policy for SQUARES Vault. Compliant with India’s DPDP Act 2023, EU GDPR, and Google API Services User Data Policy."><meta name="twitter:image" content="https://squares-vault.github.io/squares-vault/og-image.png"><!-- Alternate Languages --><link rel="alternate" hreflang="x-default" href="https://squares-vault.github.io/squares-vault/"><!-- Favicons --><link rel="icon" type="image/x-icon" href="/squares-vault/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/squares-vault/favicon.png"><link rel="icon" type="image/png" sizes="512x512" href="/squares-vault/logo-icon.png"><link rel="apple-touch-icon" href="/squares-vault/logo-icon.png"><!-- JSON-LD Structured Data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SQUARES Vault","applicationCategory":"ProductivityApplication","operatingSystem":"Telegram","offers":{"@type":"Offer","price":"0","priceCurrency":"INR","description":"Free during early access. Core features (Limited AI document reading, vault, expiry alerts) will stay free. Optional paid plans may come later."},"author":{"@type":"Person","name":"SHIKHAR SINGH PATEL"},"description":"A Telegram assistant that reads household documents with Gemini AI, stores the original files in your personal Google Drive, and sends automated expiry reminders."}</script><!-- Privacy-friendly Analytics (off by default) --><style>.legal-body h2{font-size:1.35rem;margin:36px 0 12px;color:var(--ink-primary);border-bottom:1px solid var(--border-hairline);padding-bottom:6px}.legal-body h3{font-size:1.15rem;margin:24px 0 10px}.legal-body p{margin-bottom:16px;color:var(--ink-secondary)}.legal-body ul,.legal-body ol{margin:0 0 20px 24px;color:var(--ink-secondary)}.legal-body li{margin-bottom:8px}.legal-body .doc-callout{background-color:var(--bg-paper);border:1px solid var(--border-hairline);border-left:3px solid var(--accent-pine);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:16px 20px;margin:24px 0}.legal-body .doc-callout.warning{border-left-color:var(--status-expiring)}.legal-body table{width:100%;border-collapse:collapse;margin:24px 0;background-color:var(--bg-paper);border:1px solid var(--border-hairline);border-radius:var(--radius-sm);font-size:.88rem}.legal-body th,.legal-body td{padding:12px 16px;border-bottom:1px solid var(--border-hairline);text-align:left}.legal-body th{background-color:var(--bg-subtle);font-weight:600;color:var(--ink-primary)}
+</style>
+<link rel="stylesheet" href="/squares-vault/_astro/_slug_.DpaADGul.css"></head> <body> <header class="site-header"> <div class="container header-inner"> <a href="/squares-vault/" class="header-brand"> <img src="/squares-vault/logo-icon.png" alt="SQUARES Vault Emblem" class="brand-emblem" width="34" height="34"> <span class="brand-title">SQUARES Vault</span> </a> <nav class="header-nav" aria-label="Main Navigation"> <a href="/squares-vault/#how-it-works">How It Works</a> <a href="/squares-vault/#features">Features</a> <a href="/squares-vault/#comparison">DigiLocker vs Drive</a> <a href="/squares-vault/guides/">Guides</a> <a href="/squares-vault/privacy.html">Privacy</a> </nav> <div class="header-actions"> <a href="/squares-vault/hi/" class="lang-switch" title="हिन्दी में पढ़ें" hreflang="hi"> <span>हिन्दी</span> </a> <a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.88rem;"> <span>Open in Telegram</span> <span aria-hidden="true">&rarr;</span> </a> </div> </div> </header> <main>  <div class="container" style="padding: 40px 0 80px;"> <!-- Breadcrumb --> <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;"> <a href="/squares-vault/" style="color: var(--ink-secondary); text-decoration: none;">Home</a> <span style="margin: 0 8px;">/</span> <span style="color: var(--ink-primary); font-weight: 500;">Privacy Policy</span> </nav> <header style="margin-bottom: 36px; padding-bottom: 20px; border-bottom: 1px solid var(--border-hairline);"> <h1 style="margin-bottom: 10px;">Privacy Policy</h1> <div style="font-size: 0.88rem; color: var(--ink-muted);"> <strong>Version:</strong> 1.0 &nbsp;|&nbsp;
+<strong>Effective Date:</strong> October 10, 2026 &nbsp;|&nbsp;
+<strong>Scope:</strong> Global (including India DPDP Act 2023, EU/UK GDPR, California CCPA)
+</div> </header> <div class="text-container legal-body" style="font-size: 1rem; line-height: 1.7;">  <div class="doc-callout"> <strong>Core Commitment — Zero-Custodian Architecture:</strong><br>
+SQUARES Vault operates on a zero-custodian principle. We <strong>do not store your original document files</strong> on our servers. Uploaded documents are saved directly into your personal Google Drive account. You retain 100% ownership and control over your files at all times.
+</div> <h2>1. Introduction & Overview</h2> <p>
+This Privacy Policy explains how <strong>SQUARES Vault</strong> ("we", "us", or "the Service"), operated via Telegram (<code>@squaresvaultbot</code>), collects, processes, and protects your personal data when you interact with our automated life-admin assistant.
+</p> <p>
+We are committed to respecting your privacy in strict compliance with applicable global data protection laws, including:
+</p> <ul> <li><strong>India:</strong> The Digital Personal Data Protection Act, 2023 (DPDP Act) and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011.</li> <li><strong>European Union & United Kingdom:</strong> General Data Protection Regulation (Regulation (EU) 2016/679 - GDPR) and the UK GDPR.</li> <li><strong>United States:</strong> California Consumer Privacy Act of 2018, as amended by the California Privacy Rights Act (CCPA/CPRA).</li> <li><strong>Google User Data Policy:</strong> The Google API Services User Data Policy, specifically the Limited Use requirements.</li> </ul> <h2>2. What Personal Data We Process</h2> <p>
+In accordance with the principle of data minimization, we process only the strictly necessary information required to operate the service:
+</p> <table> <thead> <tr> <th>Category of Data</th> <th>Specific Items</th> <th>Storage Location & Safeguards</th> </tr> </thead> <tbody> <tr> <td><strong>Telegram Identity</strong></td> <td>Telegram User ID, Chat ID, and display first name. We do <em>not</em> collect your phone number, contacts, or passwords.</td> <td>Local SQLite database, indexed by numeric ID.</td> </tr> <tr> <td><strong>Google OAuth Tokens</strong></td> <td>Access and refresh tokens granted during the Google Device Flow.</td> <td>Encrypted at rest using AES-256-GCM envelope encryption. Per-user Data Encryption Keys (DEKs) derived from a hardware-isolated master key.</td> </tr> <tr> <td><strong>Document Metadata</strong></td> <td>Category, extracted title, key dates (expiry/due dates), currency, amounts, and notes. Full policy or identification numbers are permanently <strong>masked</strong> (e.g. <code>••••3113</code>).</td> <td>Encrypted local database and FTS5 search index.</td> </tr> <tr> <td><strong>Ephemeral Processing Files</strong></td> <td>Temporary document images and PDF attachments sent for optical parsing.</td> <td>Held in volatile server temporary directories only during active AI processing. Permanently deleted immediately after ingestion.</td> </tr> <tr> <td><strong>Original Documents</strong></td> <td>Your actual vehicle registrations, insurance policies, bills, receipts, and identity documents.</td> <td><strong>Your own Google Drive account.</strong> Never permanently stored on our servers.</td> </tr> <tr> <td><strong>Consent & Audit Logs</strong></td> <td>Version of policy consented to, timestamp, action logs (e.g., agreed, deleted).</td> <td>Local SQLite audit tables. Retained for 12 months for compliance verification.</td> </tr> </tbody> </table> <h2>3. Lawful Basis and Purposes of Processing</h2> <p>We process your data exclusively for the following specific purposes:</p> <ol> <li><strong>Providing the Service:</strong> To ingest, categorize, and extract deadlines from your documents upon your instruction.</li> <li><strong>Sending Deadline Alerts:</strong> To dispatch automated Telegram notifications before deadlines (10 days, 2 days, and same-day).</li> <li><strong>Interactive Vault Querying ("Ask Your Vault"):</strong> To synthesize answers to your dynamic questions (e.g., "What bills are due this month?") using private AI models.</li> <li><strong>Google Drive Synchronization:</strong> To upload files directly to your designated <code>SQUARES Vault</code> Google Drive folder and maintain a recoverable metadata index.</li> </ol> <p>
+The lawful basis under GDPR Article 6(1) is <strong>Contract Performance</strong> (operating the service requested by you) and <strong>Explicit Consent</strong> provided during onboarding. Under the India DPDP Act 2023, processing is carried out based on your explicit, informed consent.
+</p> <h2>4. Google API Limited Use Disclosure</h2> <div class="doc-callout"> <p><strong>Mandatory Google User Data Policy Compliance Statement:</strong></p> <p>
+SQUARES Vault's use and transfer to any other app of information received from Google APIs adheres to the
+<a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">Google API Services User Data Policy</a>, including the Limited Use requirements.
+</p> </div> <p>Specifically:</p> <ul> <li>We only request access to two Google scopes:
+<ul> <li><code>https://www.googleapis.com/auth/drive.file</code> — Permits viewing and managing only the files that SQUARES Vault itself creates. We cannot read or alter other documents in your Drive.</li> <li><code>https://www.googleapis.com/auth/drive.appdata</code> — Allows saving a private, non-public configuration backup.</li> </ul> </li> <li>We do not sell, rent, or transfer your Google data to third parties for advertising or profiling.</li> <li>We do not use data obtained through Google APIs to train, retrain, or improve generalized artificial intelligence or machine learning models.</li> </ul> <h2>5. AI Processing & Third-Party Sub-Processors</h2> <p>
+To provide intelligent document extraction and natural language assistance, we engage specific third-party infrastructure sub-processors under strict contractual data protection terms:
+</p> <ul> <li><strong>Google Cloud (Gemini API):</strong> Document text recognition and question-answering are executed via Google's API. Disclosed under <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">Google Gemini API Terms</a>.</li> <li><strong>Telegram Messenger Inc.:</strong> Provides the user-interface transport layer. Message transit is governed by Telegram's Terms and Privacy Policy.</li> <li><strong>Cloudflare R2 & Backblaze B2:</strong> Encrypted secondary disaster recovery backups. All database snapshots are client-side encrypted using <code>age</code> (X25519) cryptographic envelopes before leaving the server.</li> <li><strong>Oracle Cloud Infrastructure:</strong> Cloud virtual machine hosting our application runtime.</li> </ul> <h2>6. Security Architecture & Safeguards</h2> <p>
+We employ multi-layered technical and organizational safeguards:
+</p> <ul> <li><strong>AES-256-GCM Encryption:</strong> All sensitive tokens and keys are encrypted at rest with authenticated AES-GCM ciphers.</li> <li><strong>Key Separation:</strong> The master encryption key is stored outside the database directory in an isolated, restricted file.</li> <li><strong>EXIF Stripping:</strong> All photos sent to the bot have GPS coordinates, camera metadata, and device identifiers stripped prior to processing.</li> <li><strong>Masking of Sensitive Identifiers:</strong> Document numbers, PAN cards, passport numbers, and account numbers are masked by default in the database (retaining only the last 4 characters).</li> </ul> <h2>7. Your Rights (India DPDP, GDPR & Global)</h2> <p>
+Regardless of your geographic location, you enjoy full sovereignty over your personal data:
+</p> <ul> <li><strong>Right to Access & Portability:</strong> You can view all indexed records at any time directly in the bot. You can also export an <code>.ics</code> calendar file containing all your deadlines via Settings.</li> <li><strong>Right to Correction:</strong> You can edit record titles, dates, amounts, categories, and notes at any time using the interactive editing wizard.</li> <li><strong>Right to Erasure ("Right to be Forgotten"):</strong> Typing <code>/deletemydata</code> executes an immediate, irreversible wipe:
+<ol> <li>Halts all active reminders and scheduled jobs.</li> <li>Revokes your Google OAuth token with Google servers.</li> <li>Deletes all user rows from SQLite databases and search indexes.</li> <li>Deletes the app folder and files in your Google Drive (if selected).</li> <li>Generates a salted cryptographic tombstone to ensure deletion persists through disaster recovery replays.</li> </ol> </li> <li><strong>Right to Withdraw Consent:</strong> You can revoke consent at any time via Settings or by disconnecting SQUARES Vault in your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">Google Account Permissions</a>.</li> </ul> <h2>8. Data Retention</h2> <ul> <li><strong>Active Users:</strong> Record metadata is retained while your account is active to provide reminders.</li> <li><strong>Inactive Accounts:</strong> If an account remains unused for 11 months, an inactivity reminder is dispatched. If no action is taken by month 12, all database records are permanently deleted (files in your personal Google Drive remain unaffected).</li> <li><strong>Encrypted Backups:</strong> Automated server backup snapshots roll off and are automatically purged after <strong>30 days</strong>.</li> </ul> <h2>9. Age Restriction (18+ Only)</h2> <p>
+SQUARES Vault is strictly intended for individuals aged <strong>18 years and above</strong>. We do not knowingly collect, process, or solicit personal data from children or individuals under the age of 18. If we discover that a user is under 18, their account and associated metadata will be deleted immediately.
+</p> <h2>10. Grievance Redressal & Contact Information</h2> <p>
+In accordance with the India Digital Personal Data Protection Act 2023 and the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules 2021, as well as global regulatory requirements, we have appointed a dedicated Grievance Officer:
+</p> <div class="doc-callout"> <strong>Grievance & Support Redressal:</strong><br>
+Contact Email: <strong><a href="mailto:shikharsinghpatel07@gmail.com" style="color: var(--accent-pine); text-decoration: underline;">shikharsinghpatel07@gmail.com</a></strong><br>
+Official Telegram Interface: <strong><a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">@squaresvaultbot</a></strong> (use <code>/help</code> or contact the administrator).<br> <strong>Statutory Turnaround Time:</strong> Grievance requests are acknowledged within 48 hours and resolved within 30 calendar days.
+</div> <h2>11. Updates to this Policy</h2> <p>
+We may update this Privacy Policy from time to time. When significant updates occur, the <code>policy_version</code> in the bot configuration will increment, and users will be prompted in Telegram to review and re-consent before proceeding.
+</p>  </div> </div>  </main> <footer class="site-footer"> <div class="container"> <div class="footer-columns"> <div class="footer-col" style="grid-column: span 1;"> <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;"> <img src="/squares-vault/logo-icon.png" alt="" width="26" height="26" style="border-radius: 4px; border: 1px solid var(--border-muted);"> <strong style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--ink-primary);">SQUARES Vault</strong> </div> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+A private, zero-custodian document management assistant for Telegram.
+          Files stored exclusively in your own Google Drive.
+</p> <p style="font-size: 0.82rem; color: var(--ink-muted); line-height: 1.5;">
+Built by <strong>SHIKHAR SINGH PATEL</strong>.<br>
+Contact: <a href="mailto:shikharsinghpatel07@gmail.com" style="color: var(--ink-secondary);">shikharsinghpatel07@gmail.com</a> </p> </div> <div class="footer-col"> <h5>Document Types</h5> <ul> <li><a href="/squares-vault/documents/vehicle-rc/">Vehicle Registration Certificate (RC)</a></li><li><a href="/squares-vault/documents/puc-certificate/">Pollution Under Control (PUC) Certificate</a></li><li><a href="/squares-vault/documents/car-insurance/">Comprehensive &amp; Third-Party Car Insurance</a></li><li><a href="/squares-vault/documents/health-insurance/">Health Insurance (Mediclaim &amp; Top-Up)</a></li><li><a href="/squares-vault/documents/extended-warranty/">Extended Warranties &amp; Annual Maintenance Contracts (AMC)</a></li> <li><a href="/squares-vault/#documents" style="font-weight: 600; color: var(--accent-pine);">View all 10 documents &rarr;</a></li> </ul> </div> <div class="footer-col"> <h5>For You</h5> <ul> <li><a href="/squares-vault/for/car-owners/">For Car &amp; Two-Wheeler Owners</a></li><li><a href="/squares-vault/for/families/">For Busy Household Families</a></li><li><a href="/squares-vault/for/tenants-landlords/">For Tenants &amp; Landlords</a></li><li><a href="/squares-vault/for/parents-nris/">For People Managing Parents&#39; Documents &amp; NRIs</a></li> <li><a href="/squares-vault/vs/digilocker/">vs. DigiLocker</a></li> <li><a href="/squares-vault/vs/google-drive/">vs. Drive Alone</a></li> </ul> </div> <div class="footer-col"> <h5>Resources & Trust</h5> <ul> <li><a href="/squares-vault/guides/">Guides & Checklists</a></li> <li><a href="/squares-vault/about/">About the Project</a></li> <li><a href="/squares-vault/privacy.html">Privacy Policy</a></li> <li><a href="/squares-vault/terms.html">Terms of Service</a></li> <li><a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google Gemini API Terms ↗</a></li> <li><a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener noreferrer">Launch @squaresvaultbot ↗</a></li> </ul> </div> </div> <div class="footer-bottom"> <div>
+© 2026 SQUARES Vault. Zero-custodian document management.
+</div> <div style="display: flex; gap: 20px;"> <a href="/squares-vault/privacy.html">Privacy Policy</a> <a href="/squares-vault/terms.html">Terms of Service</a> <a href="/squares-vault/hi/">हिन्दी संस्करण</a> </div> </div> </div> </footer> </body></html> 

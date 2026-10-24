@@ -1,0 +1,108 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { siteConfig } from '../config';
+
+const title = 'Terms of Service';
+const description = 'Terms of Service for SQUARES Vault. Governs the use of our zero-custodian document management assistant.';
+---
+
+<LegalLayout
+  title={title}
+  description={description}
+  version="1.0"
+  effectiveDate="October 10, 2026"
+  canonicalPath="/terms.html"
+>
+  <h2>1. Acceptance of Terms</h2>
+  <p>
+    These Terms of Service ("Terms") constitute a legally binding agreement between you ("User", "you") and <strong>SQUARES Vault</strong> ("we", "us", or "the Service"), governing your access to and use of the SQUARES Vault Telegram bot (<code>@squaresvaultbot</code>), its related web interfaces, and automated notification services.
+  </p>
+  <p>
+    By tapping "Agree", sending commands to the bot, or authorizing Google Drive access, you acknowledge that you have read, understood, and agree to be bound by these Terms and our <a href="privacy.html" style="color: var(--accent-pine); text-decoration: underline;">Privacy Policy</a>. If you do not agree, do not use the Service.
+  </p>
+
+  <h2>2. Eligibility & Age Restriction</h2>
+  <p>
+    You must be at least <strong>18 years of age</strong> (or the age of majority in your jurisdiction) to use SQUARES Vault. By registering or using the Service, you represent and warrant that you are 18 years or older. The Service is not intended for or directed toward minors.
+  </p>
+
+  <h2>3. Description of the Service & Zero-Custodian Principle</h2>
+  <p>
+    SQUARES Vault is an automated assistant designed to help you organize documents, index deadlines, and receive reminder notifications.
+  </p>
+  <div class="doc-callout">
+    <strong>Zero-Custodian Architecture:</strong><br />
+    SQUARES Vault does not store, host, or act as a permanent custodian for your original document files. Document attachments are ingested ephemerally and uploaded directly to your own personal Google Drive account. You retain 100% legal ownership, title, and intellectual property in all uploaded files.
+  </div>
+
+  <h2>4. User Accounts & Telegram / Google Credentials</h2>
+  <ul>
+    <li><strong>Telegram Account:</strong> Your account is identified by your Telegram User ID. You are responsible for safeguarding your Telegram account credentials.</li>
+    <li><strong>Google Drive Authorization:</strong> You must grant OAuth access for SQUARES Vault to manage files in your designated Google Drive folder. You may revoke this access at any time via your Google Account security settings.</li>
+    <li><strong>Invite Codes & Access:</strong> Access to the bot may be restricted by administrator invite codes or capacity limits. We reserve the right to decline or suspend accounts that violate our fair-use or anti-abuse policies.</li>
+  </ul>
+
+  <h2>5. Acceptable Use Policy</h2>
+  <p>You agree not to use SQUARES Vault for any unlawful purpose. Specifically, you agree NOT to upload or process:</p>
+  <ul>
+    <li>Any document or material that infringes on third-party intellectual property or privacy rights.</li>
+    <li>Malicious code, viruses, spyware, trojans, or corrupted files.</li>
+    <li>Unlawful, fraudulent, defamatory, or abusive content.</li>
+    <li>Classified government secrets or unlawful surveillance materials.</li>
+  </ul>
+  <p>
+    We reserve the right to immediately terminate access for any user violating these terms.
+  </p>
+
+  <h2>6. AI Processing & Practical Disclaimers (Crucial)</h2>
+  <div class="doc-callout warning">
+    <strong>Important Disclaimer Regarding Automated Extraction & Reminders:</strong><br />
+    SQUARES Vault uses automated artificial intelligence (Google Gemini API) and rule-based heuristics to identify document dates, categories, and amounts. While we strive for high precision:
+    <ul style="margin: 8px 0 0 20px;">
+      <li>Automated extractions may occasionally be incomplete or inaccurate due to poor document lighting, handwritten text, or unusual formatting.</li>
+      <li><strong>You are solely responsible</strong> for verifying the accuracy of extracted key dates (e.g., vehicle registration renewals, insurance expiry, passport validity, or tax deadlines).</li>
+      <li>SQUARES Vault is a personal productivity tool. It does <strong>not</strong> provide legal, financial, tax, or professional compliance advice.</li>
+      <li>We are not liable for any fines, penalties, interest, or lapsed policies arising from missed deadlines or reliance on automated notifications.</li>
+    </ul>
+  </div>
+
+  <h2>7. Third-Party Services & Dependencies</h2>
+  <p>
+    The Service relies on third-party platforms including <strong>Telegram Messenger Inc.</strong>, <strong>Google LLC (Google Drive and Google Gemini APIs)</strong>, and cloud hosting providers. We are not liable for service interruptions, delivery delays, or policy changes imposed by these third-party platforms.
+  </p>
+
+  <h2>8. Limitation of Liability</h2>
+  <p>
+    To the maximum extent permitted by applicable law:
+  </p>
+  <ul>
+    <li>THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</li>
+    <li>IN NO EVENT SHALL SQUARES VAULT, ITS OPERATORS, OR CONTRIBUTORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES (INCLUDING LOSS OF DATA, LOSS OF PROFITS, OR REGULATORY FINES) ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE SERVICE.</li>
+    <li>OUR TOTAL AGGREGATE LIABILITY ARISING FROM ALL CLAIMS RELATING TO THE SERVICE SHALL BE LIMITED TO THE TOTAL AMOUNT PAID BY YOU TO US IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR ₹1,000 INR (APPROXIMATELY $12 USD), WHICHEVER IS GREATER.</li>
+  </ul>
+
+  <h2>9. Account Deletion & Termination</h2>
+  <p>
+    You may terminate this agreement at any time by executing the <code>/deletemydata</code> command inside the bot. This immediately initiates a purge of your database rows, search index entries, and OAuth tokens. We reserve the right to suspend or discontinue the Service, or terminate accounts, with reasonable notice where feasible.
+  </p>
+
+  <h2>10. Governing Law & Dispute Resolution</h2>
+  <p>
+    These Terms shall be governed by and construed in accordance with the laws of <strong>India</strong>, without regard to its conflict of law principles. Any dispute, claim, or controversy arising out of or relating to these Terms shall be subject to the exclusive jurisdiction of the competent courts in New Delhi, India. For international users, disputes shall first be submitted to good-faith informal mediation prior to any legal proceedings.
+  </p>
+
+  <h2>11. Modifications to Terms</h2>
+  <p>
+    We reserve the right to modify these Terms. When changes are made, we will update the version number and notify users via Telegram. Continued use of SQUARES Vault following notice constitutes acceptance of the modified Terms.
+  </p>
+
+  <h2>12. Contact & Grievance Redressal</h2>
+  <p>
+    For inquiries, feedback, or grievance redressal regarding these Terms of Service:
+  </p>
+  <div class="doc-callout">
+    <strong>Support & Communication:</strong><br />
+    Contact Email: <strong><a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--accent-pine); text-decoration: underline;">{siteConfig.contactEmail}</a></strong><br />
+    Telegram Interface: <strong><a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">@squaresvaultbot</a></strong> (type <code>/help</code> in chat).
+  </div>
+</LegalLayout>

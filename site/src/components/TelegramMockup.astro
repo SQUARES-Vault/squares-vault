@@ -1,0 +1,57 @@
+---
+import { getAssetUrl } from '../config';
+---
+
+<div class="chat-mockup-card">
+  <div class="chat-header">
+    <img src={getAssetUrl('/logo-icon.png')} alt="" class="chat-avatar" />
+    <div>
+      <div class="chat-title">SQUARES Vault</div>
+      <div class="chat-subtitle">Verified Telegram Bot</div>
+    </div>
+  </div>
+
+  <div class="chat-stream">
+    <div class="bubble bubble-user">
+      Show me all documents for my Venue car
+    </div>
+
+    <div class="bubble bubble-bot">
+      <div style="font-weight: 600; font-size: 0.85rem; color: var(--accent-pine); margin-bottom: 4px;">
+        Vault Assistant
+      </div>
+      <p style="font-size: 0.85rem; color: var(--ink-secondary); margin-bottom: 10px;">
+        Found 3 linked records for <span class="badge-plate">UP15EB3XX3</span> <em>(Hyundai VENUE)</em>:
+      </p>
+
+      <div class="mock-doc-row">
+        <div>
+          <strong style="color: var(--ink-primary);">1. Vehicle RC — VENUE</strong>
+          <div style="color: var(--ink-muted); font-size: 0.75rem;">Registration: UP15EB3XX3 · Active</div>
+        </div>
+        <span class="badge-status active">Active</span>
+      </div>
+
+      <div class="mock-doc-row">
+        <div>
+          <strong style="color: var(--ink-primary);">2. Motor Insurance Schedule</strong>
+          <div style="color: var(--ink-muted); font-size: 0.75rem;">Expires 10 Nov 2026 · Comprehensive</div>
+        </div>
+        <span class="badge-status expiring">17 Days</span>
+      </div>
+
+      <div class="mock-doc-row">
+        <div>
+          <strong style="color: var(--ink-primary);">3. Traffic Camera Challan</strong>
+          <div style="color: var(--ink-muted); font-size: 0.75rem;">₹500 fine · Speed violation notice</div>
+        </div>
+        <span class="badge-status" style="background-color: var(--bg-subtle); color: var(--ink-muted); border: 1px solid var(--border-hairline);">Pending</span>
+      </div>
+
+      <div class="mock-btn-row">
+        <div class="mock-btn">📎 View Documents (3)</div>
+        <div class="mock-btn" style="color: var(--ink-muted); background-color: var(--bg-subtle);">🚪 End Chat</div>
+      </div>
+    </div>
+  </div>
+</div>

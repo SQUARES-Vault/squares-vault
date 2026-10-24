@@ -1,0 +1,43 @@
+---
+import { siteConfig, getAssetUrl } from '../config';
+
+interface Props {
+  currentLang?: 'en' | 'hi';
+}
+
+const { currentLang = 'en' } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={getAssetUrl(currentLang === 'hi' ? '/hi/' : '/')} class="header-brand">
+      <img src={getAssetUrl('/logo-icon.png')} alt="SQUARES Vault Emblem" class="brand-emblem" width="34" height="34" />
+      <span class="brand-title">{siteConfig.siteName}</span>
+    </a>
+
+    <nav class="header-nav" aria-label="Main Navigation">
+      <a href={getAssetUrl('#how-it-works')}>{currentLang === 'hi' ? 'यह कैसे काम करता है' : 'How It Works'}</a>
+      <a href={getAssetUrl('#features')}>{currentLang === 'hi' ? 'विशेषताएं' : 'Features'}</a>
+      <a href={getAssetUrl('#comparison')}>{currentLang === 'hi' ? 'तुलना' : 'DigiLocker vs Drive'}</a>
+      <a href={getAssetUrl('/guides/')}>{currentLang === 'hi' ? 'मार्गदर्शिका' : 'Guides'}</a>
+      <a href={getAssetUrl('/privacy.html')}>{currentLang === 'hi' ? 'गोपनीयता' : 'Privacy'}</a>
+    </nav>
+
+    <div class="header-actions">
+      {currentLang === 'en' ? (
+        <a href={getAssetUrl('/hi/')} class="lang-switch" title="हिन्दी में पढ़ें" hreflang="hi">
+          <span>हिन्दी</span>
+        </a>
+      ) : (
+        <a href={getAssetUrl('/')} class="lang-switch" title="Read in English" hreflang="en">
+          <span>English</span>
+        </a>
+      )}
+
+      <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.88rem;">
+        <span>Open in Telegram</span>
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</header>

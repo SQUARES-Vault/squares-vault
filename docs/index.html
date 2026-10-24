@@ -1,668 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQUARES Vault — Private Document Vault for Telegram</title>
-  <meta name="description" content="Snap a document. Gemini AI reads it. Files go straight to your Google Drive. Smart alerts before every deadline. Works inside Telegram — no extra app needed.">
-  <meta name="google-site-verification" content="nhyGz_6hp1YBNQgTZzzW-jW0_WXk9VBi-8D8xBNEja4">
-
-  <!-- Inter — variable font, single request -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&display=swap" rel="stylesheet">
-
-  <!-- Iconify — loads only icons actually used, lazy via CDN -->
-  <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js" defer></script>
-
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="logo-icon.png">
-  <link rel="apple-touch-icon" href="logo-icon.png">
-</head>
-<body>
-
-  <!-- ═══════════════════ NAVIGATION ═══════════════════ -->
-  <header id="site-header">
-    <div class="container">
-      <div class="nav-wrap">
-        <a href="index.html" class="brand">
-          <img src="logo-icon.png" alt="SQUARES Vault" class="brand-logo">
-          <span>SQUARES Vault</span>
-        </a>
-
-        <nav id="main-nav">
-          <a href="#how-it-works">How It Works</a>
-          <a href="#features">Features</a>
-          <a href="#testimonials">Reviews</a>
-          <a href="#comparison">Compare</a>
-          <a href="#faq">FAQ</a>
-          <a href="privacy.html">Privacy</a>
-          <a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener" class="btn-nav">
-            <iconify-icon icon="ri:telegram-fill" width="15"></iconify-icon>
-            Launch Bot
-          </a>
-        </nav>
-
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- ═══════════════════ HERO ═══════════════════ -->
-  <section class="hero-section">
-    <div class="container hero-inner">
-
-      <div class="hero-content">
-        <div class="pill-badge">
-          <span class="pill-dot"></span>
-          Powered by Gemini AI &nbsp;·&nbsp; Files in your Google Drive
-        </div>
-
-        <h1>Your documents.<br><span class="gradient-text">Organized,<br>intelligent,</span><br>always ready.</h1>
-
-        <p class="hero-subtitle">
-          Snap a photo or forward a PDF inside Telegram. AI reads the document, extracts key dates and amounts, and stores the original file directly in <strong>your own Google Drive</strong> — never ours. Get smart alerts before anything expires.
-        </p>
-
-        <div class="hero-actions">
-          <a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener" class="btn-primary">
-            <iconify-icon icon="ri:telegram-fill" width="20"></iconify-icon>
-            Open in Telegram
-          </a>
-          <a href="#how-it-works" class="btn-secondary">
-            See how it works
-            <iconify-icon icon="ri:arrow-down-s-line" width="20"></iconify-icon>
-          </a>
-        </div>
-
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-num">9</span>
-            <span class="stat-label">Document categories</span>
-          </div>
-          <div class="stat-sep"></div>
-          <div class="stat-item">
-            <span class="stat-num">0</span>
-            <span class="stat-label">Files on our servers</span>
-          </div>
-          <div class="stat-sep"></div>
-          <div class="stat-item">
-            <span class="stat-num">Free</span>
-            <span class="stat-label">Always, no paid tiers</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Authentic Telegram Mockup -->
-      <div class="tg-mockup" aria-hidden="true">
-        <div class="tg-header">
-          <img src="logo-icon.png" alt="" class="tg-avatar">
-          <div class="tg-header-info">
-            <div class="tg-header-title">
-              SQUARES Vault
-              <span class="tg-verified">✓</span>
-            </div>
-            <div class="tg-status">bot</div>
-          </div>
-        </div>
-        <div class="tg-body">
-          <div class="tg-msg-user">What documents do I have for my Venue car?</div>
-          <div class="tg-msg-bot">
-            <div class="tg-bot-name">Vault Assistant</div>
-            <div class="tg-divider">━━━━━━━━━━━━━━━━━━━━</div>
-            <p class="tg-intro">Found <strong>3 records</strong> for <span class="tg-plate">UP15EB3113</span> — Hyundai Venue:</p>
-
-            <div class="tg-card">
-              <div class="tg-dot tg-dot-green"></div>
-              <div>
-                <div class="tg-card-title">RC – Venue UP15EB3113</div>
-                <div class="tg-card-meta">Vehicle · Active</div>
-              </div>
-            </div>
-
-            <div class="tg-card">
-              <div class="tg-dot tg-dot-amber"></div>
-              <div>
-                <div class="tg-card-title">Hyundai Extended Warranty</div>
-                <div class="tg-card-meta">Expires Oct 2026 · Expiring soon</div>
-              </div>
-            </div>
-
-            <div class="tg-card">
-              <div class="tg-dot tg-dot-grey"></div>
-              <div>
-                <div class="tg-card-title">Traffic Challan – Jan 2026</div>
-                <div class="tg-card-meta">₹300.00 · Vehicle</div>
-              </div>
-            </div>
-
-            <div class="tg-keyboard">
-              <div class="tg-kb-btn tg-kb-primary">
-                <iconify-icon icon="ri:attachment-line" width="13"></iconify-icon>
-                View Documents (3)
-              </div>
-              <div class="tg-kb-btn tg-kb-ghost">End Chat</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ TRUST BAR ═══════════════════ -->
-  <div class="trust-bar">
-    <div class="container trust-inner">
-      <span class="trust-label">Built on</span>
-      <div class="trust-logos">
-        <div class="trust-item">
-          <iconify-icon icon="ri:telegram-fill" width="20" style="color:#2AABEE"></iconify-icon>
-          <span>Telegram</span>
-        </div>
-        <div class="trust-sep"></div>
-        <div class="trust-item">
-          <iconify-icon icon="ri:google-fill" width="20" style="color:#4285F4"></iconify-icon>
-          <span>Google Drive</span>
-        </div>
-        <div class="trust-sep"></div>
-        <div class="trust-item">
-          <iconify-icon icon="ri:sparkling-2-fill" width="20" style="color:#a78bfa"></iconify-icon>
-          <span>Gemini AI</span>
-        </div>
-        <div class="trust-sep"></div>
-        <div class="trust-item">
-          <iconify-icon icon="ri:shield-check-line" width="20" style="color:#10B981"></iconify-icon>
-          <span>Zero server storage</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
-  <section class="section" id="how-it-works">
-    <div class="container">
-      <div class="section-head gs-fade">
-        <span class="tag-label">Simple &amp; Effortless</span>
-        <h2 class="title-lg">Up and running in 60 seconds</h2>
-        <p class="desc-text">No separate app to download. No sign-up form. Everything lives inside Telegram.</p>
-      </div>
-
-      <div class="flow-grid">
-        <div class="flow-step gs-stagger">
-          <div class="flow-icon-wrap">
-            <iconify-icon icon="ri:telegram-fill" width="22"></iconify-icon>
-          </div>
-          <div class="flow-num">01</div>
-          <h4>Start the Bot</h4>
-          <p>Open <code>@squaresvaultbot</code> in Telegram and tap Start. Connect your personal Google Drive with a secure one-tap Google sign-in.</p>
-        </div>
-
-        <div class="flow-step gs-stagger">
-          <div class="flow-icon-wrap">
-            <iconify-icon icon="ri:file-add-line" width="22"></iconify-icon>
-          </div>
-          <div class="flow-num">02</div>
-          <h4>Send Any Document</h4>
-          <p>Photo or PDF — vehicle RC, insurance policy, warranty card, utility bill, prescription. Forward from any chat or snap it fresh.</p>
-        </div>
-
-        <div class="flow-step gs-stagger">
-          <div class="flow-icon-wrap">
-            <iconify-icon icon="ri:sparkling-2-fill" width="22"></iconify-icon>
-          </div>
-          <div class="flow-num">03</div>
-          <h4>AI Reads &amp; Categorizes</h4>
-          <p>Gemini AI extracts the title, category, key dates, amounts, and policy numbers. Review the draft — confirm in one tap.</p>
-        </div>
-
-        <div class="flow-step gs-stagger">
-          <div class="flow-icon-wrap">
-            <iconify-icon icon="ri:notification-3-line" width="22"></iconify-icon>
-          </div>
-          <div class="flow-num">04</div>
-          <h4>Never Miss a Deadline</h4>
-          <p>Automatic alerts at 10 days, 2 days, and on the due date. Ask anything: <em>"What's expiring next month?"</em> — instant answer.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ FEATURES ═══════════════════ -->
-  <section class="section" id="features">
-    <div class="container">
-      <div class="section-head gs-fade">
-        <span class="tag-label">What You Get</span>
-        <h2 class="title-lg">Every feature your documents need</h2>
-        <p class="desc-text">Built specifically for households managing vehicles, insurance, warranties and everyday life-admin.</p>
-      </div>
-
-      <div class="bento-grid">
-
-        <!-- Card 1: Vehicle Intelligence — wide -->
-        <div class="bento-card col-8 gs-fade">
-          <div class="bento-icon">
-            <iconify-icon icon="ri:car-line" width="26"></iconify-icon>
-          </div>
-          <h3>Vehicle &amp; Entity Intelligence</h3>
-          <p>
-            Upload your car's RC once and SQUARES Vault remembers the registration number. Later, ask about your <em>"Venue"</em> — it automatically surfaces the RC, insurance, PUC, and challans. No manual tagging required.
-          </p>
-          <div class="bento-chip-row">
-            <div class="bento-chip">
-              <iconify-icon icon="ri:arrow-right-s-line" width="15"></iconify-icon>
-              <span><em>"Venue"</em> &rarr; <code>UP15EB3113</code> &rarr; 4 linked documents found</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 2: Zero server storage — narrow -->
-        <div class="bento-card col-4 gs-fade">
-          <div class="bento-icon">
-            <iconify-icon icon="ri:cloud-line" width="26"></iconify-icon>
-          </div>
-          <h3>Files in Your Drive, Not Ours</h3>
-          <p>
-            Your original files go directly into your personal Google Drive folder. We request only <code>drive.file</code> scope — we cannot read any other file in your Drive.
-          </p>
-        </div>
-
-        <!-- Card 3: Smart Alerts — narrow -->
-        <div class="bento-card col-4 gs-fade">
-          <div class="bento-icon">
-            <iconify-icon icon="ri:alarm-line" width="26"></iconify-icon>
-          </div>
-          <h3>Precision Expiry Alerts</h3>
-          <p>
-            Automatic reminders at <strong>10 days, 2 days, and on the due date</strong> with one-tap Snooze, Done, and Renew buttons directly in Telegram.
-          </p>
-        </div>
-
-        <!-- Card 4: Ask Your Vault — wide -->
-        <div class="bento-card col-8 gs-fade">
-          <div class="bento-icon">
-            <iconify-icon icon="ri:chat-voice-line" width="26"></iconify-icon>
-          </div>
-          <h3>"Ask Your Vault" — Conversational AI</h3>
-          <p>
-            Ask anything in plain English: <em>"What warranties expire this year?"</em> or <em>"How much did I spend on vehicle maintenance?"</em> The AI searches your vault and replies instantly with linked records you can open in one tap.
-          </p>
-          <div class="bento-chip-row">
-            <div class="bento-chip">
-              <iconify-icon icon="ri:arrow-right-s-line" width="15"></iconify-icon>
-              <span><em>"What's due between Jan and June?"</em> &rarr; 4 records, ₹12,400 estimated</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 5: Family Sharing -->
-        <div class="bento-card col-6 gs-fade">
-          <div class="bento-icon">
-            <iconify-icon icon="ri:group-2-line" width="26"></iconify-icon>
-          </div>
-          <h3>Family Vault Sharing</h3>
-          <p>
-            Grant a family member read access to specific document categories — or your entire vault. They can browse and retrieve documents without managing their own account.
-          </p>
-        </div>
-
-        <!-- Card 6: Calendar + Search -->
-        <div class="bento-card col-6 gs-fade">
-          <div class="bento-icon">
-            <iconify-icon icon="ri:calendar-check-line" width="26"></iconify-icon>
-          </div>
-          <h3>Calendar Export &amp; Smart Search</h3>
-          <p>
-            Export all upcoming deadlines as a <code>.ics</code> file to Google or Apple Calendar. Full-text keyword search and category browsing — both with live expiry-status indicators.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ TESTIMONIALS ═══════════════════ -->
-  <section class="section" id="testimonials">
-    <div class="container">
-      <div class="section-head gs-fade">
-        <span class="tag-label">Early Access Users</span>
-        <h2 class="title-lg">People who use it, love it</h2>
-        <p class="desc-text">SQUARES Vault is in early access. Here is what our first users say.</p>
-      </div>
-
-      <div class="testimonials-grid">
-
-        <div class="testimonial-card gs-stagger">
-          <div class="t-stars">
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-          </div>
-          <p class="t-quote">"I forwarded my car insurance PDF and it read the expiry date correctly within seconds. Got a reminder 10 days before — I had completely forgotten about the renewal."</p>
-          <div class="t-author">
-            <div class="t-avatar" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">RK</div>
-            <div>
-              <div class="t-name">Rahul K.</div>
-              <div class="t-role">Two cars, Delhi NCR</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card gs-stagger">
-          <div class="t-stars">
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-          </div>
-          <p class="t-quote">"The family sharing is exactly what I needed. My wife can check her own documents without setting up her own account. Everything linked, everything in one place."</p>
-          <div class="t-author">
-            <div class="t-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">AS</div>
-            <div>
-              <div class="t-name">Arjun S.</div>
-              <div class="t-role">Family of 4, Bengaluru</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card gs-stagger">
-          <div class="t-stars">
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-fill" width="15"></iconify-icon>
-            <iconify-icon icon="ri:star-half-fill" width="15"></iconify-icon>
-          </div>
-          <p class="t-quote">"I stopped searching through WhatsApp groups for warranty cards. Everything is organized, the AI is shockingly accurate, and all my files stay in my own Google Drive."</p>
-          <div class="t-author">
-            <div class="t-avatar" style="background: linear-gradient(135deg, #a78bfa, #7c3aed);">PM</div>
-            <div>
-              <div class="t-name">Priya M.</div>
-              <div class="t-role">Homeowner, Mumbai</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ COMPARISON ═══════════════════ -->
-  <section class="section" id="comparison">
-    <div class="container">
-      <div class="section-head gs-fade">
-        <span class="tag-label">Why Not Just a Folder?</span>
-        <h2 class="title-lg">A folder doesn't remind you. We do.</h2>
-        <p class="desc-text">A folder is passive storage. SQUARES Vault is an intelligent assistant that keeps you ahead of every deadline.</p>
-      </div>
-
-      <div class="matrix-card gs-fade">
-        <table>
-          <thead>
-            <tr>
-              <th>Capability</th>
-              <th class="col-vault">
-                <iconify-icon icon="ri:safe-2-line" width="16"></iconify-icon>
-                SQUARES Vault
-              </th>
-              <th>
-                <iconify-icon icon="ri:folder-3-line" width="16"></iconify-icon>
-                Drive / Folders
-              </th>
-              <th>
-                <iconify-icon icon="ri:building-2-line" width="16"></iconify-icon>
-                Govt. Portals
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Automatic expiry alerts</td>
-              <td class="col-vault"><iconify-icon icon="ri:check-line" width="16" class="ic-check"></iconify-icon> 10-day, 2-day, same-day</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> None</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> Inconsistent</td>
-            </tr>
-            <tr>
-              <td>AI reads your documents</td>
-              <td class="col-vault"><iconify-icon icon="ri:check-line" width="16" class="ic-check"></iconify-icon> Extracts dates &amp; amounts</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> Manual only</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> None</td>
-            </tr>
-            <tr>
-              <td>Your file ownership</td>
-              <td class="col-vault"><iconify-icon icon="ri:check-line" width="16" class="ic-check"></iconify-icon> Your own Google Drive</td>
-              <td><iconify-icon icon="ri:check-line" width="16" class="ic-check"></iconify-icon> Your storage</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> Govt. cloud</td>
-            </tr>
-            <tr>
-              <td>Conversational search</td>
-              <td class="col-vault"><iconify-icon icon="ri:check-line" width="16" class="ic-check"></iconify-icon> Natural language Q&amp;A</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> Manual search</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> None</td>
-            </tr>
-            <tr>
-              <td>Vehicle cross-linking</td>
-              <td class="col-vault"><iconify-icon icon="ri:check-line" width="16" class="ic-check"></iconify-icon> Name &rarr; plate &rarr; all docs</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> None</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> Isolated silos</td>
-            </tr>
-            <tr>
-              <td>Family access sharing</td>
-              <td class="col-vault"><iconify-icon icon="ri:check-line" width="16" class="ic-check"></iconify-icon> Per-category grants</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> All-or-nothing</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> None</td>
-            </tr>
-            <tr>
-              <td>No extra app needed</td>
-              <td class="col-vault"><iconify-icon icon="ri:check-line" width="16" class="ic-check"></iconify-icon> Lives in Telegram</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> Separate app</td>
-              <td><iconify-icon icon="ri:close-line" width="16" class="ic-cross"></iconify-icon> Separate website</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ FAQ ═══════════════════ -->
-  <section class="section" id="faq">
-    <div class="container">
-      <div class="section-head gs-fade">
-        <span class="tag-label">Got Questions?</span>
-        <h2 class="title-lg">Honest answers</h2>
-        <p class="desc-text">Transparent about how SQUARES Vault works and what we do with your data.</p>
-      </div>
-
-      <div class="faq-list gs-fade">
-
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <iconify-icon icon="ri:eye-off-line" width="20" class="faq-icon"></iconify-icon>
-            <span>Can anyone at SQUARES Vault see my documents?</span>
-            <iconify-icon icon="ri:arrow-down-s-line" width="22" class="faq-chevron"></iconify-icon>
-          </button>
-          <div class="faq-a">
-            <p>No. When you upload a document, it is processed in memory by the AI to extract metadata — title, dates, amounts, category. The file is then immediately uploaded to your personal Google Drive. We do not keep a permanent copy on our servers. The only data we store is the extracted metadata and the Google Drive file ID that points back to your Drive.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <iconify-icon icon="ri:robot-line" width="20" class="faq-icon"></iconify-icon>
-            <span>Are my documents used to train AI models?</span>
-            <iconify-icon icon="ri:arrow-down-s-line" width="22" class="faq-chevron"></iconify-icon>
-          </button>
-          <div class="faq-a">
-            <p>No. Document processing uses Google's enterprise Gemini API. Under enterprise API terms, your data is processed only to return a response and is never used to train or improve any public AI models.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <iconify-icon icon="ri:google-fill" width="20" class="faq-icon"></iconify-icon>
-            <span>What Google Drive permissions do you need?</span>
-            <iconify-icon icon="ri:arrow-down-s-line" width="22" class="faq-chevron"></iconify-icon>
-          </button>
-          <div class="faq-a">
-            <p>We request only two narrowly-scoped permissions: <code>drive.file</code> — which only allows accessing files SQUARES Vault itself created — and <code>drive.appdata</code> — for configuration sync. We cannot read, see, or modify any other file in your Google Drive.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <iconify-icon icon="ri:file-list-3-line" width="20" class="faq-icon"></iconify-icon>
-            <span>What document types can I store?</span>
-            <iconify-icon icon="ri:arrow-down-s-line" width="22" class="faq-chevron"></iconify-icon>
-          </button>
-          <div class="faq-a">
-            <p>Vehicle registration certificates (RC), Pollution certificates (PUC), Traffic challans, Car and health insurance policies, Extended warranties, Electronic appliance invoices and receipts, Utility bills, Passports, Home purchase and rental documents. You can also add any custom document type manually using the step-by-step entry form.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <iconify-icon icon="ri:delete-bin-6-line" width="20" class="faq-icon"></iconify-icon>
-            <span>How do I delete my data?</span>
-            <iconify-icon icon="ri:arrow-down-s-line" width="22" class="faq-chevron"></iconify-icon>
-          </button>
-          <div class="faq-a">
-            <p>Type <code>/deletemydata</code> in the bot. This permanently deletes all your records from our database, revokes SQUARES Vault's access to your Google Drive, and cancels all active reminders. Your actual files inside Google Drive are not affected — they remain yours to keep or delete yourself.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            <iconify-icon icon="ri:price-tag-3-line" width="20" class="faq-icon"></iconify-icon>
-            <span>Is it free? What's the catch?</span>
-            <iconify-icon icon="ri:arrow-down-s-line" width="22" class="faq-chevron"></iconify-icon>
-          </button>
-          <div class="faq-a">
-            <p>Completely free during early access. There is no premium tier. We may introduce optional plans in the future, but core vault features, AI document reading, and expiry alerts will remain free.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ CTA ═══════════════════ -->
-  <div class="container">
-    <section class="cta-banner gs-fade">
-      <div class="cta-icon-wrap">
-        <iconify-icon icon="ri:safe-2-line" width="38"></iconify-icon>
-      </div>
-      <h2>Stop hunting through WhatsApp for warranty cards.</h2>
-      <p>Organize your entire household document life in 60 seconds. Private, intelligent, and always in your pocket.</p>
-      <a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener" class="btn-primary cta-btn">
-        <iconify-icon icon="ri:telegram-fill" width="20"></iconify-icon>
-        Start Free on Telegram
-      </a>
-      <div class="cta-sub">Free during early access &nbsp;·&nbsp; No sign-up form &nbsp;·&nbsp; Your files stay in your Drive</div>
-    </section>
-  </div>
-
-  <!-- ═══════════════════ FOOTER ═══════════════════ -->
-  <footer>
-    <div class="container">
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#features">Features</a>
-        <a href="#comparison">Compare</a>
-        <a href="#faq">FAQ</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms</a>
-        <a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener">Telegram Bot</a>
-      </div>
-      <div class="footer-brand">
-        <img src="logo-icon.png" alt="SQUARES Vault" style="width:26px;height:26px;border-radius:7px;border:1px solid rgba(212,175,55,0.3);">
-        <span>SQUARES Vault</span>
-      </div>
-      <p class="footer-copy">© 2026 SQUARES Vault. Your documents, your Drive, your privacy.</p>
-    </div>
-  </footer>
-
-  <!-- GSAP — loaded after page content -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-
-  <script>
-    // ── Mobile Nav ──────────────────────────────────────────────────
-    const hamburger = document.getElementById('hamburger');
-    const nav = document.getElementById('main-nav');
-
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('is-open');
-      nav.classList.toggle('is-open');
-    });
-    nav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        hamburger.classList.remove('is-open');
-        nav.classList.remove('is-open');
-      });
-    });
-
-    // ── Header shadow on scroll ──────────────────────────────────────
-    window.addEventListener('scroll', () => {
-      document.getElementById('site-header').classList.toggle('is-scrolled', window.scrollY > 24);
-    }, { passive: true });
-
-    // ── FAQ Accordion ────────────────────────────────────────────────
-    document.querySelectorAll('.faq-q').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.closest('.faq-item');
-        const isOpen = item.classList.contains('is-open');
-        // Close all
-        document.querySelectorAll('.faq-item.is-open').forEach(o => {
-          o.classList.remove('is-open');
-          o.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
-        });
-        // Open this one if it was closed
-        if (!isOpen) {
-          item.classList.add('is-open');
-          btn.setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
-
-    // ── GSAP Scroll Animations ────────────────────────────────────────
-    window.addEventListener('load', () => {
-      if (typeof gsap === 'undefined') return;
-      gsap.registerPlugin(ScrollTrigger);
-
-      // Single fade-up elements
-      gsap.utils.toArray('.gs-fade').forEach(el => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 32,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-        });
-      });
-
-      // Stagger groups — elements share a common parent
-      const parentMap = new Map();
-      document.querySelectorAll('.gs-stagger').forEach(el => {
-        const p = el.parentElement;
-        if (!parentMap.has(p)) parentMap.set(p, []);
-        parentMap.get(p).push(el);
-      });
-      parentMap.forEach(group => {
-        gsap.from(group, {
-          opacity: 0,
-          y: 32,
-          duration: 0.65,
-          stagger: 0.12,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: group[0], start: 'top 88%', once: true }
-        });
-      });
-    });
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SQUARES Vault — Private Life-Admin &amp; Document Expiry Assistant</title><meta name="description" content="Forward your vehicle RC, insurance, warranties and bills in Telegram. Gemini AI logs the dates, saves files to your personal Google Drive, and alerts you before renewal."><link rel="canonical" href="https://squares-vault.github.io/squares-vault/"><meta name="google-site-verification" content="nhyGz_6hp1YBNQgTZzzW-jW0_WXk9VBi-8D8xBNEja4"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:title" content="SQUARES Vault — Private Life-Admin &#38; Document Expiry Assistant"><meta property="og:description" content="Forward your vehicle RC, insurance, warranties and bills in Telegram. Gemini AI logs the dates, saves files to your personal Google Drive, and alerts you before renewal."><meta property="og:url" content="https://squares-vault.github.io/squares-vault/"><meta property="og:site_name" content="SQUARES Vault"><meta property="og:image" content="https://squares-vault.github.io/squares-vault/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_IN"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="SQUARES Vault — Private Life-Admin &#38; Document Expiry Assistant"><meta name="twitter:description" content="Forward your vehicle RC, insurance, warranties and bills in Telegram. Gemini AI logs the dates, saves files to your personal Google Drive, and alerts you before renewal."><meta name="twitter:image" content="https://squares-vault.github.io/squares-vault/og-image.png"><!-- Alternate Languages --><link rel="alternate" hreflang="hi" href="https://squares-vault.github.io/squares-vault/hi/"><link rel="alternate" hreflang="x-default" href="https://squares-vault.github.io/squares-vault/"><!-- Favicons --><link rel="icon" type="image/x-icon" href="/squares-vault/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/squares-vault/favicon.png"><link rel="icon" type="image/png" sizes="512x512" href="/squares-vault/logo-icon.png"><link rel="apple-touch-icon" href="/squares-vault/logo-icon.png"><!-- JSON-LD Structured Data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SQUARES Vault","applicationCategory":"ProductivityApplication","operatingSystem":"Telegram","offers":{"@type":"Offer","price":"0","priceCurrency":"INR","description":"Free during early access. Core features (Limited AI document reading, vault, expiry alerts) will stay free. Optional paid plans may come later."},"author":{"@type":"Person","name":"SHIKHAR SINGH PATEL"},"description":"A Telegram assistant that reads household documents with Gemini AI, stores the original files in your personal Google Drive, and sends automated expiry reminders."}</script><!-- Privacy-friendly Analytics (off by default) --><link rel="stylesheet" href="/squares-vault/_astro/_slug_.DpaADGul.css"></head> <body> <header class="site-header"> <div class="container header-inner"> <a href="/squares-vault/" class="header-brand"> <img src="/squares-vault/logo-icon.png" alt="SQUARES Vault Emblem" class="brand-emblem" width="34" height="34"> <span class="brand-title">SQUARES Vault</span> </a> <nav class="header-nav" aria-label="Main Navigation"> <a href="/squares-vault/#how-it-works">How It Works</a> <a href="/squares-vault/#features">Features</a> <a href="/squares-vault/#comparison">DigiLocker vs Drive</a> <a href="/squares-vault/guides/">Guides</a> <a href="/squares-vault/privacy.html">Privacy</a> </nav> <div class="header-actions"> <a href="/squares-vault/hi/" class="lang-switch" title="हिन्दी में पढ़ें" hreflang="hi"> <span>हिन्दी</span> </a> <a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.88rem;"> <span>Open in Telegram</span> <span aria-hidden="true">&rarr;</span> </a> </div> </div> </header> <main>   <section class="section" style="padding-top: 56px; padding-bottom: 64px;"> <div class="container hero-grid"> <div class="hero-content"> <div class="hero-kicker">Personal Life-Admin · Telegram Assistant</div> <h1>Your household documents, organised.<br>Expiries tracked before they cost you.</h1> <p class="hero-subtitle">
+Forward a vehicle RC, motor insurance policy, appliance warranty, or utility bill in Telegram.
+          Gemini AI extracts key renewal dates, saves the original file directly into <strong>your personal Google Drive</strong>, and alerts you before it expires.
+</p> <div class="hero-actions"> <a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 14px 28px; font-size: 1.05rem;"> <svg class width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2 2 9.5l7 3 2.5 7 3.5-4 4.5 3.5L21.5 2Z"></path><path d="m9 12.5 7.5-6.5"></path></svg> <span>Open in Telegram</span> <span>&rarr;</span> </a> <a href="#how-it-works" class="btn btn-secondary" style="padding: 14px 24px; font-size: 1.05rem;"> <span>See How It Works</span> </a> </div> <div class="hero-pricing-note"> <strong>Pricing:</strong> Free during early access. Core features (Limited AI document reading, vault, expiry alerts) will stay free. Optional paid plans may come later. </div> <div class="email-capture-box"> <strong style="display: block; font-size: 1rem; color: var(--ink-primary); margin-bottom: 4px;">Get product updates by email</strong> <p style="font-size: 0.88rem; color: var(--ink-secondary); margin-bottom: 12px;">Not on Telegram yet? Leave your email to receive occasional release notes and platform announcements.</p> <form class="email-form" action="#" method="POST" onsubmit="event.preventDefault(); document.getElementById('form-feedback').style.display='block';"> <input type="email" name="email" required placeholder="you@domain.com" class="email-input" aria-label="Email address"> <button type="submit" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.88rem;">
+Notify Me
+</button> </form> <div id="form-feedback" style="display: none; margin-top: 10px; font-size: 0.85rem; color: var(--accent-pine); font-weight: 500;">
+✓ Thank you. When email notification service goes live, we will add your address.
+</div> <div class="email-disclaimer">
+No spam, unsubscribe anytime. Read our <a href="/squares-vault/privacy.html">Privacy Policy</a>.
+</div> </div> <div class="hero-stats-strip"> <div class="stat-item"> <span class="stat-value">10 Types</span> <span class="stat-label">RC, PUC, insurance, bills</span> </div> <div class="stat-item"> <span class="stat-value">Your Drive</span> <span class="stat-label">Zero server file custody</span> </div> <div class="stat-item"> <span class="stat-value">10d / 2d / 0d</span> <span class="stat-label">Automated alert cadence</span> </div> </div> </div> <!-- Right Column: Demo Chat & Video Slot --> <div> <div class="chat-mockup-card"> <div class="chat-header"> <img src="/squares-vault/logo-icon.png" alt="" class="chat-avatar"> <div> <div class="chat-title">SQUARES Vault</div> <div class="chat-subtitle">Verified Telegram Bot</div> </div> </div> <div class="chat-stream"> <div class="bubble bubble-user">
+Show me all documents for my Venue car
+</div> <div class="bubble bubble-bot"> <div style="font-weight: 600; font-size: 0.85rem; color: var(--accent-pine); margin-bottom: 4px;">
+Vault Assistant
+</div> <p style="font-size: 0.85rem; color: var(--ink-secondary); margin-bottom: 10px;">
+Found 3 linked records for <span class="badge-plate">UP15EB3XX3</span> <em>(Hyundai VENUE)</em>:
+</p> <div class="mock-doc-row"> <div> <strong style="color: var(--ink-primary);">1. Vehicle RC — VENUE</strong> <div style="color: var(--ink-muted); font-size: 0.75rem;">Registration: UP15EB3XX3 · Active</div> </div> <span class="badge-status active">Active</span> </div> <div class="mock-doc-row"> <div> <strong style="color: var(--ink-primary);">2. Motor Insurance Schedule</strong> <div style="color: var(--ink-muted); font-size: 0.75rem;">Expires 10 Nov 2026 · Comprehensive</div> </div> <span class="badge-status expiring">17 Days</span> </div> <div class="mock-doc-row"> <div> <strong style="color: var(--ink-primary);">3. Traffic Camera Challan</strong> <div style="color: var(--ink-muted); font-size: 0.75rem;">₹500 fine · Speed violation notice</div> </div> <span class="badge-status" style="background-color: var(--bg-subtle); color: var(--ink-muted); border: 1px solid var(--border-hairline);">Pending</span> </div> <div class="mock-btn-row"> <div class="mock-btn">📎 View Documents (3)</div> <div class="mock-btn" style="color: var(--ink-muted); background-color: var(--bg-subtle);">🚪 End Chat</div> </div> </div> </div> </div> <div class="video-slot-card" style="margin-top: 16px; background-color: var(--bg-paper); border: 1px dashed var(--border-muted); border-radius: var(--radius-md); padding: 20px; text-align: center;"> <!-- Product Walkthrough Video / GIF slot reserved for owner --> <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--ink-muted); font-size: 0.85rem; font-weight: 500;"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"></circle> <polygon points="10 8 16 12 10 16 10 8"></polygon> </svg> <span>Product Walkthrough Video (Owner will attach recording here)</span> </div> </div> </div> </div> </section>  <section class="section" id="how-it-works" style="background-color: var(--bg-paper);"> <div class="container"> <div class="section-header"> <div class="section-kicker">Simple &amp; Frictionless</div> <h2>How SQUARES Vault Works</h2> <p>No separate app download. No passwords to remember. Everything operates inside your existing Telegram app.</p> </div> <div class="steps-grid"> <div class="step-card"> <div class="step-num">01</div> <h3 class="step-title">Connect in 15 seconds</h3> <p class="step-text">
+Send <code>/start</code> in Telegram. Connect your personal Google Drive via Google's secure Device Flow. SQUARES Vault only receives permission to manage files it creates.
+</p> </div> <div class="step-card"> <div class="step-num">02</div> <h3 class="step-title">Snap or forward any paper</h3> <p class="step-text">
+Forward an insurance PDF from your email, or photograph a vehicle RC, appliance invoice, or PUC slip. Multi-page documents can be sent in a single photo batch.
+</p> </div> <div class="step-card"> <div class="step-num">03</div> <h3 class="step-title">In-memory AI reading</h3> <p class="step-text">
+Gemini AI extracts the category, title, expiry date, provider, and vehicle number. Review the drafted record in chat and confirm with one tap.
+</p> </div> <div class="step-card"> <div class="step-num">04</div> <h3 class="step-title">Automated renewal alerts</h3> <p class="step-text">
+Receive reminders at 10 days, 2 days, and same-day at 09:00 AM local time. Tap 'Snooze', 'Renew', or ask natural language questions whenever you need answers.
+</p> </div> </div> </div> </section>  <section class="section" id="features"> <div class="container"> <div class="section-header"> <div class="section-kicker">Built for Real Life</div> <h2>Features engineered for household peace of mind</h2> <p>A structured filing cabinet that actively keeps track of your household compliance.</p> </div> <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;"> <div class="card-paper"> <div style="color: var(--accent-pine); margin-bottom: 12px;"><svg class width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg></div> <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Vehicle Multi-Hop Linking</h3> <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+Save your car's RC once. SQUARES Vault automatically groups your insurance policies, PUC slips, service invoices, and traffic challans under your vehicle registration plate. Ask about your <em>"Venue"</em> and every related document surfaces together.
+</p> </div> <div class="card-paper"> <div style="color: var(--accent-pine); margin-bottom: 12px;"><svg class width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg></div> <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Your Own Google Drive Storage</h3> <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+We operate with zero file custody. Uploaded documents are saved directly into your personal Google Drive folder. You retain 100% legal ownership of your original files, completely independent of our service.
+</p> </div> <div class="card-paper"> <div style="color: var(--accent-pine); margin-bottom: 12px;"><svg class width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg></div> <h3 style="font-size: 1.18rem; margin-bottom: 8px;">"Ask Your Vault" Natural Language Q&amp;A</h3> <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+Ask questions in plain conversational language: <em>"What is due between Jan and June?"</em> or <em>"How much did I spend on maintenance?"</em>. The bot parses your indexed records and returns concise answers with clickable attachment links.
+</p> </div> <div class="card-paper"> <div style="color: var(--accent-pine); margin-bottom: 12px;"><svg class width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div> <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Family Access Sharing</h3> <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+Grant family members read access to specific categories (such as 'vehicle' or 'health') without duplicating files. They can retrieve policies and vehicle papers from their own Telegram during emergencies.
+</p> </div> <div class="card-paper"> <div style="color: var(--accent-pine); margin-bottom: 12px;"><svg class width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg></div> <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Calendar Export &amp; Smart Search</h3> <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+Export all upcoming deadlines as a standard <code>.ics</code> file into Google Calendar or Apple Calendar. Use full-text search across titles, provider names, and notes with live validity tags (🟢 Active · 🟡 Expiring · 🔴 Expired).
+</p> </div> <div class="card-paper"> <div style="color: var(--accent-pine); margin-bottom: 12px;"><svg class width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 17.5v-11"></path></svg></div> <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Manual Entry &amp; Renewal Wizard</h3> <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+Prefer manual entry? Add any document without AI using our step-by-step wizard, equipped with smart date shortcuts (+6 Months, +1 Year, +2 Years). Edit existing records or record annual renewals in seconds.
+</p> </div> </div> </div> </section>  <section class="section" id="privacy" style="background-color: var(--bg-paper);"> <div class="container"> <div class="section-header"> <div class="section-kicker">Honest &amp; Plain Language</div> <h2>Privacy by Architecture, Not Slogans</h2> <p>A transparent breakdown of how your files, tokens, and data are treated.</p> </div> <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;"> <div class="card-paper"> <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+1. Zero Server File Custody
+</strong> <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+Your original files are uploaded directly to your own Google Drive. We do not store permanent copies of your documents on our servers.
+</p> </div> <div class="card-paper"> <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+2. Narrow <code>drive.file</code> Scope
+</strong> <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+We only request access to files created by SQUARES Vault itself. We cannot view, open, or edit any pre-existing files in your Google Drive.
+</p> </div> <div class="card-paper"> <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+3. Google Gemini API Processing
+</strong> <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+Document OCR and date extraction are handled via Google's Gemini API in transit. For details on Google's API data practices, review <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google's Gemini API terms</a>.
+</p> </div> <div class="card-paper"> <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+4. Simple Deletion via <code>/deletemydata</code> </strong> <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+Typing <code>/deletemydata</code> permanently deletes all your metadata from our database, revokes OAuth access, and cancels active reminders. Your Drive files remain yours.
+</p> </div> </div> </div> </section>  <section class="section" id="comparison"> <div class="container"> <div class="section-header"> <div class="section-kicker">Factual Comparison</div> <h2>Why not DigiLocker or a generic Drive folder?</h2> <p>Different tools serve different purposes. Here is a fair and factual breakdown.</p> </div> <div class="table-wrapper"> <table class="comparison-table"> <thead> <tr> <th style="width: 25%;">Capability</th> <th style="width: 27%; color: var(--accent-pine); font-weight: 700;">SQUARES Vault</th> <th style="width: 24%;">DigiLocker</th> <th style="width: 24%;">Google Drive Folders</th> </tr> </thead> <tbody> <tr> <td class="col-feature">Primary Role</td> <td class="col-vault">Proactive life-admin & expiry assistant</td> <td>Official government document depository</td> <td>General cloud file storage</td> </tr> <tr> <td class="col-feature">Document Scope</td> <td class="col-vault">Any document (warranties, bills, receipts, insurance, RC)</td> <td>Government-issued digital certificates</td> <td>Any file uploaded manually</td> </tr> <tr> <td class="col-feature">AI Extraction</td> <td class="col-vault">Reads dates, policy numbers, amounts via Gemini API</td> <td>Reads issuer metadata via national APIs</td> <td>Manual indexing / text OCR only</td> </tr> <tr> <td class="col-feature">Automated Expiry Alerts</td> <td class="col-vault">Automated 10-day, 2-day & same-day Telegram reminders</td> <td>Limited or issuer-dependent</td> <td>None (Requires manual calendar creation)</td> </tr> <tr> <td class="col-feature">Original File Storage</td> <td class="col-vault">Stored directly in your own Google Drive</td> <td>Stored in Government of India cloud</td> <td>Stored in your Google Drive</td> </tr> <tr> <td class="col-feature">Vehicle Multi-Hop Linking</td> <td class="col-vault">Links RC, insurance, PUC, challan by plate</td> <td>Separate issuer cards</td> <td>Manual folder sorting</td> </tr> <tr> <td class="col-feature">Access Method</td> <td class="col-vault">Telegram chat (@squaresvaultbot)</td> <td>DigiLocker app / Web portal</td> <td>Google Drive app / Web</td> </tr> </tbody> </table> </div> <div style="margin-top: 20px; font-size: 0.88rem; color: var(--ink-muted); text-align: center;">
+Read our in-depth guides: <a href="/squares-vault/vs/digilocker/">SQUARES Vault vs DigiLocker</a> · <a href="/squares-vault/vs/google-drive/">SQUARES Vault vs Drive Alone</a> </div> </div> </section>  <section class="section" id="documents" style="background-color: var(--bg-paper);"> <div class="container"> <div class="section-header"> <div class="section-kicker">Supported Documents</div> <h2>10 Document Types Built for Indian Households</h2> <p>Explore detailed guides, expiry validity rules, and what dates matter for each document.</p> </div> <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px;"> <div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Vehicle</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/vehicle-rc/" style="color: var(--ink-primary); text-decoration: none;"> Vehicle Registration Certificate (RC) </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Track your smart card or paper RC, engine/chassis numbers, and 15-year fitness renewal date. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/vehicle-rc/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Vehicle</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"></path><path d="M9.6 4.6A2 2 0 1 1 11 8H2"></path><path d="M12.6 19.4A2 2 0 1 0 14 16H2"></path></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/puc-certificate/" style="color: var(--ink-primary); text-decoration: none;"> Pollution Under Control (PUC) Certificate </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Never pay a ₹10,000 challan for an expired 6-month or 1-year emissions certificate. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/puc-certificate/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Insurance</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/car-insurance/" style="color: var(--ink-primary); text-decoration: none;"> Comprehensive &amp; Third-Party Car Insurance </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Protect your No Claim Bonus (NCB) and prevent policy lapses with advance renewal warnings. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/car-insurance/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Insurance</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"></path></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/health-insurance/" style="color: var(--ink-primary); text-decoration: none;"> Health Insurance (Mediclaim &amp; Top-Up) </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Preserve waiting-period credits for pre-existing diseases by never missing premium due dates. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/health-insurance/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Warranty</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/extended-warranty/" style="color: var(--ink-primary); text-decoration: none;"> Extended Warranties &amp; Annual Maintenance Contracts (AMC) </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Exercise free replacement and repair claims before manufacturer warranty windows snap shut. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/extended-warranty/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Purchases</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 17.5v-11"></path></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/appliance-invoices/" style="color: var(--ink-primary); text-decoration: none;"> Appliance Invoices &amp; Cash Memos </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Preserve proof of purchase for laptops, phones, TVs, and air conditioners for warranty claims. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/appliance-invoices/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Vehicle</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/traffic-challans/" style="color: var(--ink-primary); text-decoration: none;"> Traffic Challans &amp; e-Challan Notices </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Clear automated camera challans before they get referred to Virtual Courts. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/traffic-challans/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Bills</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/utility-bills/" style="color: var(--ink-primary); text-decoration: none;"> Electricity, Water &amp; Piped Gas Bills </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Keep proof of residence up to date and pay monthly utilities without late surcharges. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/utility-bills/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Identity</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/passport/" style="color: var(--ink-primary); text-decoration: none;"> Passports &amp; Visas </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Prevent cancelled international travel with the 6-month validity countdown. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/passport/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;"> <div> <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;"> <span class="badge-status active">Home</span> <div style="color: var(--accent-pine); display: flex; align-items: center;"> <svg class width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> </div> </div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/documents/rental-agreements/" style="color: var(--ink-primary); text-decoration: none;"> Home Rental &amp; Lease Agreements </a> </h3> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;"> Track 11-month lease expirations, notice periods, and security deposit returns. </p> </div> <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;"> <a href="/squares-vault/documents/rental-agreements/" style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+View Document Guide &rarr;
+</a> </div> </div> </div> </div> </section>  <section class="section" id="audiences"> <div class="container"> <div class="section-header"> <div class="section-kicker">Tailored Solutions</div> <h2>Who uses SQUARES Vault?</h2> <p>Specific life-admin setups designed around real household pain points.</p> </div> <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;"> <div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between;"> <div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/for/car-owners/" style="text-decoration: none; color: var(--ink-primary);"> For Car &amp; Two-Wheeler Owners </a> </h3> <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;"> Keep your RC, insurance, PUC, warranties, and challans unified by registration plate. </p> </div> <a href="/squares-vault/for/car-owners/" style="font-size: 0.84rem; font-weight: 600; color: var(--accent-pine); text-decoration: none;">
+Read solution guide &rarr;
+</a> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between;"> <div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/for/families/" style="text-decoration: none; color: var(--ink-primary);"> For Busy Household Families </a> </h3> <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;"> Stop digging through family WhatsApp groups for appliance bills, health policies, and warranties. </p> </div> <a href="/squares-vault/for/families/" style="font-size: 0.84rem; font-weight: 600; color: var(--accent-pine); text-decoration: none;">
+Read solution guide &rarr;
+</a> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between;"> <div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/for/tenants-landlords/" style="text-decoration: none; color: var(--ink-primary);"> For Tenants &amp; Landlords </a> </h3> <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;"> Track 11-month lease expirations, notice periods, and electricity meter deposits without friction. </p> </div> <a href="/squares-vault/for/tenants-landlords/" style="font-size: 0.84rem; font-weight: 600; color: var(--accent-pine); text-decoration: none;">
+Read solution guide &rarr;
+</a> </div><div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between;"> <div> <h3 style="font-size: 1.15rem; margin-bottom: 8px;"> <a href="/squares-vault/for/parents-nris/" style="text-decoration: none; color: var(--ink-primary);"> For People Managing Parents&#39; Documents &amp; NRIs </a> </h3> <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;"> Oversee elderly parents&#39; health policies, utility connections, and property records from anywhere in the world. </p> </div> <a href="/squares-vault/for/parents-nris/" style="font-size: 0.84rem; font-weight: 600; color: var(--accent-pine); text-decoration: none;">
+Read solution guide &rarr;
+</a> </div> </div> </div> </section>    <section class="section" id="faq" style="background-color: var(--bg-paper);"> <div class="container"> <div class="section-header"> <div class="section-kicker">Common Inquiries</div> <h2>Frequently Asked Questions</h2> <p>Direct answers about permissions, Google Gemini API handling, and security.</p> </div> <div class="faq-stack"> <details class="faq-item" open> <summary>How does SQUARES Vault access my Google Drive?</summary> <div class="faq-content"> <p>During setup, you authorize SQUARES Vault via Google’s official Device Flow. We request only two narrowly-scoped permissions: <code>drive.file</code> (which permits viewing and managing only the files created by SQUARES Vault) and <code>drive.appdata</code> (for configuration sync). We cannot view, open, or modify any other files or folders in your personal Google Drive.</p> </div> </details><details class="faq-item"> <summary>How is my document data processed by AI?</summary> <div class="faq-content"> <p>Documents are processed using Google’s Gemini API for optical character recognition and key-date extraction. Processing takes place in transit/volatile memory. Please refer to <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google’s Gemini API Terms of Service</a> for details on Google’s API data handling terms.</p> </div> </details><details class="faq-item"> <summary>Is SQUARES Vault free to use?</summary> <div class="faq-content"> <p>Free during early access. Core features (Limited AI document reading, vault, expiry alerts) will stay free. Optional paid plans may come later.</p> </div> </details><details class="faq-item"> <summary>What happens if I decide to delete my data?</summary> <div class="faq-content"> <p>You can type <code>/deletemydata</code> directly in the Telegram bot at any time. This permanently deletes your user profile and indexed metadata from our databases, revokes the Google OAuth access token, and cancels all pending reminder schedules. Your original files stored inside your personal Google Drive remain unaffected and completely under your control.</p> </div> </details><details class="faq-item"> <summary>Can other people see my documents?</summary> <div class="faq-content"> <p>No. Your documents are filed into your private Google Drive and associated with your unique Telegram user ID. Only you—and any family members you explicitly authorize through the Family Access Sharing settings—can search or retrieve your records.</p> </div> </details> </div> </div> </section>  <section class="section" style="padding: 80px 0; text-align: center;"> <div class="container text-container" style="margin: 0 auto;"> <h2 style="font-size: 2.2rem; margin-bottom: 14px;">Take control of your household life-admin</h2> <p style="font-size: 1.1rem; color: var(--ink-secondary); margin-bottom: 28px;">
+Never lose a warranty receipt, miss an insurance renewal, or pay an avoidable traffic fine again.
+</p> <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px;"> <a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.05rem;"> <svg class width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2 2 9.5l7 3 2.5 7 3.5-4 4.5 3.5L21.5 2Z"></path><path d="m9 12.5 7.5-6.5"></path></svg> <span>Launch SQUARES Vault in Telegram</span> <span>&rarr;</span> </a> </div> <div style="font-size: 0.84rem; color: var(--ink-muted);"> Free during early access. Core features (Limited AI document reading, vault, expiry alerts) will stay free. Optional paid plans may come later. · Zero-custodian Google Drive storage
+</div> </div> </section>  </main> <footer class="site-footer"> <div class="container"> <div class="footer-columns"> <div class="footer-col" style="grid-column: span 1;"> <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;"> <img src="/squares-vault/logo-icon.png" alt="" width="26" height="26" style="border-radius: 4px; border: 1px solid var(--border-muted);"> <strong style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--ink-primary);">SQUARES Vault</strong> </div> <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+A private, zero-custodian document management assistant for Telegram.
+          Files stored exclusively in your own Google Drive.
+</p> <p style="font-size: 0.82rem; color: var(--ink-muted); line-height: 1.5;">
+Built by <strong>SHIKHAR SINGH PATEL</strong>.<br>
+Contact: <a href="mailto:shikharsinghpatel07@gmail.com" style="color: var(--ink-secondary);">shikharsinghpatel07@gmail.com</a> </p> </div> <div class="footer-col"> <h5>Document Types</h5> <ul> <li><a href="/squares-vault/documents/vehicle-rc/">Vehicle Registration Certificate (RC)</a></li><li><a href="/squares-vault/documents/puc-certificate/">Pollution Under Control (PUC) Certificate</a></li><li><a href="/squares-vault/documents/car-insurance/">Comprehensive &amp; Third-Party Car Insurance</a></li><li><a href="/squares-vault/documents/health-insurance/">Health Insurance (Mediclaim &amp; Top-Up)</a></li><li><a href="/squares-vault/documents/extended-warranty/">Extended Warranties &amp; Annual Maintenance Contracts (AMC)</a></li> <li><a href="/squares-vault/#documents" style="font-weight: 600; color: var(--accent-pine);">View all 10 documents &rarr;</a></li> </ul> </div> <div class="footer-col"> <h5>For You</h5> <ul> <li><a href="/squares-vault/for/car-owners/">For Car &amp; Two-Wheeler Owners</a></li><li><a href="/squares-vault/for/families/">For Busy Household Families</a></li><li><a href="/squares-vault/for/tenants-landlords/">For Tenants &amp; Landlords</a></li><li><a href="/squares-vault/for/parents-nris/">For People Managing Parents&#39; Documents &amp; NRIs</a></li> <li><a href="/squares-vault/vs/digilocker/">vs. DigiLocker</a></li> <li><a href="/squares-vault/vs/google-drive/">vs. Drive Alone</a></li> </ul> </div> <div class="footer-col"> <h5>Resources & Trust</h5> <ul> <li><a href="/squares-vault/guides/">Guides & Checklists</a></li> <li><a href="/squares-vault/about/">About the Project</a></li> <li><a href="/squares-vault/privacy.html">Privacy Policy</a></li> <li><a href="/squares-vault/terms.html">Terms of Service</a></li> <li><a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google Gemini API Terms ↗</a></li> <li><a href="https://t.me/squaresvaultbot" target="_blank" rel="noopener noreferrer">Launch @squaresvaultbot ↗</a></li> </ul> </div> </div> <div class="footer-bottom"> <div>
+© 2026 SQUARES Vault. Zero-custodian document management.
+</div> <div style="display: flex; gap: 20px;"> <a href="/squares-vault/privacy.html">Privacy Policy</a> <a href="/squares-vault/terms.html">Terms of Service</a> <a href="/squares-vault/hi/">हिन्दी संस्करण</a> </div> </div> </div> </footer> </body></html>

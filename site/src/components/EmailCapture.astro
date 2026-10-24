@@ -1,0 +1,45 @@
+---
+import { siteConfig, getAssetUrl } from '../config';
+
+interface Props {
+  heading?: string;
+  subtext?: string;
+}
+
+const {
+  heading = 'Get product updates by email',
+  subtext = 'Not on Telegram yet? Leave your email to receive occasional release notes and platform announcements.',
+} = Astro.props;
+---
+
+<div class="email-capture-box">
+  <strong style="display: block; font-size: 1rem; color: var(--ink-primary); margin-bottom: 4px;">{heading}</strong>
+  <p style="font-size: 0.88rem; color: var(--ink-secondary); margin-bottom: 12px;">{subtext}</p>
+
+  <form
+    class="email-form"
+    action={siteConfig.formspreeEndpoint || '#'}
+    method="POST"
+    onsubmit={!siteConfig.formspreeEndpoint ? "event.preventDefault(); document.getElementById('form-feedback').style.display='block';" : undefined}
+  >
+    <input
+      type="email"
+      name="email"
+      required
+      placeholder="you@domain.com"
+      class="email-input"
+      aria-label="Email address"
+    />
+    <button type="submit" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.88rem;">
+      Notify Me
+    </button>
+  </form>
+
+  <div id="form-feedback" style="display: none; margin-top: 10px; font-size: 0.85rem; color: var(--accent-pine); font-weight: 500;">
+    ✓ Thank you. When email notification service goes live, we will add your address.
+  </div>
+
+  <div class="email-disclaimer">
+    No spam, unsubscribe anytime. Read our <a href={getAssetUrl('/privacy.html')}>Privacy Policy</a>.
+  </div>
+</div>

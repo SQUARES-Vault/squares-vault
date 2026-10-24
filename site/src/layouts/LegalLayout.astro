@@ -1,0 +1,93 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getAssetUrl } from '../config';
+
+interface Props {
+  title: string;
+  description: string;
+  version: string;
+  effectiveDate: string;
+  canonicalPath: string;
+}
+
+const { title, description, version, effectiveDate, canonicalPath } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} canonicalPath={canonicalPath}>
+  <div class="container" style="padding: 40px 0 80px;">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-primary); font-weight: 500;">{title}</span>
+    </nav>
+
+    <header style="margin-bottom: 36px; padding-bottom: 20px; border-bottom: 1px solid var(--border-hairline);">
+      <h1 style="margin-bottom: 10px;">{title}</h1>
+      <div style="font-size: 0.88rem; color: var(--ink-muted);">
+        <strong>Version:</strong> {version} &nbsp;|&nbsp;
+        <strong>Effective Date:</strong> {effectiveDate} &nbsp;|&nbsp;
+        <strong>Scope:</strong> Global (including India DPDP Act 2023, EU/UK GDPR, California CCPA)
+      </div>
+    </header>
+
+    <div class="text-container legal-body" style="font-size: 1rem; line-height: 1.7;">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+.legal-body h2 {
+  font-size: 1.35rem;
+  margin: 36px 0 12px;
+  color: var(--ink-primary);
+  border-bottom: 1px solid var(--border-hairline);
+  padding-bottom: 6px;
+}
+.legal-body h3 {
+  font-size: 1.15rem;
+  margin: 24px 0 10px;
+}
+.legal-body p {
+  margin-bottom: 16px;
+  color: var(--ink-secondary);
+}
+.legal-body ul, .legal-body ol {
+  margin: 0 0 20px 24px;
+  color: var(--ink-secondary);
+}
+.legal-body li {
+  margin-bottom: 8px;
+}
+.legal-body .doc-callout {
+  background-color: var(--bg-paper);
+  border: 1px solid var(--border-hairline);
+  border-left: 3px solid var(--accent-pine);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px 20px;
+  margin: 24px 0;
+}
+.legal-body .doc-callout.warning {
+  border-left-color: var(--status-expiring);
+}
+.legal-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  background-color: var(--bg-paper);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+}
+.legal-body th, .legal-body td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-hairline);
+  text-align: left;
+}
+.legal-body th {
+  background-color: var(--bg-subtle);
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+</style>

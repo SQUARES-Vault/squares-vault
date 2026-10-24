@@ -1,0 +1,141 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { siteConfig, getAssetUrl, getCanonicalUrl } from '../config';
+import documents from '../data/documents.json';
+import LucideIcon from '../components/icons/LucideIcon.astro';
+
+interface Props {
+  guide: any;
+}
+
+const { guide } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: guide.title,
+  description: guide.summary,
+  datePublished: guide.publishedDate,
+  author: {
+    '@type': 'Person',
+    name: siteConfig.builderName,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.siteName,
+  },
+  mainEntityOfPage: getCanonicalUrl(`/guides/${guide.slug}/`),
+};
+
+const relatedDocs = documents.filter((d) => (guide.relatedDocuments || []).includes(d.slug));
+---
+
+<BaseLayout
+  title={`${guide.title} | SQUARES Vault Guide`}
+  description={guide.summary}
+  canonicalPath={`/guides/${guide.slug}/`}
+  type="article"
+  jsonLd={jsonLd}
+>
+  <div class="container" style="padding: 40px 0 70px;">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+      <span style="margin: 0 8px;">/</span>
+      <a href={getAssetUrl('/guides/')} style="color: var(--ink-secondary); text-decoration: none;">Guides</a>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-primary); font-weight: 500;">{guide.title}</span>
+    </nav>
+
+    <!-- Header Block -->
+    <header style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-hairline);">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 0.85rem; color: var(--ink-muted);">
+        <span class="badge-status active">{guide.category}</span>
+        <span>·</span>
+        <span>{guide.readingTime}</span>
+        <span>·</span>
+        <span>Published {guide.publishedDate}</span>
+      </div>
+      <h1 style="margin-bottom: 16px;">{guide.title}</h1>
+      <p style="font-size: 1.15rem; color: var(--ink-secondary); max-width: var(--text-max-width);">
+        {guide.summary}
+      </p>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
+      <!-- Main Content -->
+      <article class="text-container" style="font-size: 1.05rem; line-height: 1.75;">
+        <p style="font-size: 1.15rem; color: var(--ink-primary); font-weight: 450; margin-bottom: 32px; border-left: 2px solid var(--accent-pine); padding-left: 18px;">
+          {guide.intro}
+        </p>
+
+        {guide.sections.map((sec: any) => (
+          <section style="margin-bottom: 40px;">
+            <h2 style="font-size: 1.45rem; margin-bottom: 14px; color: var(--ink-primary);">{sec.heading}</h2>
+            <div style="white-space: pre-line; color: var(--ink-secondary);">
+              {sec.content}
+            </div>
+          </section>
+        ))}
+
+        <!-- Next Steps Callout -->
+        <section style="margin: 48px 0; background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); padding: 28px;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 8px;">Automate this routine today</h3>
+          <p style="font-size: 0.95rem; color: var(--ink-secondary); margin-bottom: 16px;">
+            Forward your papers to SQUARES Vault in Telegram. Gemini AI logs the expiry date, schedules notifications, and files the original securely to your Google Drive.
+          </p>
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <span>Launch @squaresvaultbot in Telegram</span>
+            <span>&rarr;</span>
+          </a>
+        </section>
+
+        <!-- Related Documents -->
+        {relatedDocs.length > 0 && (
+          <section style="margin-top: 40px;">
+            <h3 style="font-size: 1.2rem; margin-bottom: 14px;">Related Document Guides</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+              {relatedDocs.map((doc) => (
+                <a href={getAssetUrl(`/documents/${doc.slug}/`)} style="text-decoration: none; color: inherit;">
+                  <div class="card-paper" style="padding: 14px;">
+                    <span class="badge-status active" style="margin-bottom: 6px;">{doc.category}</span>
+                    <strong style="display: block; font-size: 0.92rem; color: var(--ink-primary);">{doc.name}</strong>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+      </article>
+
+      <!-- Sidebar -->
+      <aside style="position: sticky; top: 90px;">
+        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 8px;">
+            About SQUARES Vault
+          </strong>
+          <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+            Zero-custodian document management in Telegram. Your original files are stored exclusively in your personal Google Drive.
+          </p>
+
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
+            <span>Try Free in Telegram</span>
+            <span>&rarr;</span>
+          </a>
+
+          <div style="font-size: 0.78rem; color: var(--ink-muted); text-align: center;">
+            {siteConfig.pricingNotice}
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+@media (max-width: 900px) {
+  div[style*="grid-template-columns: 1fr 340px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>

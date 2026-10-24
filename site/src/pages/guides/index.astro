@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig, getAssetUrl } from '../../config';
+import guides from '../../data/guides.json';
+import LucideIcon from '../../components/icons/LucideIcon.astro';
+
+const title = 'Document Management Guides & Expiry Checklists | SQUARES Vault';
+const description = 'Practical, step-by-step guides on tracking vehicle RC and PUC expiry, renewing car insurance, organising appliance warranty receipts, and sharing family documents safely.';
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/guides/">
+  <div class="container" style="padding: 40px 0 80px;">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-primary); font-weight: 500;">Guides</span>
+    </nav>
+
+    <!-- Header Block -->
+    <header style="margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid var(--border-hairline);">
+      <h1 style="margin-bottom: 14px;">Guides & Checklists</h1>
+      <p style="font-size: 1.18rem; color: var(--ink-secondary); max-width: var(--text-max-width);">
+        Factual, straightforward routines for managing vehicle papers, appliance warranties, insurance renewals, and household administration in India.
+      </p>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
+      <!-- Guides List -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        {guides.map((guide) => (
+          <article class="card-paper" style="padding: 28px; display: flex; flex-direction: column; gap: 12px; transition: border-color var(--transition-fast);">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--ink-muted);">
+              <span class="badge-status active">{guide.category}</span>
+              <span>·</span>
+              <span>{guide.readingTime}</span>
+              <span>·</span>
+              <span>Published {guide.publishedDate}</span>
+            </div>
+
+            <h2 style="font-size: 1.35rem; margin: 0; line-height: 1.35;">
+              <a href={getAssetUrl(`/guides/${guide.slug}/`)} style="color: var(--ink-primary); text-decoration: none;">
+                {guide.title}
+              </a>
+            </h2>
+
+            <p style="font-size: 0.95rem; color: var(--ink-secondary); line-height: 1.6; margin: 0;">
+              {guide.summary}
+            </p>
+
+            <div style="margin-top: 8px;">
+              <a href={getAssetUrl(`/guides/${guide.slug}/`)} class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">
+                <span>Read Full Guide</span>
+                <span>&rarr;</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Sidebar -->
+      <aside style="position: sticky; top: 90px; display: flex; flex-direction: column; gap: 24px;">
+        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 8px;">
+            Automate with SQUARES Vault
+          </strong>
+          <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+            Instead of tracking dates on wall calendars, forward your documents to our Telegram assistant. Expiry reminders run on your schedule, and original files live in your Google Drive.
+          </p>
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
+            <span>Launch @squaresvaultbot</span>
+            <span>&rarr;</span>
+          </a>
+          <div style="font-size: 0.78rem; color: var(--ink-muted); text-align: center;">
+            {siteConfig.pricingNotice}
+          </div>
+        </div>
+
+        <div class="card-paper" style="padding: 24px;">
+          <h3 style="font-size: 1rem; margin-bottom: 12px;">Browse by Document Type</h3>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
+            <li><a href={getAssetUrl('/documents/vehicle-rc/')} style="color: var(--ink-secondary); text-decoration: none;">Vehicle Registration (RC) &rarr;</a></li>
+            <li><a href={getAssetUrl('/documents/puc-certificate/')} style="color: var(--ink-secondary); text-decoration: none;">Pollution (PUC) Certificate &rarr;</a></li>
+            <li><a href={getAssetUrl('/documents/car-insurance/')} style="color: var(--ink-secondary); text-decoration: none;">Car Insurance Policy &rarr;</a></li>
+            <li><a href={getAssetUrl('/documents/extended-warranty/')} style="color: var(--ink-secondary); text-decoration: none;">Extended Warranties &rarr;</a></li>
+            <li><a href={getAssetUrl('/documents/appliance-invoices/')} style="color: var(--ink-secondary); text-decoration: none;">Appliance Invoices & Bills &rarr;</a></li>
+            <li><a href={getAssetUrl('/documents/passport/')} style="color: var(--ink-secondary); text-decoration: none;">Passport Expiry & Renewals &rarr;</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+@media (max-width: 900px) {
+  div[style*="grid-template-columns: 1fr 340px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>

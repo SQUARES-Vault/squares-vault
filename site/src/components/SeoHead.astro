@@ -1,0 +1,93 @@
+---
+import { siteConfig, getCanonicalUrl, getAssetUrl } from '../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalPath?: string;
+  type?: 'website' | 'article';
+  jsonLd?: Record<string, any>;
+  hreflangHi?: string;
+  hreflangEn?: string;
+}
+
+const {
+  title = `${siteConfig.siteName} — ${siteConfig.tagline}`,
+  description = siteConfig.description,
+  ogImage = getAssetUrl('/og-image.png'),
+  canonicalPath = '',
+  type = 'website',
+  jsonLd,
+  hreflangHi,
+  hreflangEn,
+} = Astro.props;
+
+const canonicalUrl = getCanonicalUrl(canonicalPath);
+const fullOgImageUrl = ogImage.startsWith('http') ? ogImage : `${siteConfig.siteUrl}${ogImage}`;
+
+// Base SoftwareApplication schema for home
+const defaultSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: siteConfig.siteName,
+  applicationCategory: 'ProductivityApplication',
+  operatingSystem: 'Telegram',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'INR',
+    description: siteConfig.pricingNotice,
+  },
+  author: {
+    '@type': 'Person',
+    name: siteConfig.builderName,
+  },
+  description: siteConfig.description,
+};
+
+const finalSchema = jsonLd || defaultSchema;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+<meta name="google-site-verification" content={siteConfig.googleSiteVerification} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:site_name" content={siteConfig.siteName} />
+<meta property="og:image" content={fullOgImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_IN" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={fullOgImageUrl} />
+
+<!-- Alternate Languages -->
+{hreflangHi && <link rel="alternate" hreflang="hi" href={getCanonicalUrl(hreflangHi)} />}
+{hreflangEn && <link rel="alternate" hreflang="en" href={getCanonicalUrl(hreflangEn)} />}
+<link rel="alternate" hreflang="x-default" href={getCanonicalUrl('/')} />
+
+<!-- Favicons -->
+<link rel="icon" type="image/x-icon" href={getAssetUrl('/favicon.ico')} />
+<link rel="icon" type="image/png" sizes="32x32" href={getAssetUrl('/favicon.png')} />
+<link rel="icon" type="image/png" sizes="512x512" href={getAssetUrl('/logo-icon.png')} />
+<link rel="apple-touch-icon" href={getAssetUrl('/logo-icon.png')} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(finalSchema)} />
+
+<!-- Privacy-friendly Analytics (off by default) -->
+{siteConfig.analytics.enabled && siteConfig.analytics.plausibleDomain && (
+  <script defer data-domain={siteConfig.analytics.plausibleDomain} src="https://plausible.io/js/script.js"></script>
+)}

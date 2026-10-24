@@ -1,0 +1,123 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { siteConfig, getAssetUrl } from '../config';
+import documents from '../data/documents.json';
+import LucideIcon from '../components/icons/LucideIcon.astro';
+
+interface Props {
+  audience: any;
+}
+
+const { audience: aud } = Astro.props;
+
+// Filter matching essential documents
+const matchedDocs = documents.filter((d) => aud.essentialDocuments.includes(d.slug));
+---
+
+<BaseLayout
+  title={`${aud.title} — Life-Admin & Document Management | SQUARES Vault`}
+  description={aud.subtitle}
+  canonicalPath={`/for/${aud.slug}/`}
+>
+  <div class="container" style="padding: 40px 0 70px;">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-secondary);">Audiences</span>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-primary); font-weight: 500;">{aud.title}</span>
+    </nav>
+
+    <!-- Header Block -->
+    <header style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-hairline);">
+      <h1 style="margin-bottom: 12px;">{aud.title}</h1>
+      <p style="font-size: 1.18rem; color: var(--ink-secondary); max-width: var(--text-max-width);">
+        {aud.subtitle}
+      </p>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
+      <!-- Main Content -->
+      <article class="text-container">
+        <!-- The Core Problem -->
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 12px;">The Core Problem</h2>
+          <p>{aud.coreProblem}</p>
+        </section>
+
+        <!-- How SQUARES Vault Helps -->
+        <section style="margin-bottom: 44px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 16px;">How SQUARES Vault Solves This</h2>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            {aud.howVaultHelps.map((h: any) => (
+              <div class="card-paper">
+                <strong style="color: var(--ink-primary); font-size: 1.05rem; display: block; margin-bottom: 6px;">
+                  {h.title}
+                </strong>
+                <p style="margin: 0; font-size: 0.94rem; color: var(--ink-secondary); line-height: 1.6;">
+                  {h.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Quote -->
+        {aud.quote && (
+          <section style="margin-bottom: 44px; background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-left: 3px solid var(--accent-pine); padding: 20px 24px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;">
+            <p style="font-style: italic; font-size: 1rem; color: var(--ink-secondary); margin: 0;">
+              "{aud.quote}"
+            </p>
+          </section>
+        )}
+
+        <!-- Essential Documents for this Audience -->
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 16px;">Essential Documents to Add First</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+            {matchedDocs.map((doc) => (
+              <a href={getAssetUrl(`/documents/${doc.slug}/`)} style="text-decoration: none; color: inherit;">
+                <div class="card-paper" style="padding: 16px; height: 100%; transition: border-color 0.15s ease;">
+                  <span class="badge-status active" style="margin-bottom: 8px;">{doc.category}</span>
+                  <strong style="color: var(--ink-primary); display: block; font-size: 0.95rem; margin-bottom: 4px;">{doc.name}</strong>
+                  <div style="color: var(--accent-pine); font-size: 0.8rem; font-weight: 600;">View Guide &rarr;</div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      </article>
+
+      <!-- Sidebar Sticky Card -->
+      <aside style="position: sticky; top: 90px;">
+        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: var(--accent-pine);">
+            <LucideIcon name="shield-check" size={20} />
+            <strong style="color: var(--ink-primary); font-size: 0.92rem;">Direct Telegram Access</strong>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;">
+            Get started in 15 seconds. No separate app downloads. Your files stay in your own Google Drive.
+          </p>
+
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
+            <span>Open in Telegram</span>
+            <span>&rarr;</span>
+          </a>
+
+          <div style="font-size: 0.78rem; color: var(--ink-muted); text-align: center;">
+            {siteConfig.pricingNotice}
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+@media (max-width: 900px) {
+  div[style*="grid-template-columns: 1fr 340px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>

@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig, getAssetUrl } from '../../config';
+import LucideIcon from '../../components/icons/LucideIcon.astro';
+
+const title = 'SQUARES Vault vs DigiLocker — Factual Comparison | SQUARES Vault';
+const description = 'DigiLocker and SQUARES Vault are complementary tools: DigiLocker fetches official government credentials, while SQUARES Vault reads your commercial bills, warranties, and sends proactive expiry reminders.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  author: {
+    '@type': 'Person',
+    name: siteConfig.builderName,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.siteName,
+  },
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/vs/digilocker/" jsonLd={jsonLd}>
+  <div class="container" style="padding: 40px 0 80px;">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-secondary);">Comparisons</span>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-primary); font-weight: 500;">vs DigiLocker</span>
+    </nav>
+
+    <!-- Header Block -->
+    <header style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-hairline);">
+      <div style="display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px;">
+        <span class="badge-status active">Product Comparison</span>
+      </div>
+      <h1 style="margin-bottom: 14px;">SQUARES Vault vs DigiLocker</h1>
+      <p style="font-size: 1.18rem; color: var(--ink-secondary); max-width: var(--text-max-width);">
+        DigiLocker and SQUARES Vault solve two completely different parts of your document life. They are complementary, not competitors.
+      </p>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
+      <article class="text-container" style="font-size: 1.05rem; line-height: 1.75;">
+        <!-- Core Distinction -->
+        <section style="margin-bottom: 36px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">The Fundamental Difference</h2>
+          <p>
+            <strong>DigiLocker</strong> is the Government of India's flagship digital credential platform. It connects directly with national and state databases (UIDAI, MoRTH, CBSE, state tax departments) to issue verified digital versions of government-issued documents like your Aadhaar card, Driver's License, and educational marksheets. Under Rule 9A of the Information Technology Rules, 2016, issued documents in DigiLocker are treated at par with physical originals by enforcement authorities.
+          </p>
+          <p>
+            <strong>SQUARES Vault</strong> is an intelligent life-admin assistant built inside Telegram. It processes all the non-government, commercial, and household documents that DigiLocker does not handle: appliance invoices, extended warranty slips, private health insurance policies, rental contracts, maintenance agreements, and thermal store receipts. It reads them with AI, extracts expiration dates, schedules multi-stage reminders, and organizes original files in your personal Google Drive.
+          </p>
+        </section>
+
+        <!-- Comparison Table -->
+        <section style="margin-bottom: 44px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 16px;">Side-by-Side Comparison</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-radius: var(--radius-sm); font-size: 0.92rem;">
+              <thead>
+                <tr style="background-color: var(--bg-subtle); border-bottom: 1px solid var(--border-hairline);">
+                  <th style="padding: 12px 16px; text-align: left; color: var(--ink-primary);">Dimension</th>
+                  <th style="padding: 12px 16px; text-align: left; color: var(--ink-primary); width: 40%;">DigiLocker</th>
+                  <th style="padding: 12px 16px; text-align: left; color: var(--ink-primary); width: 40%;">SQUARES Vault</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">Primary Purpose</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Government-verified digital credential issuer & locker</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Automated reading, expiry tracking & personal Drive backup for household documents</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">Document Scope</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Government-issued certificates (Aadhaar, DL, RC, Degrees)</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Any document: store receipts, warranty cards, private insurance, rental deeds, PUC slips</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">Expiry Reminders</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">No automated proactive multi-stage notification cadence</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">10-day, 2-day, and same-day notifications via Telegram with 1-tap Snooze</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">AI Extraction</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">None (pulls structured data directly from issuer APIs)</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Google Gemini API reads unstructured PDFs and photos into structured records</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">File Storage</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">DigiLocker national cloud infrastructure</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Your personal Google Drive account (Zero-Custodian architecture)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 16px; font-weight: 500;">Legal Identity Proof</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Yes, recognized under IT Act Rule 9A by traffic police & airports</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">No, productivity vault for personal admin, warranties, and renewals</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- How to Use Them Together -->
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">How to Use Them Together for Complete Peace of Mind</h2>
+          <p>
+            The most organized households use both tools in tandem:
+          </p>
+          <ol style="margin-left: 20px; display: flex; flex-direction: column; gap: 10px;">
+            <li>
+              <strong>Keep Government IDs in DigiLocker:</strong> Use DigiLocker on your phone when passing airport security or showing your Driving License at traffic checkpoints.
+            </li>
+            <li>
+              <strong>Forward Every Commercial Paper to SQUARES Vault:</strong> Whenever you buy an air conditioner, renew your private car insurance, get a roadside PUC test slip, or sign an 11-month lease, forward the PDF or photo to <code>@squaresvaultbot</code>.
+            </li>
+            <li>
+              <strong>Let Reminders Run Automatically:</strong> When your car insurance or PUC approaches expiry, SQUARES Vault notifies you before you incur a fine or lose your 50% No Claim Bonus.
+            </li>
+          </ol>
+        </section>
+
+        <!-- CTA Callout -->
+        <div style="background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); padding: 28px; margin-top: 40px;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 10px;">Ready to organize your household paperwork?</h3>
+          <p style="font-size: 0.95rem; color: var(--ink-secondary); margin-bottom: 18px;">
+            Start free in Telegram without installing any new apps. Forward your first bill or policy in under 30 seconds.
+          </p>
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <span>Open @squaresvaultbot in Telegram</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Sidebar -->
+      <aside style="position: sticky; top: 90px; display: flex; flex-direction: column; gap: 24px;">
+        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 8px;">
+            Key Takeaway
+          </strong>
+          <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 14px;">
+            DigiLocker is for official credentials. SQUARES Vault is for bills, warranties, and renewal reminders saved in your own Google Drive.
+          </p>
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
+            <span>Try in Telegram</span>
+            <span>&rarr;</span>
+          </a>
+          <div style="font-size: 0.78rem; color: var(--ink-muted); text-align: center;">
+            {siteConfig.pricingNotice}
+          </div>
+        </div>
+
+        <div class="card-paper" style="padding: 24px;">
+          <h3 style="font-size: 1rem; margin-bottom: 12px;">Related Comparisons</h3>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
+            <li><a href={getAssetUrl('/vs/google-drive/')} style="color: var(--ink-secondary); text-decoration: none;">SQUARES Vault vs Google Drive Alone &rarr;</a></li>
+            <li><a href={getAssetUrl('/documents/vehicle-rc/')} style="color: var(--ink-secondary); text-decoration: none;">Vehicle RC Tracking Guide &rarr;</a></li>
+            <li><a href={getAssetUrl('/documents/puc-certificate/')} style="color: var(--ink-secondary); text-decoration: none;">PUC Expiry Tracker &rarr;</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+@media (max-width: 900px) {
+  div[style*="grid-template-columns: 1fr 340px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>

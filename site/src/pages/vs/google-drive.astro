@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siteConfig, getAssetUrl } from '../../config';
+import LucideIcon from '../../components/icons/LucideIcon.astro';
+
+const title = 'SQUARES Vault vs Google Drive Alone — Why Drive Needs an Assistant | SQUARES Vault';
+const description = 'Google Drive stores files passively; SQUARES Vault reads them, extracts expiration dates, and alerts you before deadlines. See why combining them gives you the best of both worlds.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  author: {
+    '@type': 'Person',
+    name: siteConfig.builderName,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: siteConfig.siteName,
+  },
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/vs/google-drive/" jsonLd={jsonLd}>
+  <div class="container" style="padding: 40px 0 80px;">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-secondary);">Comparisons</span>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-primary); font-weight: 500;">vs Google Drive</span>
+    </nav>
+
+    <!-- Header Block -->
+    <header style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-hairline);">
+      <div style="display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px;">
+        <span class="badge-status active">Architecture Comparison</span>
+      </div>
+      <h1 style="margin-bottom: 14px;">SQUARES Vault vs Google Drive Alone</h1>
+      <p style="font-size: 1.18rem; color: var(--ink-secondary); max-width: var(--text-max-width);">
+        Google Drive is where your files live; SQUARES Vault is the intelligent filing clerk who reads them, tracks deadlines, and pings you before they expire.
+      </p>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
+      <article class="text-container" style="font-size: 1.05rem; line-height: 1.75;">
+        <!-- The Core Insight -->
+        <section style="margin-bottom: 36px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">The Core Problem with Folders Alone</h2>
+          <p>
+            Almost every household starts with good intentions: creating a folder hierarchy in Google Drive called <code>Documents/Car</code>, <code>Documents/Insurance</code>, and <code>Documents/Warranties</code>.
+          </p>
+          <p>
+            Within three months, the system breaks down:
+          </p>
+          <ul style="margin-left: 20px; display: flex; flex-direction: column; gap: 10px;">
+            <li><strong>Filing Friction:</strong> Uploading requires saving the PDF from WhatsApp, opening Drive, navigating through 4 nested folders, and renaming <code>IMG_20261010_12345.jpg</code> manually. In reality, documents stay stranded in phone downloads.</li>
+            <li><strong>Passive Storage:</strong> Google Drive stores files safely, but it cannot read a faded PUC slip or an insurance schedule. It will never tell you that your pollution certificate expires next Tuesday.</li>
+            <li><strong>No Expiry Clock:</strong> Files in Drive have an "upload date" and "modified date", but no concept of a regulatory "expiry date" or "renewal deadline".</li>
+          </ul>
+        </section>
+
+        <!-- Side-by-Side Comparison -->
+        <section style="margin-bottom: 44px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 16px;">Feature Comparison</h2>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-radius: var(--radius-sm); font-size: 0.92rem;">
+              <thead>
+                <tr style="background-color: var(--bg-subtle); border-bottom: 1px solid var(--border-hairline);">
+                  <th style="padding: 12px 16px; text-align: left; color: var(--ink-primary);">Capability</th>
+                  <th style="padding: 12px 16px; text-align: left; color: var(--ink-primary); width: 40%;">Google Drive Alone</th>
+                  <th style="padding: 12px 16px; text-align: left; color: var(--ink-primary); width: 40%;">SQUARES Vault + Google Drive</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">Ingestion Effort</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Manual upload, folder navigation, manual renaming</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Forward PDF or snap a photo in Telegram in 5 seconds</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">Automatic Expiry Alerts</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">None (requires setting separate calendar entries)</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Automated 10-day, 2-day, and same-day notifications</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">Data Extraction</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Basic OCR text search on select PDFs</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Gemini AI extracts registration plate, dates, coverage, and amounts</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">Multi-Hop Vehicle Grouping</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Requires manual sorting into vehicle folders</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Automatic linking by vehicle plate across insurance, RC, PUC, and challans</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-hairline);">
+                  <td style="padding: 12px 16px; font-weight: 500;">File Ownership</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">100% in your Google account</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">100% in your Google account (Zero-Custodian architecture)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 16px; font-weight: 500;">Conversational Queries</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Search by keywords only</td>
+                  <td style="padding: 12px 16px; color: var(--ink-secondary);">Natural language: "What is my car policy number?" or "When does the AC warranty end?"</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Zero Custodian Section -->
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">Why You Don't Have to Choose Between Them</h2>
+          <p>
+            SQUARES Vault was explicitly built not to lock you into a proprietary cloud silo.
+          </p>
+          <p>
+            During onboarding, SQUARES Vault connects to your Google Drive using the strictly scoped <code>https://www.googleapis.com/auth/drive.file</code> permission. This means:
+          </p>
+          <ul style="margin-left: 20px; display: flex; flex-direction: column; gap: 8px;">
+            <li>SQUARES Vault creates an organized <code>SQUARES Vault</code> directory in your personal Google Drive.</li>
+            <li>Original document files (images, PDFs) upload directly to your Drive.</li>
+            <li>SQUARES Vault cannot read, alter, or access any other files, photos, or folders in your Google Drive.</li>
+            <li>If you ever stop using SQUARES Vault, your files remain completely intact in your Google Drive. You lose nothing.</li>
+          </ul>
+        </section>
+
+        <!-- CTA Callout -->
+        <div style="background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); padding: 28px; margin-top: 40px;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 10px;">Turn your Google Drive into an active vault</h3>
+          <p style="font-size: 0.95rem; color: var(--ink-secondary); margin-bottom: 18px;">
+            Set up in 60 seconds with Telegram and Google Sign-In. Free during early access.
+          </p>
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <span>Connect @squaresvaultbot</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Sidebar -->
+      <aside style="position: sticky; top: 90px; display: flex; flex-direction: column; gap: 24px;">
+        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 8px;">
+            Zero-Custodian Security
+          </strong>
+          <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 14px;">
+            Your files never sit permanently on our servers. They reside in your own Google Drive under your personal ownership.
+          </p>
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
+            <span>Get Started in Telegram</span>
+            <span>&rarr;</span>
+          </a>
+          <div style="font-size: 0.78rem; color: var(--ink-muted); text-align: center;">
+            {siteConfig.pricingNotice}
+          </div>
+        </div>
+
+        <div class="card-paper" style="padding: 24px;">
+          <h3 style="font-size: 1rem; margin-bottom: 12px;">Related Reading</h3>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
+            <li><a href={getAssetUrl('/vs/digilocker/')} style="color: var(--ink-secondary); text-decoration: none;">SQUARES Vault vs DigiLocker &rarr;</a></li>
+            <li><a href={getAssetUrl('/guides/how-to-organise-warranty-cards-and-bills/')} style="color: var(--ink-secondary); text-decoration: none;">Organising Warranty Cards & Bills &rarr;</a></li>
+            <li><a href={getAssetUrl('/guides/how-to-share-documents-with-family-safely/')} style="color: var(--ink-secondary); text-decoration: none;">Sharing Documents with Family Safely &rarr;</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+@media (max-width: 900px) {
+  div[style*="grid-template-columns: 1fr 340px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>

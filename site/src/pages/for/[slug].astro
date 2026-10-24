@@ -1,0 +1,19 @@
+---
+import AudienceLayout from '../../layouts/AudienceLayout.astro';
+import audiences from '../../data/audiences.json';
+
+export function getStaticPaths() {
+  return audiences.map((aud) => ({
+    params: { slug: aud.slug },
+    props: { audience: aud },
+  }));
+}
+
+interface Props {
+  audience: any;
+}
+
+const { audience: aud } = Astro.props;
+---
+
+<AudienceLayout audience={aud} />

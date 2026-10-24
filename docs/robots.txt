@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://squares-vault.github.io/squares-vault/sitemap-index.xml

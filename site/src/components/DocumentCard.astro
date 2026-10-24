@@ -1,0 +1,41 @@
+---
+import { getAssetUrl } from '../config';
+import LucideIcon from './icons/LucideIcon.astro';
+
+interface Props {
+  title: string;
+  category: string;
+  iconName?: string;
+  slug: string;
+  summary: string;
+}
+
+const { title, category, iconName = 'file-text', slug, summary } = Astro.props;
+---
+
+<div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+  <div>
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+      <span class="badge-status active">{category}</span>
+      <div style="color: var(--accent-pine); display: flex; align-items: center;">
+        <LucideIcon name={iconName} size={20} />
+      </div>
+    </div>
+
+    <h3 style="font-size: 1.15rem; margin-bottom: 8px;">
+      <a href={getAssetUrl(`/documents/${slug}/`)} style="color: var(--ink-primary); text-decoration: none;">
+        {title}
+      </a>
+    </h3>
+
+    <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.5; margin-bottom: 16px;">
+      {summary}
+    </p>
+  </div>
+
+  <div style="padding-top: 12px; border-top: 1px solid var(--border-hairline); display: flex; justify-content: space-between; align-items: center;">
+    <a href={getAssetUrl(`/documents/${slug}/`)} style="font-size: 0.82rem; font-weight: 600; text-decoration: none; color: var(--accent-pine);">
+      View Document Guide &rarr;
+    </a>
+  </div>
+</div>

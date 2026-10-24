@@ -1,0 +1,94 @@
+[
+  {
+    "slug": "car-owners",
+    "title": "For Car & Two-Wheeler Owners",
+    "subtitle": "Keep your RC, insurance, PUC, warranties, and challans unified by registration plate.",
+    "icon": "car",
+    "coreProblem": "Indian vehicle owners juggle at least four separate expiry cycles: 6-month PUCs, 1-year motor insurance, 3-year extended warranties, and periodic camera challans. A single lapsed PUC invites a ₹10,000 fine; an insurance lapse over 90 days destroys your accrued No Claim Bonus (up to 50% premium discount).",
+    "howVaultHelps": [
+      {
+        "title": "Automatic Multi-Hop Vehicle Grouping",
+        "description": "Upload your car's RC once. SQUARES Vault connects every subsequent insurance policy, PUC certificate, service invoice, and e-challan to that vehicle plate automatically."
+      },
+      {
+        "title": "Triple-Tier Expiry Notifications",
+        "description": "Never get caught off guard at traffic checkpoints. Receive notifications at 10 days, 2 days, and same-day with 1-tap Snooze and Renewal links."
+      },
+      {
+        "title": "Instant On-Demand Retrieval",
+        "description": "When questioned by a traffic officer or visiting an authorized service center, type 'Give me docs for my Venue' to pull up your records in 3 seconds."
+      }
+    ],
+    "essentialDocuments": ["vehicle-rc", "puc-certificate", "car-insurance", "traffic-challans", "extended-warranty"],
+    "quote": "I used to maintain a spreadsheet for 2 cars and a scooter. Now I just forward the PDF whenever renewal arrives, and SQUARES Vault tracks the rest."
+  },
+  {
+    "slug": "families",
+    "title": "For Busy Household Families",
+    "subtitle": "Stop digging through family WhatsApp groups for appliance bills, health policies, and warranties.",
+    "icon": "home",
+    "coreProblem": "Households buy dozens of electronic appliances every few years: laptops, TVs, refrigerators, air conditioners, water purifiers. Invoices are printed on thermal roll paper that fades to blank within months, while health insurance cards and utility bills get buried in disorganized WhatsApp family groups.",
+    "howVaultHelps": [
+      {
+        "title": "Family Access Sharing",
+        "description": "Grant your spouse or adult children read-only access to specific categories (e.g. 'health' or 'warranty') so anyone can pull up policy details during clinic visits without multiple logins."
+      },
+      {
+        "title": "Permanent Proof-of-Purchase Storage",
+        "description": "Snap thermal store receipts immediately. Photos transfer directly to your personal Google Drive so proof of purchase remains crisp for consumer court claims years later."
+      },
+      {
+        "title": "Annual Maintenance & Warranty Tracking",
+        "description": "Know exactly when water purifier AMC filters are due or when extended warranty replacements expire before paying local repair shops."
+      }
+    ],
+    "essentialDocuments": ["health-insurance", "appliance-invoices", "extended-warranty", "utility-bills"],
+    "quote": "When our refrigerator compressor failed in month 22, my wife pulled up the warranty invoice from Telegram in 10 seconds. The service center replaced it free."
+  },
+  {
+    "slug": "tenants-landlords",
+    "title": "For Tenants & Landlords",
+    "subtitle": "Track 11-month lease expirations, notice periods, and electricity meter deposits without friction.",
+    "icon": "key",
+    "coreProblem": "Tenancy relationships in India run on 11-month lease agreements. Forgetting the 30-day or 60-day notice period frequently leads to forfeiture of security deposit interest or disputes over rent escalations. Meanwhile, utility bills must be tracked monthly to prove address residency for banking and passport renewals.",
+    "howVaultHelps": [
+      {
+        "title": "11-Month Term Countdown",
+        "description": "Logs commencement and expiry dates from your registered or notarized rent agreement, scheduling alerts ahead of mandatory notice windows."
+      },
+      {
+        "title": "Address Proof Freshness Guarantee",
+        "description": "Indian passport offices and banks reject electricity bills older than 3 months. Upload monthly utility PDFs to always have an active address document ready."
+      },
+      {
+        "title": "Security Deposit Tracking",
+        "description": "Maintains a permanent verifiable log of advance deposits, escalation clauses, and handover terms in your personal Google Drive."
+      }
+    ],
+    "essentialDocuments": ["rental-agreements", "utility-bills", "appliance-invoices"],
+    "quote": "I manage 3 rented apartments. Keeping track of which 11-month contract is expiring and reminding tenants about renewal is now completely hands-off."
+  },
+  {
+    "slug": "parents-nris",
+    "title": "For People Managing Parents' Documents & NRIs",
+    "subtitle": "Oversee elderly parents' health policies, utility connections, and property records from anywhere in the world.",
+    "icon": "globe",
+    "coreProblem": "Children living in different cities or abroad (NRIs) frequently bear responsibility for their elderly parents' medical insurance renewals, pension life certificates, fixed deposit renewals, and utility dues. Coordinating document renewals over long-distance phone calls often leads to delayed payments and lapsed policies.",
+    "howVaultHelps": [
+      {
+        "title": "Zero Distance Vault Oversight",
+        "description": "Upload parents' mediclaim cards, utility bills, and property papers into a unified vault. Receive proactive deadline alerts in your own Telegram regardless of time zone."
+      },
+      {
+        "title": "Continuous Health Insurance Protection",
+        "description": "Senior citizens cannot afford a break in health insurance continuity. Advance 10-day reminders ensure premiums are settled before the 30-day grace period closes."
+      },
+      {
+        "title": "Simple Telegram Interface for Parents",
+        "description": "Elderly parents don't need to learn a complex portal. They can forward a bill photo directly in Telegram; Gemini AI reads the due date automatically."
+      }
+    ],
+    "essentialDocuments": ["health-insurance", "utility-bills", "passport", "rental-agreements"],
+    "quote": "Living in London, I was terrified of my parents in Delhi missing their health insurance renewal deadline. SQUARES Vault sends me alerts 10 days ahead so I can pay online."
+  }
+]

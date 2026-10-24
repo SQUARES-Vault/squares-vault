@@ -1,0 +1,23 @@
+---
+interface FaqItem {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  items: FaqItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="faq-stack">
+  {items.map((item, idx) => (
+    <details class="faq-item" open={idx === 0 ? true : undefined}>
+      <summary>{item.q}</summary>
+      <div class="faq-content">
+        <p set:html={item.a} />
+      </div>
+    </details>
+  ))}
+</div>

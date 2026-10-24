@@ -1,0 +1,361 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TelegramMockup from '../components/TelegramMockup.astro';
+import VideoPlaceholder from '../components/VideoPlaceholder.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import Testimonials from '../components/Testimonials.astro';
+import EmailCapture from '../components/EmailCapture.astro';
+import DocumentCard from '../components/DocumentCard.astro';
+import LucideIcon from '../components/icons/LucideIcon.astro';
+import documents from '../data/documents.json';
+import audiences from '../data/audiences.json';
+import { siteConfig, getAssetUrl } from '../config';
+
+const homeFaqs = [
+  {
+    q: 'How does SQUARES Vault access my Google Drive?',
+    a: 'During setup, you authorize SQUARES Vault via Google’s official Device Flow. We request only two narrowly-scoped permissions: <code>drive.file</code> (which permits viewing and managing only the files created by SQUARES Vault) and <code>drive.appdata</code> (for configuration sync). We cannot view, open, or modify any other files or folders in your personal Google Drive.',
+  },
+  {
+    q: 'How is my document data processed by AI?',
+    a: 'Documents are processed using Google’s Gemini API for optical character recognition and key-date extraction. Processing takes place in transit/volatile memory. Please refer to <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google’s Gemini API Terms of Service</a> for details on Google’s API data handling terms.',
+  },
+  {
+    q: 'Is SQUARES Vault free to use?',
+    a: siteConfig.pricingNotice,
+  },
+  {
+    q: 'What happens if I decide to delete my data?',
+    a: 'You can type <code>/deletemydata</code> directly in the Telegram bot at any time. This permanently deletes your user profile and indexed metadata from our databases, revokes the Google OAuth access token, and cancels all pending reminder schedules. Your original files stored inside your personal Google Drive remain unaffected and completely under your control.',
+  },
+  {
+    q: 'Can other people see my documents?',
+    a: 'No. Your documents are filed into your private Google Drive and associated with your unique Telegram user ID. Only you—and any family members you explicitly authorize through the Family Access Sharing settings—can search or retrieve your records.',
+  },
+];
+---
+
+<BaseLayout
+  title="SQUARES Vault — Private Life-Admin & Document Expiry Assistant"
+  description="Forward your vehicle RC, insurance, warranties and bills in Telegram. Gemini AI logs the dates, saves files to your personal Google Drive, and alerts you before renewal."
+  canonicalPath="/"
+  hreflangHi="/hi/"
+>
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section class="section" style="padding-top: 56px; padding-bottom: 64px;">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-kicker">Personal Life-Admin · Telegram Assistant</div>
+        <h1>Your household documents, organised.<br />Expiries tracked before they cost you.</h1>
+
+        <p class="hero-subtitle">
+          Forward a vehicle RC, motor insurance policy, appliance warranty, or utility bill in Telegram.
+          Gemini AI extracts key renewal dates, saves the original file directly into <strong>your personal Google Drive</strong>, and alerts you before it expires.
+        </p>
+
+        <div class="hero-actions">
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 14px 28px; font-size: 1.05rem;">
+            <LucideIcon name="telegram" size={18} />
+            <span>Open in Telegram</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="#how-it-works" class="btn btn-secondary" style="padding: 14px 24px; font-size: 1.05rem;">
+            <span>See How It Works</span>
+          </a>
+        </div>
+
+        <div class="hero-pricing-note">
+          <strong>Pricing:</strong> {siteConfig.pricingNotice}
+        </div>
+
+        <EmailCapture />
+
+        <div class="hero-stats-strip">
+          <div class="stat-item">
+            <span class="stat-value">10 Types</span>
+            <span class="stat-label">RC, PUC, insurance, bills</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">Your Drive</span>
+            <span class="stat-label">Zero server file custody</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">10d / 2d / 0d</span>
+            <span class="stat-label">Automated alert cadence</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Demo Chat & Video Slot -->
+      <div>
+        <TelegramMockup />
+        <VideoPlaceholder />
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+  <section class="section" id="how-it-works" style="background-color: var(--bg-paper);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Simple &amp; Frictionless</div>
+        <h2>How SQUARES Vault Works</h2>
+        <p>No separate app download. No passwords to remember. Everything operates inside your existing Telegram app.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Connect in 15 seconds</h3>
+          <p class="step-text">
+            Send <code>/start</code> in Telegram. Connect your personal Google Drive via Google's secure Device Flow. SQUARES Vault only receives permission to manage files it creates.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Snap or forward any paper</h3>
+          <p class="step-text">
+            Forward an insurance PDF from your email, or photograph a vehicle RC, appliance invoice, or PUC slip. Multi-page documents can be sent in a single photo batch.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3 class="step-title">In-memory AI reading</h3>
+          <p class="step-text">
+            Gemini AI extracts the category, title, expiry date, provider, and vehicle number. Review the drafted record in chat and confirm with one tap.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <h3 class="step-title">Automated renewal alerts</h3>
+          <p class="step-text">
+            Receive reminders at 10 days, 2 days, and same-day at 09:00 AM local time. Tap 'Snooze', 'Renew', or ask natural language questions whenever you need answers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FEATURES ═══════════════════ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Built for Real Life</div>
+        <h2>Features engineered for household peace of mind</h2>
+        <p>A structured filing cabinet that actively keeps track of your household compliance.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="car" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Vehicle Multi-Hop Linking</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            Save your car's RC once. SQUARES Vault automatically groups your insurance policies, PUC slips, service invoices, and traffic challans under your vehicle registration plate. Ask about your <em>"Venue"</em> and every related document surfaces together.
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="shield" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Your Own Google Drive Storage</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            We operate with zero file custody. Uploaded documents are saved directly into your personal Google Drive folder. You retain 100% legal ownership of your original files, completely independent of our service.
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="file-text" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">"Ask Your Vault" Natural Language Q&amp;A</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            Ask questions in plain conversational language: <em>"What is due between Jan and June?"</em> or <em>"How much did I spend on maintenance?"</em>. The bot parses your indexed records and returns concise answers with clickable attachment links.
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="home" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Family Access Sharing</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            Grant family members read access to specific categories (such as 'vehicle' or 'health') without duplicating files. They can retrieve policies and vehicle papers from their own Telegram during emergencies.
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="calendar" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Calendar Export &amp; Smart Search</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            Export all upcoming deadlines as a standard <code>.ics</code> file into Google Calendar or Apple Calendar. Use full-text search across titles, provider names, and notes with live validity tags (🟢 Active · 🟡 Expiring · 🔴 Expired).
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="receipt" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Manual Entry &amp; Renewal Wizard</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            Prefer manual entry? Add any document without AI using our step-by-step wizard, equipped with smart date shortcuts (+6 Months, +1 Year, +2 Years). Edit existing records or record annual renewals in seconds.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PRIVACY & SECURITY ═══════════════════ -->
+  <section class="section" id="privacy" style="background-color: var(--bg-paper);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Honest &amp; Plain Language</div>
+        <h2>Privacy by Architecture, Not Slogans</h2>
+        <p>A transparent breakdown of how your files, tokens, and data are treated.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <div class="card-paper">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+            1. Zero Server File Custody
+          </strong>
+          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+            Your original files are uploaded directly to your own Google Drive. We do not store permanent copies of your documents on our servers.
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+            2. Narrow <code>drive.file</code> Scope
+          </strong>
+          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+            We only request access to files created by SQUARES Vault itself. We cannot view, open, or edit any pre-existing files in your Google Drive.
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+            3. Google Gemini API Processing
+          </strong>
+          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+            Document OCR and date extraction are handled via Google's Gemini API in transit. For details on Google's API data practices, review <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google's Gemini API terms</a>.
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+            4. Simple Deletion via <code>/deletemydata</code>
+          </strong>
+          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+            Typing <code>/deletemydata</code> permanently deletes all your metadata from our database, revokes OAuth access, and cancels active reminders. Your Drive files remain yours.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ COMPARISON ═══════════════════ -->
+  <section class="section" id="comparison">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Factual Comparison</div>
+        <h2>Why not DigiLocker or a generic Drive folder?</h2>
+        <p>Different tools serve different purposes. Here is a fair and factual breakdown.</p>
+      </div>
+
+      <ComparisonTable />
+
+      <div style="margin-top: 20px; font-size: 0.88rem; color: var(--ink-muted); text-align: center;">
+        Read our in-depth guides: <a href={getAssetUrl('/vs/digilocker/')}>SQUARES Vault vs DigiLocker</a> · <a href={getAssetUrl('/vs/google-drive/')}>SQUARES Vault vs Drive Alone</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ DOCUMENT TYPES DIRECTORY ═══════════════════ -->
+  <section class="section" id="documents" style="background-color: var(--bg-paper);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Supported Documents</div>
+        <h2>10 Document Types Built for Indian Households</h2>
+        <p>Explore detailed guides, expiry validity rules, and what dates matter for each document.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px;">
+        {documents.map((doc) => (
+          <DocumentCard
+            title={doc.name}
+            category={doc.category}
+            iconName={doc.icon}
+            slug={doc.slug}
+            summary={doc.summary}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ AUDIENCE SOLUTIONS ═══════════════════ -->
+  <section class="section" id="audiences">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Tailored Solutions</div>
+        <h2>Who uses SQUARES Vault?</h2>
+        <p>Specific life-admin setups designed around real household pain points.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+        {audiences.map((aud) => (
+          <div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; margin-bottom: 8px;">
+                <a href={getAssetUrl(`/for/${aud.slug}/`)} style="text-decoration: none; color: var(--ink-primary);">
+                  {aud.title}
+                </a>
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+                {aud.subtitle}
+              </p>
+            </div>
+            <a href={getAssetUrl(`/for/${aud.slug}/`)} style="font-size: 0.84rem; font-weight: 600; color: var(--accent-pine); text-decoration: none;">
+              Read solution guide &rarr;
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ TESTIMONIALS (CONDITIONAL) ═══════════════════ -->
+  <Testimonials />
+
+  <!-- ═══════════════════ FAQ ═══════════════════ -->
+  <section class="section" id="faq" style="background-color: var(--bg-paper);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Common Inquiries</div>
+        <h2>Frequently Asked Questions</h2>
+        <p>Direct answers about permissions, Google Gemini API handling, and security.</p>
+      </div>
+
+      <FaqAccordion items={homeFaqs} />
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FINAL CALL TO ACTION ═══════════════════ -->
+  <section class="section" style="padding: 80px 0; text-align: center;">
+    <div class="container text-container" style="margin: 0 auto;">
+      <h2 style="font-size: 2.2rem; margin-bottom: 14px;">Take control of your household life-admin</h2>
+      <p style="font-size: 1.1rem; color: var(--ink-secondary); margin-bottom: 28px;">
+        Never lose a warranty receipt, miss an insurance renewal, or pay an avoidable traffic fine again.
+      </p>
+
+      <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px;">
+        <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.05rem;">
+          <LucideIcon name="telegram" size={18} />
+          <span>Launch SQUARES Vault in Telegram</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+
+      <div style="font-size: 0.84rem; color: var(--ink-muted);">
+        {siteConfig.pricingNotice} · Zero-custodian Google Drive storage
+      </div>
+    </div>
+  </section>
+</BaseLayout>

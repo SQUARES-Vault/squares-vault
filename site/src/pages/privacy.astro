@@ -1,0 +1,183 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { siteConfig } from '../config';
+
+const title = 'Privacy Policy';
+const description = 'Privacy Policy for SQUARES Vault. Compliant with India’s DPDP Act 2023, EU GDPR, and Google API Services User Data Policy.';
+---
+
+<LegalLayout
+  title={title}
+  description={description}
+  version="1.0"
+  effectiveDate="October 10, 2026"
+  canonicalPath="/privacy.html"
+>
+  <div class="doc-callout">
+    <strong>Core Commitment — Zero-Custodian Architecture:</strong><br />
+    SQUARES Vault operates on a zero-custodian principle. We <strong>do not store your original document files</strong> on our servers. Uploaded documents are saved directly into your personal Google Drive account. You retain 100% ownership and control over your files at all times.
+  </div>
+
+  <h2>1. Introduction & Overview</h2>
+  <p>
+    This Privacy Policy explains how <strong>SQUARES Vault</strong> ("we", "us", or "the Service"), operated via Telegram (<code>@squaresvaultbot</code>), collects, processes, and protects your personal data when you interact with our automated life-admin assistant.
+  </p>
+  <p>
+    We are committed to respecting your privacy in strict compliance with applicable global data protection laws, including:
+  </p>
+  <ul>
+    <li><strong>India:</strong> The Digital Personal Data Protection Act, 2023 (DPDP Act) and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011.</li>
+    <li><strong>European Union & United Kingdom:</strong> General Data Protection Regulation (Regulation (EU) 2016/679 - GDPR) and the UK GDPR.</li>
+    <li><strong>United States:</strong> California Consumer Privacy Act of 2018, as amended by the California Privacy Rights Act (CCPA/CPRA).</li>
+    <li><strong>Google User Data Policy:</strong> The Google API Services User Data Policy, specifically the Limited Use requirements.</li>
+  </ul>
+
+  <h2>2. What Personal Data We Process</h2>
+  <p>
+    In accordance with the principle of data minimization, we process only the strictly necessary information required to operate the service:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Category of Data</th>
+        <th>Specific Items</th>
+        <th>Storage Location & Safeguards</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Telegram Identity</strong></td>
+        <td>Telegram User ID, Chat ID, and display first name. We do <em>not</em> collect your phone number, contacts, or passwords.</td>
+        <td>Local SQLite database, indexed by numeric ID.</td>
+      </tr>
+      <tr>
+        <td><strong>Google OAuth Tokens</strong></td>
+        <td>Access and refresh tokens granted during the Google Device Flow.</td>
+        <td>Encrypted at rest using AES-256-GCM envelope encryption. Per-user Data Encryption Keys (DEKs) derived from a hardware-isolated master key.</td>
+      </tr>
+      <tr>
+        <td><strong>Document Metadata</strong></td>
+        <td>Category, extracted title, key dates (expiry/due dates), currency, amounts, and notes. Full policy or identification numbers are permanently <strong>masked</strong> (e.g. <code>••••3113</code>).</td>
+        <td>Encrypted local database and FTS5 search index.</td>
+      </tr>
+      <tr>
+        <td><strong>Ephemeral Processing Files</strong></td>
+        <td>Temporary document images and PDF attachments sent for optical parsing.</td>
+        <td>Held in volatile server temporary directories only during active AI processing. Permanently deleted immediately after ingestion.</td>
+      </tr>
+      <tr>
+        <td><strong>Original Documents</strong></td>
+        <td>Your actual vehicle registrations, insurance policies, bills, receipts, and identity documents.</td>
+        <td><strong>Your own Google Drive account.</strong> Never permanently stored on our servers.</td>
+      </tr>
+      <tr>
+        <td><strong>Consent & Audit Logs</strong></td>
+        <td>Version of policy consented to, timestamp, action logs (e.g., agreed, deleted).</td>
+        <td>Local SQLite audit tables. Retained for 12 months for compliance verification.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. Lawful Basis and Purposes of Processing</h2>
+  <p>We process your data exclusively for the following specific purposes:</p>
+  <ol>
+    <li><strong>Providing the Service:</strong> To ingest, categorize, and extract deadlines from your documents upon your instruction.</li>
+    <li><strong>Sending Deadline Alerts:</strong> To dispatch automated Telegram notifications before deadlines (10 days, 2 days, and same-day).</li>
+    <li><strong>Interactive Vault Querying ("Ask Your Vault"):</strong> To synthesize answers to your dynamic questions (e.g., "What bills are due this month?") using private AI models.</li>
+    <li><strong>Google Drive Synchronization:</strong> To upload files directly to your designated <code>SQUARES Vault</code> Google Drive folder and maintain a recoverable metadata index.</li>
+  </ol>
+  <p>
+    The lawful basis under GDPR Article 6(1) is <strong>Contract Performance</strong> (operating the service requested by you) and <strong>Explicit Consent</strong> provided during onboarding. Under the India DPDP Act 2023, processing is carried out based on your explicit, informed consent.
+  </p>
+
+  <h2>4. Google API Limited Use Disclosure</h2>
+  <div class="doc-callout">
+    <p><strong>Mandatory Google User Data Policy Compliance Statement:</strong></p>
+    <p>
+      SQUARES Vault's use and transfer to any other app of information received from Google APIs adheres to the 
+      <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">Google API Services User Data Policy</a>, including the Limited Use requirements.
+    </p>
+  </div>
+  <p>Specifically:</p>
+  <ul>
+    <li>We only request access to two Google scopes:
+      <ul>
+        <li><code>https://www.googleapis.com/auth/drive.file</code> — Permits viewing and managing only the files that SQUARES Vault itself creates. We cannot read or alter other documents in your Drive.</li>
+        <li><code>https://www.googleapis.com/auth/drive.appdata</code> — Allows saving a private, non-public configuration backup.</li>
+      </ul>
+    </li>
+    <li>We do not sell, rent, or transfer your Google data to third parties for advertising or profiling.</li>
+    <li>We do not use data obtained through Google APIs to train, retrain, or improve generalized artificial intelligence or machine learning models.</li>
+  </ul>
+
+  <h2>5. AI Processing & Third-Party Sub-Processors</h2>
+  <p>
+    To provide intelligent document extraction and natural language assistance, we engage specific third-party infrastructure sub-processors under strict contractual data protection terms:
+  </p>
+  <ul>
+    <li><strong>Google Cloud (Gemini API):</strong> Document text recognition and question-answering are executed via Google's API. Disclosed under <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">Google Gemini API Terms</a>.</li>
+    <li><strong>Telegram Messenger Inc.:</strong> Provides the user-interface transport layer. Message transit is governed by Telegram's Terms and Privacy Policy.</li>
+    <li><strong>Cloudflare R2 & Backblaze B2:</strong> Encrypted secondary disaster recovery backups. All database snapshots are client-side encrypted using <code>age</code> (X25519) cryptographic envelopes before leaving the server.</li>
+    <li><strong>Oracle Cloud Infrastructure:</strong> Cloud virtual machine hosting our application runtime.</li>
+  </ul>
+
+  <h2>6. Security Architecture & Safeguards</h2>
+  <p>
+    We employ multi-layered technical and organizational safeguards:
+  </p>
+  <ul>
+    <li><strong>AES-256-GCM Encryption:</strong> All sensitive tokens and keys are encrypted at rest with authenticated AES-GCM ciphers.</li>
+    <li><strong>Key Separation:</strong> The master encryption key is stored outside the database directory in an isolated, restricted file.</li>
+    <li><strong>EXIF Stripping:</strong> All photos sent to the bot have GPS coordinates, camera metadata, and device identifiers stripped prior to processing.</li>
+    <li><strong>Masking of Sensitive Identifiers:</strong> Document numbers, PAN cards, passport numbers, and account numbers are masked by default in the database (retaining only the last 4 characters).</li>
+  </ul>
+
+  <h2>7. Your Rights (India DPDP, GDPR & Global)</h2>
+  <p>
+    Regardless of your geographic location, you enjoy full sovereignty over your personal data:
+  </p>
+  <ul>
+    <li><strong>Right to Access & Portability:</strong> You can view all indexed records at any time directly in the bot. You can also export an <code>.ics</code> calendar file containing all your deadlines via Settings.</li>
+    <li><strong>Right to Correction:</strong> You can edit record titles, dates, amounts, categories, and notes at any time using the interactive editing wizard.</li>
+    <li><strong>Right to Erasure ("Right to be Forgotten"):</strong> Typing <code>/deletemydata</code> executes an immediate, irreversible wipe:
+      <ol>
+        <li>Halts all active reminders and scheduled jobs.</li>
+        <li>Revokes your Google OAuth token with Google servers.</li>
+        <li>Deletes all user rows from SQLite databases and search indexes.</li>
+        <li>Deletes the app folder and files in your Google Drive (if selected).</li>
+        <li>Generates a salted cryptographic tombstone to ensure deletion persists through disaster recovery replays.</li>
+      </ol>
+    </li>
+    <li><strong>Right to Withdraw Consent:</strong> You can revoke consent at any time via Settings or by disconnecting SQUARES Vault in your <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">Google Account Permissions</a>.</li>
+  </ul>
+
+  <h2>8. Data Retention</h2>
+  <ul>
+    <li><strong>Active Users:</strong> Record metadata is retained while your account is active to provide reminders.</li>
+    <li><strong>Inactive Accounts:</strong> If an account remains unused for 11 months, an inactivity reminder is dispatched. If no action is taken by month 12, all database records are permanently deleted (files in your personal Google Drive remain unaffected).</li>
+    <li><strong>Encrypted Backups:</strong> Automated server backup snapshots roll off and are automatically purged after <strong>30 days</strong>.</li>
+  </ul>
+
+  <h2>9. Age Restriction (18+ Only)</h2>
+  <p>
+    SQUARES Vault is strictly intended for individuals aged <strong>18 years and above</strong>. We do not knowingly collect, process, or solicit personal data from children or individuals under the age of 18. If we discover that a user is under 18, their account and associated metadata will be deleted immediately.
+  </p>
+
+  <h2>10. Grievance Redressal & Contact Information</h2>
+  <p>
+    In accordance with the India Digital Personal Data Protection Act 2023 and the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules 2021, as well as global regulatory requirements, we have appointed a dedicated Grievance Officer:
+  </p>
+
+  <div class="doc-callout">
+    <strong>Grievance & Support Redressal:</strong><br />
+    Contact Email: <strong><a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--accent-pine); text-decoration: underline;">{siteConfig.contactEmail}</a></strong><br />
+    Official Telegram Interface: <strong><a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">@squaresvaultbot</a></strong> (use <code>/help</code> or contact the administrator).<br />
+    <strong>Statutory Turnaround Time:</strong> Grievance requests are acknowledged within 48 hours and resolved within 30 calendar days.
+  </div>
+
+  <h2>11. Updates to this Policy</h2>
+  <p>
+    We may update this Privacy Policy from time to time. When significant updates occur, the <code>policy_version</code> in the bot configuration will increment, and users will be prompted in Telegram to review and re-consent before proceeding.
+  </p>
+</LegalLayout>

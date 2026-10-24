@@ -1,0 +1,142 @@
+[
+  {
+    "slug": "track-vehicle-document-expiry-dates-india",
+    "title": "How to Keep Track of Vehicle Document Expiry Dates in India",
+    "readingTime": "5 min read",
+    "publishedDate": "2026-10-15",
+    "category": "Vehicles",
+    "summary": "A practical system for managing vehicle RC, motor insurance, 6-month PUC certificates, and traffic challans without paying costly fines.",
+    "intro": "Owning a car or motorcycle in India is an exercise in managing multiple overlapping regulatory deadlines. Between mandatory 6-month pollution checks, annual insurance policies, 15-year fitness renewals, and automated camera challans, it is remarkably easy for an otherwise diligent driver to miss an expiration date.",
+    "sections": [
+      {
+        "heading": "1. Understand the 4 Key Expiry Timelines",
+        "content": "Every motor vehicle operating on Indian roads is governed by four distinct legal documents, each with its own renewal frequency:\n\n• Pollution Under Control (PUC) Certificate: Valid for 6 months (or 12 months for select BS-VI vehicles in certain states). Driving without a valid PUC attracts a statutory penalty of ₹10,000 under Section 190(2) of the amended Motor Vehicles Act.\n\n• Motor Insurance Policy: Annual renewal (midnight expiry). Lapsing past 90 days completely wipes out your accumulated No Claim Bonus (NCB), which can represent up to a 50% discount on your own-damage premium.\n\n• Registration Certificate (RC): Initial registration is valid for 15 years from the purchase date for private non-transport vehicles. Post 15 years, vehicles must undergo fitness re-inspection every 5 years.\n\n• Automated e-Challans: While not an expiry date in the traditional sense, traffic violation notices issued by automated speed or red-light cameras carry a typical 60-day window for online payment before being forwarded to Virtual Courts."
+      },
+      {
+        "heading": "2. Why Paper Folders and Phone Galleries Fail",
+        "content": "Most motorists keep their vehicle papers inside the dashboard glove box. Over time, thermal paper PUC slips fade into illegible white paper, original RCs suffer heat damage, and updated insurance PDFs remain buried inside unread email accounts.\n\nPhone gallery albums are equally unreliable. When a traffic officer asks for your PUC at a junction, scrolling through thousands of personal photos to find a snapshot taken 5 months ago creates unnecessary anxiety and delay."
+      },
+      {
+        "heading": "3. The 3-Tier Alert System",
+        "content": "An effective reminder system cannot rely on a single calendar ping. In SQUARES Vault, we implemented a 3-tier notification cadence that matches real-world driving habits:\n\n• T-10 Days (Planning Window): An alert arrives 10 days before expiry. For car insurance, this gives you ample time to check Insured Declared Value (IDV) options, compare policy terms across insurers, or port your policy without emergency price gouging.\n\n• T-2 Days (Action Window): A second reminder arrives 48 hours prior to deadline. If you receive a PUC alert, this is your signal to stop at the petrol pump testing booth on your evening commute.\n\n• T-0 Day (Final Due Date): A morning notification confirms that coverage or validity lapses at midnight."
+      },
+      {
+        "heading": "4. Automating with SQUARES Vault",
+        "content": "Instead of manually creating calendar reminders and typing dates, forward your insurance PDF or snap a photo of your PUC slip directly to @squaresvaultbot in Telegram. Gemini AI extracts the plate number (e.g. UP15EB3XX3), tags the expiration date, schedules your reminders, and files the original document into your personal Google Drive."
+      }
+    ],
+    "relatedDocuments": ["vehicle-rc", "puc-certificate", "car-insurance", "traffic-challans"]
+  },
+  {
+    "slug": "what-to-do-before-car-insurance-expires",
+    "title": "What to Do Before Your Car Insurance Policy Expires",
+    "readingTime": "6 min read",
+    "publishedDate": "2026-10-18",
+    "category": "Insurance",
+    "summary": "Step-by-step checklist to renew car insurance, safeguard your 50% No Claim Bonus, evaluate IDV, and avoid break-in inspection fees.",
+    "intro": "Allowing your car insurance to lapse by even a single day creates serious legal and financial liabilities. Beyond the immediate risk of police fines for driving an uninsured vehicle, a lapse can cost thousands of rupees in lost No Claim Bonus discounts and mandatory break-in vehicle inspection charges.",
+    "sections": [
+      {
+        "heading": "1. The 10-Day Pre-Renewal Window",
+        "content": "Never wait until the final 24 hours of your policy to initiate renewal. Starting the process 10 days in advance provides several concrete advantages:\n\n• You have time to evaluate your vehicle's Insured Declared Value (IDV). Insurers often artificially depress IDV to show a lower premium, leaving you under-insured in the event of total loss or theft.\n\n• You can review whether essential add-ons (such as Zero Depreciation, Engine Protect, Consumables Cover, and Return to Invoice) are still cost-effective given your vehicle's age.\n\n• If your current insurer offers an inflated renewal quote, 10 days gives you ample room to port to an alternative provider without stress."
+      },
+      {
+        "heading": "2. Protecting Your No Claim Bonus (NCB)",
+        "content": "The No Claim Bonus is a reward discount offered to policyholders who made zero claims during the previous policy year. It scales progressively from 20% in Year 1 up to 50% in Year 5.\n\nCritical Rule: Under Indian insurance regulations, your accumulated NCB is valid for up to 90 days after your policy expires. If you fail to renew within 90 days of the expiration date, your entire accumulated bonus resets to zero. A driver who spent 5 claim-free years reaching a 50% discount loses thousands of rupees on future premiums with a single forgotten deadline."
+      },
+      {
+        "heading": "3. Avoiding Break-In Vehicle Inspections",
+        "content": "If you renew your insurance policy after midnight of the expiry date, it is classified as a 'break-in' renewal. Most insurers will not issue an active policy until a certified surveyor conducts a physical or self-inspection (video walkaround) of your vehicle to ensure no pre-existing dent or damage exists.\n\nThis inspection process can take 24 to 48 hours to approve, during which your car must remain parked. If an accident occurs during this uninsured gap, you bear 100% of the liability."
+      },
+      {
+        "heading": "4. Storing Your New Policy Schedule",
+        "content": "Once your renewal payment succeeds, immediately forward the newly generated policy schedule PDF to @squaresvaultbot in Telegram. The bot registers the new expiry date for the following year, connects it to your car's registration plate, and backs up the PDF directly to your Google Drive."
+      }
+    ],
+    "relatedDocuments": ["car-insurance", "vehicle-rc", "extended-warranty"]
+  },
+  {
+    "slug": "how-to-organise-warranty-cards-and-bills",
+    "title": "How to Organise Appliance Warranty Cards and Cash Memos",
+    "readingTime": "5 min read",
+    "publishedDate": "2026-10-20",
+    "category": "Consumer",
+    "summary": "The ultimate guide to digitising paper receipts before thermal ink fades, keeping serial numbers handy, and winning warranty claims.",
+    "intro": "Every Indian household spends significant money on home appliances, consumer electronics, and kitchen gadgets. Yet when an air conditioner leaks, a laptop display flickers, or a water purifier stops dispensing, an astonishing percentage of families end up paying out of pocket because they cannot find the original invoice.",
+    "sections": [
+      {
+        "heading": "1. The Fading Thermal Ink Problem",
+        "content": "Nearly all major retail stores, supermarkets, and electronics showrooms print receipts on thermal roll paper. Thermal printing does not use ink; instead, a heated print head activates a heat-sensitive chemical coating on the paper.\n\nBecause thermal coatings react to heat and light, receipts stored in standard drawers or folders typically fade into complete blank sheets within 6 to 9 months. By the time your television or washing machine experiences an issue in month 11, the store receipt is unreadable, and service centers will flatly reject free warranty repairs."
+      },
+      {
+        "heading": "2. What Service Centers Actually Require",
+        "content": "To honour a warranty claim under India's Consumer Protection Act, authorized brand service centers require:\n\n• The original tax invoice displaying the seller's registered GSTIN.\n• Clear mention of the product model name and purchase date.\n• The product serial number or IMEI number matching the device chassis.\n• Proof of an extended warranty or AMC certificate (if claiming beyond year one).\n\nIf you have a clear digital scan of the tax invoice showing these items, service centers are legally required to honour the manufacturer warranty."
+      },
+      {
+        "heading": "3. The 30-Second Unboxing Routine",
+        "content": "The simplest way to eliminate lost warranty headaches is to build a 30-second habit whenever you unbox a new product:\n\n1. Place the invoice and warranty booklet flat on a table under decent light.\n2. Open Telegram and snap a photo directly inside @squaresvaultbot.\n3. Gemini AI parses the store name, item name, purchase date, and amount.\n4. Confirm the draft in one tap. The high-resolution photo uploads directly to your personal Google Drive."
+      },
+      {
+        "heading": "4. Reclaiming Peace of Mind",
+        "content": "When an appliance breaks two years later, you don't need to rummage through cardboard boxes. Simply open Telegram and ask: 'Show me the invoice for my LG washing machine'. The bot presents the original image, purchase date, and warranty terms immediately."
+      }
+    ],
+    "relatedDocuments": ["appliance-invoices", "extended-warranty", "utility-bills"]
+  },
+  {
+    "slug": "how-to-share-family-documents-securely",
+    "title": "How to Share Vital Family Documents Securely Without WhatsApp",
+    "readingTime": "5 min read",
+    "publishedDate": "2026-10-22",
+    "category": "Privacy",
+    "summary": "Why emailing or WhatsApping sensitive identity documents poses serious risks, and how granular category access keeps your family protected.",
+    "intro": "Sharing personal identity documents, health insurance cards, and vehicle registrations among family members is a daily necessity. However, forwarding sensitive PDFs across WhatsApp groups or unencrypted email chains creates major privacy vulnerabilities and digital clutter.",
+    "sections": [
+      {
+        "heading": "1. The Risks of WhatsApp Document Sharing",
+        "content": "When family members forward PAN cards, Aadhaar snapshots, passports, and insurance policies over messaging apps, several problems emerge:\n\n• Loss of Access Control: Once a file is sent to a group or chat, it is saved to everyone's local phone storage and cloud backups (Google Drive or iCloud backups), often in unencrypted format.\n\n• Version Confusion: When an insurance policy is renewed, older expired copies continue floating in chat history, leading to confusion during medical emergencies.\n\n• Phone Loss Vulnerability: If a family member's phone is lost or stolen, unencrypted document images stored in their photo gallery become vulnerable to identity theft."
+      },
+      {
+        "heading": "2. Granular Category-Level Permissions",
+        "content": "Not every household member needs access to every financial document. A spouse may need access to the family car records and health insurance, while teenage children only need vehicle papers when driving.\n\nIn SQUARES Vault, we built Family Access Grants with category-specific boundaries. You can grant access to the 'vehicle' or 'insurance' category without exposing banking, tax, or investment records."
+      },
+      {
+        "heading": "3. Zero File Duplication",
+        "content": "Instead of duplicating heavy files across multiple cloud accounts, SQUARES Vault allows authorized family members to query and view documents directly through their own Telegram interface. The master document remains securely stored in the primary owner's Google Drive, ensuring there is only one authoritative, up-to-date copy."
+      },
+      {
+        "heading": "4. Instant Revocation",
+        "content": "If circumstances change, access can be revoked in a single tap from the Settings menu. The shared user immediately loses the ability to view or search those documents."
+      }
+    ],
+    "relatedDocuments": ["health-insurance", "vehicle-rc", "passport"]
+  },
+  {
+    "slug": "set-up-document-reminders-phone",
+    "title": "How to Set Up a Bulletproof Document Reminder Routine on Your Phone",
+    "readingTime": "5 min read",
+    "publishedDate": "2026-10-24",
+    "category": "Productivity",
+    "summary": "Build a frictionless system to track expiries, sync with Google or Apple Calendar, and eliminate administrative anxiety.",
+    "intro": "Life-admin tasks—renewing passports, servicing cars, paying property taxes, and tracking warranties—are rarely difficult, but they are persistently easy to postpone until late fees and penalties strike. Here is how to construct a reliable, automated reminder routine.",
+    "sections": [
+      {
+        "heading": "1. Why Standard Calendar Apps Fall Short",
+        "content": "Many people attempt to track document expirations using Google Calendar or Apple Reminders. While well-intentioned, this approach routinely breaks down for three reasons:\n\n• High Input Friction: Manually opening a calendar app, typing document details, calculating 10-day offsets, and attaching files takes 3 to 5 minutes per document. Most people abandon the habit after two weeks.\n\n• Disconnected Files: When a calendar alert fires saying 'Car insurance expires today', the actual policy document is stored elsewhere, forcing you to hunt for policy numbers and contact details.\n\n• Rigid Alarm Times: Standard calendar alerts often trigger while you are in meetings, and clearing the notification clears your only reminder."
+      },
+      {
+        "heading": "2. The Frictionless Forwarding Principle",
+        "content": "A habit only survives if the friction is near zero. With SQUARES Vault in Telegram, the input routine requires exactly one action: forward the document PDF or photo directly into chat.\n\nGemini AI reads the expiration date, determines the appropriate reminder offset (e.g. 10 days for vehicle insurance, 30 days for passports, 7 days for utility bills), and establishes automated reminders without requiring you to set a single date manually."
+      },
+      {
+        "heading": "3. Dual-Channel: Telegram Alerts + Calendar Sync",
+        "content": "To ensure maximum reliability, SQUARES Vault combines conversational Telegram notifications with standard calendar integration:\n\n• In-Chat Actionable Notifications: When a reminder arrives in Telegram, it includes interactive buttons: 'Mark Done', 'Renew', and 'Snooze'. Tapping Snooze reschedules the alert to a more convenient time.\n\n• 1-Tap .ICS Calendar Export: In the bot settings, tap 'Export Calendar (.ics)'. You can import all upcoming deadlines directly into your Google Calendar, Apple Calendar, or Outlook in one go."
+      },
+      {
+        "heading": "4. Conducting a 10-Minute Quarterly Audit",
+        "content": "Every three months, open Telegram and type 'Show all upcoming deadlines'. The bot provides a clean chronological breakdown of everything expiring in the next 90 days, giving you complete clarity over upcoming household expenses and compliance requirements."
+      }
+    ],
+    "relatedDocuments": ["vehicle-rc", "car-insurance", "utility-bills"]
+  }
+]

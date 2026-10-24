@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig, getAssetUrl } from '../config';
+import LucideIcon from '../components/icons/LucideIcon.astro';
+
+const title = 'About SQUARES Vault — Built by Shikhar Singh Patel';
+const description = 'The story, principles, and architecture behind SQUARES Vault: a zero-custodian household document assistant built by Shikhar Singh Patel.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  mainEntity: {
+    '@type': 'Person',
+    name: siteConfig.builderName,
+    email: siteConfig.contactEmail,
+    jobTitle: 'Independent Software Engineer & Creator of SQUARES Vault',
+  },
+};
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/about/" jsonLd={jsonLd}>
+  <div class="container" style="padding: 40px 0 80px;">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+      <span style="margin: 0 8px;">/</span>
+      <span style="color: var(--ink-primary); font-weight: 500;">About</span>
+    </nav>
+
+    <!-- Header Block -->
+    <header style="margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid var(--border-hairline);">
+      <div style="display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px;">
+        <span class="badge-status active">Creator & Purpose</span>
+      </div>
+      <h1 style="margin-bottom: 14px;">Why SQUARES Vault Exists</h1>
+      <p style="font-size: 1.18rem; color: var(--ink-secondary); max-width: var(--text-max-width);">
+        A zero-custodian document assistant built on the conviction that your household records belong in your personal storage, not inside someone else's walled garden.
+      </p>
+    </header>
+
+    <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
+      <article class="text-container" style="font-size: 1.05rem; line-height: 1.75;">
+        <!-- The Origin Story -->
+        <section style="margin-bottom: 36px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">The Origin</h2>
+          <p>
+            Like millions of Indian families, my household managed documents across a disorganized web of physical plastic accordion folders, family WhatsApp groups, and unlabelled Google Drive folders.
+          </p>
+          <p>
+            The inevitable consequences followed:
+          </p>
+          <ul style="margin-left: 20px; display: flex; flex-direction: column; gap: 8px;">
+            <li>Paying a ₹10,000 traffic fine because a roadside PUC certificate expired without anyone noticing.</li>
+            <li>Losing an accumulated 50% No Claim Bonus discount on car insurance because a renewal deadline slipped past 90 days.</li>
+            <li>Paying out of pocket for a refrigerator repair because the thermal paper warranty receipt had faded into complete illegibility.</li>
+          </ul>
+          <p>
+            The existing solutions had major flaws: generic cloud storage (Google Drive, Dropbox) is passive and requires tedious manual filing; specialized document apps lock your files into proprietary servers that you cannot easily export or control; and government apps like DigiLocker only store official state credentials, completely ignoring household bills, warranties, and service invoices.
+          </p>
+          <p>
+            I built SQUARES Vault to solve this problem once and for all: a bot in Telegram that reads any document with modern AI, extracts the dates that matter, schedules proactive reminders, and saves every original file directly into your personal Google Drive.
+          </p>
+        </section>
+
+        <!-- Core Architectural Principles -->
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 16px;">Core Architectural Principles</h2>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="card-paper" style="padding: 22px;">
+              <strong style="color: var(--ink-primary); font-size: 1.08rem; display: block; margin-bottom: 6px;">
+                1. Zero-Custodian Storage
+              </strong>
+              <p style="margin: 0; font-size: 0.94rem; color: var(--ink-secondary); line-height: 1.6;">
+                We never store your original files permanently on our application servers. When you send a document, it is uploaded directly to your own Google Drive using the tightly scoped <code>drive.file</code> permission. You retain 100% legal ownership and physical custody.
+              </p>
+            </div>
+
+            <div class="card-paper" style="padding: 22px;">
+              <strong style="color: var(--ink-primary); font-size: 1.08rem; display: block; margin-bottom: 6px;">
+                2. Transparent AI Processing
+              </strong>
+              <p style="margin: 0; font-size: 0.94rem; color: var(--ink-secondary); line-height: 1.6;">
+                Documents are processed through Google's Gemini API for optical text extraction and structured parsing. Processing files exist only in volatile server memory during the analysis call and are purged immediately after ingestion.
+              </p>
+            </div>
+
+            <div class="card-paper" style="padding: 22px;">
+              <strong style="color: var(--ink-primary); font-size: 1.08rem; display: block; margin-bottom: 6px;">
+                3. Total Data Sovereignty
+              </strong>
+              <p style="margin: 0; font-size: 0.94rem; color: var(--ink-secondary); line-height: 1.6;">
+                If you ever wish to leave, typing <code>/deletemydata</code> in Telegram halts all reminders, revokes your Google OAuth token, and permanently deletes all database rows and index records. Your files in Google Drive remain completely yours.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Builder Bio -->
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.4rem; margin-bottom: 14px;">The Builder</h2>
+          <p>
+            SQUARES Vault is designed, engineered, and maintained by <strong>{siteConfig.builderName}</strong>.
+          </p>
+          <p>
+            It is developed with a focus on rock-solid reliability, calm paper-and-ink aesthetics, strict data protection compliance (under India's Digital Personal Data Protection Act 2023, EU GDPR, and Google API Limited Use policies), and zero gimmicks.
+          </p>
+        </section>
+
+        <!-- Contact & Support -->
+        <section style="background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); padding: 28px;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 10px;">Contact & Grievance Redressal</h3>
+          <p style="font-size: 0.95rem; color: var(--ink-secondary); line-height: 1.6; margin-bottom: 16px;">
+            Whether you have questions about privacy, need help connecting your Google Drive, or have feedback on document parsing accuracy, you can reach out directly:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.95rem;">
+            <div>
+              <strong>Email:</strong> <a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--accent-pine); text-decoration: underline;">{siteConfig.contactEmail}</a>
+            </div>
+            <div>
+              <strong>Telegram Support:</strong> <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">@squaresvaultbot</a> (type <code>/help</code>)
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <!-- Sidebar -->
+      <aside style="position: sticky; top: 90px; display: flex; flex-direction: column; gap: 24px;">
+        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 8px;">
+            Quick Facts
+          </strong>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--ink-secondary);">
+            <li><strong>Builder:</strong> {siteConfig.builderName}</li>
+            <li><strong>Primary Platform:</strong> Telegram bot</li>
+            <li><strong>Storage Provider:</strong> User's Google Drive</li>
+            <li><strong>AI Engine:</strong> Google Gemini API</li>
+            <li><strong>Status:</strong> Free during early access</li>
+          </ul>
+          <hr style="border: 0; border-top: 1px solid var(--border-hairline); margin: 16px 0;" />
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%;">
+            <span>Launch Bot</span>
+            <span>&rarr;</span>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+@media (max-width: 900px) {
+  div[style*="grid-template-columns: 1fr 340px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>

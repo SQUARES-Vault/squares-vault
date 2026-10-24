@@ -1,0 +1,70 @@
+---
+import { siteConfig, getAssetUrl } from '../config';
+import documents from '../data/documents.json';
+import audiences from '../data/audiences.json';
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-columns">
+      <div class="footer-col" style="grid-column: span 1;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+          <img src={getAssetUrl('/logo-icon.png')} alt="" width="26" height="26" style="border-radius: 4px; border: 1px solid var(--border-muted);" />
+          <strong style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--ink-primary);">{siteConfig.siteName}</strong>
+        </div>
+        <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+          A private, zero-custodian document management assistant for Telegram.
+          Files stored exclusively in your own Google Drive.
+        </p>
+        <p style="font-size: 0.82rem; color: var(--ink-muted); line-height: 1.5;">
+          Built by <strong>{siteConfig.builderName}</strong>.<br />
+          Contact: <a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--ink-secondary);">{siteConfig.contactEmail}</a>
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Document Types</h5>
+        <ul>
+          {documents.slice(0, 5).map((doc) => (
+            <li><a href={getAssetUrl(`/documents/${doc.slug}/`)}>{doc.name}</a></li>
+          ))}
+          <li><a href={getAssetUrl('/#documents')} style="font-weight: 600; color: var(--accent-pine);">View all 10 documents &rarr;</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>For You</h5>
+        <ul>
+          {audiences.map((aud) => (
+            <li><a href={getAssetUrl(`/for/${aud.slug}/`)}>{aud.title}</a></li>
+          ))}
+          <li><a href={getAssetUrl('/vs/digilocker/')}>vs. DigiLocker</a></li>
+          <li><a href={getAssetUrl('/vs/google-drive/')}>vs. Drive Alone</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Resources & Trust</h5>
+        <ul>
+          <li><a href={getAssetUrl('/guides/')}>Guides & Checklists</a></li>
+          <li><a href={getAssetUrl('/about/')}>About the Project</a></li>
+          <li><a href={getAssetUrl('/privacy.html')}>Privacy Policy</a></li>
+          <li><a href={getAssetUrl('/terms.html')}>Terms of Service</a></li>
+          <li><a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google Gemini API Terms ↗</a></li>
+          <li><a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer">Launch @squaresvaultbot ↗</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>
+        © {new Date().getFullYear()} SQUARES Vault. Zero-custodian document management.
+      </div>
+      <div style="display: flex; gap: 20px;">
+        <a href={getAssetUrl('/privacy.html')}>Privacy Policy</a>
+        <a href={getAssetUrl('/terms.html')}>Terms of Service</a>
+        <a href={getAssetUrl('/hi/')}>हिन्दी संस्करण</a>
+      </div>
+    </div>
+  </div>
+</footer>
