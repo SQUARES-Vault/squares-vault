@@ -16,10 +16,10 @@ const { currentLang = 'en' } = Astro.props;
     </a>
 
     <nav class="header-nav" aria-label="Main Navigation">
-      <a href={getAssetUrl('#how-it-works')}>{currentLang === 'hi' ? 'यह कैसे काम करता है' : 'How It Works'}</a>
-      <a href={getAssetUrl('#features')}>{currentLang === 'hi' ? 'विशेषताएं' : 'Capabilities'}</a>
-      <a href={getAssetUrl('#documents')}>{currentLang === 'hi' ? 'दस्तावेज़' : 'Documents'}</a>
-      <a href={getAssetUrl('#comparison')}>{currentLang === 'hi' ? 'तुलना' : 'Compare'}</a>
+      <a href={getAssetUrl(currentLang === 'hi' ? '/hi/#how-it-works' : '/#how-it-works')}>{currentLang === 'hi' ? 'यह कैसे काम करता है' : 'How It Works'}</a>
+      <a href={getAssetUrl(currentLang === 'hi' ? '/hi/#features' : '/#features')}>{currentLang === 'hi' ? 'विशेषताएं' : 'Capabilities'}</a>
+      <a href={getAssetUrl(currentLang === 'hi' ? '/hi/#documents' : '/#documents')}>{currentLang === 'hi' ? 'दस्तावेज़' : 'Documents'}</a>
+      <a href={getAssetUrl(currentLang === 'hi' ? '/hi/#comparison' : '/#comparison')}>{currentLang === 'hi' ? 'तुलना' : 'Compare'}</a>
       <a href={getAssetUrl('/guides/')}>{currentLang === 'hi' ? 'मार्गदर्शिका' : 'Guides'}</a>
       <a href={getAssetUrl('/privacy.html')}>{currentLang === 'hi' ? 'गोपनीयता' : 'Privacy'}</a>
     </nav>

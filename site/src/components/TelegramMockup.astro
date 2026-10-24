@@ -1,5 +1,12 @@
 ---
 import { getAssetUrl } from '../config';
+
+interface Props {
+  currentLang?: 'en' | 'hi';
+}
+
+const { currentLang = 'en' } = Astro.props;
+const isHi = currentLang === 'hi';
 ---
 
 <div class="hero-mockup-floating">
@@ -15,50 +22,58 @@ import { getAssetUrl } from '../config';
     />
     <div>
       <div class="chat-title">SQUARES Vault</div>
-      <div class="chat-subtitle">Verified Telegram Assistant</div>
+      <div class="chat-subtitle">{isHi ? 'सत्यापित टेलीग्राम असिस्टेंट' : 'Verified Telegram Assistant'}</div>
     </div>
   </div>
 
   <div class="chat-stream">
     <div class="bubble bubble-user">
-      Show me all documents for my Venue
+      {isHi ? 'मेरी Venue के सभी दस्तावेज़ दिखाओ' : 'Show me all documents for my Venue'}
     </div>
 
     <div class="bubble bubble-bot">
       <div style="font-weight: 600; font-size: 13px; color: var(--accent); margin-bottom: 4px;">
-        Vault Assistant
+        {isHi ? 'वॉल्ट असिस्टेंट' : 'Vault Assistant'}
       </div>
       <p style="font-size: 13px; color: var(--text); margin-bottom: 10px;">
-        Found 3 linked records for <span class="badge-plate">UP15EB3XX3</span> <em>(Hyundai VENUE)</em>:
+        {isHi ? (
+          <>
+            <span class="badge-plate">UP15EB3XX3</span> <em>(Hyundai VENUE)</em> के लिए 3 जुड़े रिकॉर्ड मिले:
+          </>
+        ) : (
+          <>
+            Found 3 linked records for <span class="badge-plate">UP15EB3XX3</span> <em>(Hyundai VENUE)</em>:
+          </>
+        )}
       </p>
 
       <div class="mock-doc-row">
         <div>
-          <strong style="color: var(--text);">1. Vehicle Registration &amp; Title</strong>
-          <div style="color: var(--muted); font-size: 12px;">Plate: UP15EB3XX3 · Verified</div>
+          <strong style="color: var(--text);">{isHi ? '1. वाहन रजिस्ट्रेशन व टाइटल' : '1. Vehicle Registration & Title'}</strong>
+          <div style="color: var(--muted); font-size: 12px;">{isHi ? 'प्लेट: UP15EB3XX3 · सत्यापित' : 'Plate: UP15EB3XX3 · Verified'}</div>
         </div>
-        <span class="badge-status active">Active</span>
+        <span class="badge-status active">{isHi ? 'सक्रिय' : 'Active'}</span>
       </div>
 
       <div class="mock-doc-row">
         <div>
-          <strong style="color: var(--text);">2. Auto Insurance Policy</strong>
-          <div style="color: var(--muted); font-size: 12px;">Expires 10 Nov 2026 · Comprehensive</div>
+          <strong style="color: var(--text);">{isHi ? '2. ऑटो इंश्योरेंस पॉलिसी' : '2. Auto Insurance Policy'}</strong>
+          <div style="color: var(--muted); font-size: 12px;">{isHi ? 'एक्सपायरी: 10 Nov 2026 · कॉम्प्रिहेंसिव' : 'Expires 10 Nov 2026 · Comprehensive'}</div>
         </div>
-        <span class="badge-status expiring">17 Days</span>
+        <span class="badge-status expiring">{isHi ? '17 दिन' : '17 Days'}</span>
       </div>
 
       <div class="mock-doc-row">
         <div>
-          <strong style="color: var(--text);">3. Safety &amp; Emissions Inspection</strong>
-          <div style="color: var(--muted); font-size: 12px;">Annual Certificate · Valid</div>
+          <strong style="color: var(--text);">{isHi ? '3. सुरक्षा व प्रदूषण जांच (PUC)' : '3. Safety & Emissions Inspection'}</strong>
+          <div style="color: var(--muted); font-size: 12px;">{isHi ? 'वार्षिक प्रमाणपत्र · वैध' : 'Annual Certificate · Valid'}</div>
         </div>
-        <span class="badge-status active">Valid</span>
+        <span class="badge-status active">{isHi ? 'वैध' : 'Valid'}</span>
       </div>
 
       <div class="mock-btn-row">
-        <div class="mock-btn">View Documents (3)</div>
-        <div class="mock-btn" style="color: var(--muted); background-color: var(--surface);">End Chat</div>
+        <div class="mock-btn">{isHi ? 'दस्तावेज़ देखें (3)' : 'View Documents (3)'}</div>
+        <div class="mock-btn" style="color: var(--muted); background-color: var(--surface);">{isHi ? 'बातचीत समाप्त' : 'End Chat'}</div>
       </div>
     </div>
   </div>

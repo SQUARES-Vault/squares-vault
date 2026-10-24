@@ -92,7 +92,7 @@ const hindiFaqs = [
 
       <!-- Telegram Chat Mockup (Right Column on Desktop) -->
       <div class="hero-visual reveal">
-        <TelegramMockup />
+        <TelegramMockup currentLang="hi" />
       </div>
     </div>
   </section>
@@ -275,7 +275,7 @@ const hindiFaqs = [
         <p>अलग-अलग टूल अलग-अलग उद्देश्यों के लिए होते हैं। यहाँ एक निष्पक्ष और तथ्यपरक तुलना है।</p>
       </div>
 
-      <ComparisonTable />
+      <ComparisonTable currentLang="hi" />
 
       <div style="margin-top: 32px; font-size: 14px; color: var(--muted); text-align: center;">
         विस्तृत तुलना मार्गदर्शिका पढ़ें: <a href={getAssetUrl('/vs/digilocker/')} class="link-apple"><span>SQUARES Vault बनाम सरकारी पोर्टल</span><span class="chevron">›</span></a> · <a href={getAssetUrl('/vs/google-drive/')} class="link-apple"><span>SQUARES Vault बनाम केवल Google Drive</span><span class="chevron">›</span></a>
@@ -300,6 +300,7 @@ const hindiFaqs = [
             iconName={doc.icon}
             slug={doc.slug}
             summary={doc.summary}
+            currentLang="hi"
           />
         ))}
       </div>

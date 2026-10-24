@@ -36,7 +36,7 @@ const defaultSchema = {
   offers: {
     '@type': 'Offer',
     price: '0',
-    priceCurrency: 'INR',
+    priceCurrency: 'USD',
     description: siteConfig.pricingNotice,
   },
   author: {
@@ -56,8 +56,12 @@ const finalSchema = jsonLd || defaultSchema;
 <link rel="canonical" href={canonicalUrl} />
 <meta name="google-site-verification" content={siteConfig.googleSiteVerification} />
 
-<!-- Preload Self-Hosted Inter Variable Font -->
-<link rel="preload" href={getAssetUrl('/fonts/inter-variable.woff2')} as="font" type="font/woff2" crossorigin />
+<!-- Preload Self-Hosted Font -->
+{canonicalPath.startsWith('/hi') ? (
+  <link rel="preload" href={getAssetUrl('/fonts/noto-sans-devanagari.woff2')} as="font" type="font/woff2" crossorigin />
+) : (
+  <link rel="preload" href={getAssetUrl('/fonts/inter-variable.woff2')} as="font" type="font/woff2" crossorigin />
+)}
 
 <!-- Open Graph -->
 <meta property="og:type" content={type} />
@@ -68,7 +72,7 @@ const finalSchema = jsonLd || defaultSchema;
 <meta property="og:image" content={fullOgImageUrl} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:locale" content="en_IN" />
+<meta property="og:locale" content={canonicalPath.startsWith('/hi') ? 'hi_IN' : 'en_US'} />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />

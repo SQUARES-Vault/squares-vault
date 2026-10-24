@@ -22,12 +22,12 @@ const items = (testimonials as TestimonialItem[]) || [];
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
         {items.map((t) => (
           <div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between;">
-            <p style="font-style: italic; font-size: 0.95rem; color: var(--ink-secondary); margin-bottom: 16px;">
+            <p style="font-style: italic; font-size: 0.95rem; color: var(--muted); margin-bottom: 16px;">
               "{t.quote}"
             </p>
             <div>
-              <strong style="color: var(--ink-primary); font-size: 0.92rem;">{t.name}</strong>
-              <div style="color: var(--ink-muted); font-size: 0.8rem;">
+              <strong style="color: var(--text); font-size: 0.92rem;">{t.name}</strong>
+              <div style="color: var(--muted); font-size: 0.8rem;">
                 {t.role} {t.location ? `· ${t.location}` : ''}
               </div>
             </div>

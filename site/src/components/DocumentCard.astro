@@ -8,15 +8,26 @@ interface Props {
   iconName?: string;
   slug: string;
   summary: string;
+  currentLang?: 'en' | 'hi';
 }
 
-const { title, category, iconName = 'file-text', slug, summary } = Astro.props;
+const { title, category, iconName = 'file-text', slug, summary, currentLang = 'en' } = Astro.props;
+
+const categoryHiMap: Record<string, string> = {
+  Vehicle: 'वाहन',
+  Property: 'संपत्ति',
+  Appliance: 'उपकरण',
+  Insurance: 'बीमा',
+  Identity: 'पहचान',
+};
+const displayCategory = currentLang === 'hi' ? (categoryHiMap[category] || category) : category;
+const ctaText = currentLang === 'hi' ? 'मार्गदर्शिका देखें' : 'Explore Guide';
 ---
 
 <div class="doc-card-apple">
   <div>
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-      <span class="badge-status active">{category}</span>
+      <span class="badge-category">{displayCategory}</span>
       <div style="color: var(--accent); display: flex; align-items: center;">
         <LucideIcon name={iconName} size={18} />
       </div>
@@ -35,7 +46,7 @@ const { title, category, iconName = 'file-text', slug, summary } = Astro.props;
 
   <div style="padding-top: 10px; border-top: 1px solid var(--hairline);">
     <a href={getAssetUrl(`/documents/${slug}/`)} class="link-apple" style="font-size: 13px;">
-      <span>Explore Guide</span>
+      <span>{ctaText}</span>
       <span class="chevron">›</span>
     </a>
   </div>

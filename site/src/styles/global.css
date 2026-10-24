@@ -33,10 +33,10 @@
   --muted: #6e6e73;
   --hairline: #d2d2d7;
 
-  /* Accent Colors */
-  --accent: #0071e3;
-  --accent-hover: #0077ed;
-  --accent-subtle: rgba(0, 113, 227, 0.08);
+  /* Accent Colors (Strict WCAG 2.1 AA Compliant on Surface #f5f5f7 & White) */
+  --accent: #006edb;
+  --accent-hover: #0075e8;
+  --accent-subtle: rgba(0, 110, 219, 0.08);
 
   /* Semantic Status Colors */
   --success: #30d158;
@@ -59,6 +59,7 @@
   --radius-pill: 980px;
   --radius-bento: 22px;
   --radius-card: 18px;
+  --radius-md: 18px;
   --radius-sm: 12px;
   --radius-xs: 6px;
 
@@ -274,7 +275,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 }
 
 /* Backward compatibility button fallback */
-.btn {
+.btn,
+.btn-primary,
+.btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -390,18 +393,22 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   gap: 16px;
 }
 
-.header-link-right {
+.header-link-right,
+.header-link-bot {
   font-size: 12px;
   font-weight: 400;
   color: var(--text);
   text-decoration: none;
   opacity: 0.8;
   transition: opacity 200ms ease;
+  white-space: nowrap;
 }
 
-.header-link-right:hover {
+.header-link-right:hover,
+.header-link-bot:hover {
   opacity: 1;
   text-decoration: none;
+  color: var(--accent);
 }
 
 .header-invite-btn {
@@ -867,7 +874,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .faq-accordion-stack {
   display: flex;
   flex-direction: column;
-  max-width: var(--content-max-width);
+  max-width: 860px;
   margin: 0 auto;
 }
 
@@ -1149,6 +1156,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .badge-status.expired {
   background-color: rgba(255, 69, 58, 0.15);
   color: #c92a2a;
+}
+
+.badge-category {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 980px;
+  font-size: 12px;
+  font-weight: 500;
+  flex-shrink: 0;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--muted);
+  border: 1px solid var(--hairline);
 }
 
 .badge-plate {

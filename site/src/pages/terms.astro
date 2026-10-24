@@ -1,6 +1,6 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
-import { siteConfig } from '../config';
+import { siteConfig, getAssetUrl } from '../config';
 
 const title = 'Terms of Service';
 const description = 'Terms of Service for SQUARES Vault. Governs the use of our zero-custodian document management assistant.';
@@ -18,7 +18,7 @@ const description = 'Terms of Service for SQUARES Vault. Governs the use of our 
     These Terms of Service ("Terms") constitute a legally binding agreement between you ("User", "you") and <strong>SQUARES Vault</strong> ("we", "us", or "the Service"), governing your access to and use of the SQUARES Vault Telegram bot (<code>@squaresvaultbot</code>), its related web interfaces, and automated notification services.
   </p>
   <p>
-    By tapping "Agree", sending commands to the bot, or authorizing Google Drive access, you acknowledge that you have read, understood, and agree to be bound by these Terms and our <a href="privacy.html" style="color: var(--accent-pine); text-decoration: underline;">Privacy Policy</a>. If you do not agree, do not use the Service.
+    By tapping "Agree", sending commands to the bot, or authorizing Google Drive access, you acknowledge that you have read, understood, and agree to be bound by these Terms and our <a href={getAssetUrl('/privacy.html')} style="color: var(--accent); text-decoration: underline;">Privacy Policy</a>. If you do not agree, do not use the Service.
   </p>
 
   <h2>2. Eligibility & Age Restriction</h2>
@@ -102,7 +102,7 @@ const description = 'Terms of Service for SQUARES Vault. Governs the use of our 
   </p>
   <div class="doc-callout">
     <strong>Support & Communication:</strong><br />
-    Contact Email: <strong><a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--accent-pine); text-decoration: underline;">{siteConfig.contactEmail}</a></strong><br />
-    Telegram Interface: <strong><a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">@squaresvaultbot</a></strong> (type <code>/help</code> in chat).
+    Contact Email: <strong><a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--accent); text-decoration: underline;">{siteConfig.contactEmail}</a></strong><br />
+    Telegram Interface: <strong><a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline;">@squaresvaultbot</a></strong>
   </div>
 </LegalLayout>

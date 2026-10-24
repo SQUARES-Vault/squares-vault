@@ -2,6 +2,13 @@
 import { siteConfig, getAssetUrl } from '../config';
 import documents from '../data/documents.json';
 import audiences from '../data/audiences.json';
+
+interface Props {
+  currentLang?: 'en' | 'hi';
+}
+
+const { currentLang = 'en' } = Astro.props;
+const isHi = currentLang === 'hi';
 ---
 
 <footer class="site-footer">
@@ -13,27 +20,29 @@ import audiences from '../data/audiences.json';
           <strong style="font-size: 14px; font-weight: 600; color: var(--text);">{siteConfig.siteName}</strong>
         </div>
         <p style="font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 14px;">
-          A private, zero-custodian document management assistant for Telegram.
-          Files stored exclusively in your own Google Drive.
+          {isHi
+            ? 'टेलीग्राम के लिए एक निजी, ज़ीरो-कस्टोडियन दस्तावेज़ प्रबंधन सहायक। मूल फ़ाइलें केवल आपके अपने Google Drive में सुरक्षित।'
+            : 'A private, zero-custodian document management assistant for Telegram. Files stored exclusively in your own Google Drive.'}
         </p>
         <p style="font-size: 12px; color: var(--muted); line-height: 1.5;">
-          Built by <strong style="color: var(--text);">{siteConfig.builderName}</strong>.<br />
+          {isHi ? 'निर्माता: ' : 'Built by '}
+          <strong style="color: var(--text);">{siteConfig.builderName}</strong>.<br />
           Contact: <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
         </p>
       </div>
 
       <div class="footer-col">
-        <h5>Document Types</h5>
+        <h5>{isHi ? 'दस्तावेज़ प्रकार' : 'Document Types'}</h5>
         <ul>
           {documents.slice(0, 5).map((doc) => (
             <li><a href={getAssetUrl(`/documents/${doc.slug}/`)}>{doc.name}</a></li>
           ))}
-          <li><a href={getAssetUrl('/#documents')} style="color: var(--accent);">View all 10 documents ›</a></li>
+          <li><a href={getAssetUrl(isHi ? '/hi/#documents' : '/#documents')} style="color: var(--accent);">{isHi ? 'सभी 10 दस्तावेज़ देखें ›' : 'View all 10 documents ›'}</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h5>For You</h5>
+        <h5>{isHi ? 'उपयोगकर्ता समाधान' : 'For You'}</h5>
         <ul>
           {audiences.map((aud) => (
             <li><a href={getAssetUrl(`/for/${aud.slug}/`)}>{aud.title}</a></li>
@@ -44,13 +53,13 @@ import audiences from '../data/audiences.json';
       </div>
 
       <div class="footer-col">
-        <h5>Resources</h5>
+        <h5>{isHi ? 'संसाधन' : 'Resources'}</h5>
         <ul>
-          <li><a href={siteConfig.inviteEmailUrl} style="color: var(--accent); font-weight: 500;">Request Free Invite Code ›</a></li>
-          <li><a href={getAssetUrl('/guides/')}>Guides &amp; Checklists</a></li>
-          <li><a href={getAssetUrl('/about/')}>About the Project</a></li>
-          <li><a href={getAssetUrl('/privacy.html')}>Privacy Policy</a></li>
-          <li><a href={getAssetUrl('/terms.html')}>Terms of Service</a></li>
+          <li><a href={siteConfig.inviteEmailUrl} style="color: var(--accent); font-weight: 500;">{isHi ? 'मुफ़्त इनवाइट कोड मांगें ›' : 'Request Free Invite Code ›'}</a></li>
+          <li><a href={getAssetUrl('/guides/')}>{isHi ? 'मार्गदर्शिका व चेकलिस्ट' : 'Guides & Checklists'}</a></li>
+          <li><a href={getAssetUrl('/about/')}>{isHi ? 'प्रोजेक्ट के बारे में' : 'About the Project'}</a></li>
+          <li><a href={getAssetUrl('/privacy.html')}>{isHi ? 'गोपनीयता नीति' : 'Privacy Policy'}</a></li>
+          <li><a href={getAssetUrl('/terms.html')}>{isHi ? 'सेवा की शर्तें' : 'Terms of Service'}</a></li>
           <li><a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google Gemini API Terms ↗</a></li>
           <li><a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer">Launch @squaresvaultbot ↗</a></li>
         </ul>
@@ -59,12 +68,16 @@ import audiences from '../data/audiences.json';
 
     <div class="footer-bottom">
       <div>
-        © {new Date().getFullYear()} SQUARES Vault. Zero-custodian document management.
+        © {new Date().getFullYear()} SQUARES Vault. {isHi ? 'ज़ीरो-कस्टोडियन दस्तावेज़ प्रबंधन।' : 'Zero-custodian document management.'}
       </div>
       <div style="display: flex; gap: 20px;">
-        <a href={getAssetUrl('/privacy.html')}>Privacy Policy</a>
-        <a href={getAssetUrl('/terms.html')}>Terms of Service</a>
-        <a href={getAssetUrl('/hi/')}>हिन्दी संस्करण</a>
+        <a href={getAssetUrl('/privacy.html')}>{isHi ? 'गोपनीयता नीति' : 'Privacy Policy'}</a>
+        <a href={getAssetUrl('/terms.html')}>{isHi ? 'सेवा की शर्तें' : 'Terms of Service'}</a>
+        {isHi ? (
+          <a href={getAssetUrl('/')} hreflang="en">English Edition</a>
+        ) : (
+          <a href={getAssetUrl('/hi/')} hreflang="hi">हिन्दी संस्करण</a>
+        )}
       </div>
     </div>
   </div>
