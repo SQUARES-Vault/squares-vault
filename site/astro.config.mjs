@@ -26,6 +26,13 @@ function staticHtmlAliases() {
             console.log(`[static-html-aliases] Copied ${folder}/index.html -> ${targetFile}`);
           }
         }
+
+        // Ensure .nojekyll exists in outDir
+        const nojekyllPath = path.join(outDir, '.nojekyll');
+        if (!fs.existsSync(nojekyllPath)) {
+          fs.writeFileSync(nojekyllPath, '');
+          console.log('[static-html-aliases] Created .nojekyll in outDir');
+        }
       },
     },
   };
@@ -36,6 +43,9 @@ export default defineConfig({
   base: BASE_PATH,
   outDir: '../docs',
   trailingSlash: 'ignore',
+  build: {
+    assets: 'assets',
+  },
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/404'),
