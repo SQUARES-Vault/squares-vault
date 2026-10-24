@@ -1,72 +1,48 @@
 /* ═══════════════════════════════════════════════════
-   SQUARES Vault — Paper & Ink Design System
-   Aesthetic: Organized stationery, calm, trustworthy
+   SQUARES Vault — Paper & Ink Design System (Global)
+   Aesthetic: Quiet luxury stationery, calm, trustworthy
    Zero glassmorphism, zero purple gradients, zero glow blobs
 ═══════════════════════════════════════════════════ */
 
-/* ── Typography & Self-Hosted Fonts ────────────── */
-@font-face {
-  font-family: 'Source Serif 4';
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url('/squares-vault/fonts/source-serif-4-0.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/squares-vault/fonts/ibm-plex-0.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans';
-  font-style: normal;
-  font-weight: 500 700;
-  font-display: swap;
-  src: url('/squares-vault/fonts/ibm-plex-1.woff2') format('woff2');
-}
-
 /* ── Design Tokens ──────────────────────────────── */
 :root {
-  /* Paper & Canvas Backgrounds */
-  --bg-canvas: #FAF8F4;        /* Warm parchment off-white */
-  --bg-paper: #FFFFFF;         /* Crisp white sheet */
-  --bg-subtle: #F3EFE8;        /* Subtle stone-tinted fill */
+  /* Premium Canvas & Paper Backgrounds (Crisp, warm alabaster/stone) */
+  --bg-canvas: #FAFAF9;        /* Warm neutral luxury stone */
+  --bg-paper: #FFFFFF;         /* Crisp pure white */
+  --bg-subtle: #F4F4F5;        /* Light clean zinc */
   --bg-card: #FFFFFF;
-  --bg-elevated: #F8F5EE;
+  --bg-elevated: #F9F9FB;
 
   /* Hairline Borders */
-  --border-hairline: #E5DFD5;  /* 1px crisp rule line */
-  --border-muted: #D8D1C4;     /* Slightly darker boundary */
-  --border-focus: #1F5C46;     /* Accessible focus indicator */
+  --border-hairline: #E4E4E7;  /* Crisp 1px rule line */
+  --border-muted: #D4D4D8;     /* Slightly darker boundary */
+  --border-focus: #0F766E;     /* Accessible focus indicator */
 
   /* Inks (Text) */
-  --ink-primary: #1C1B19;      /* Carbon deep black/ink */
-  --ink-secondary: #524E48;    /* Warm stone reading ink */
-  --ink-muted: #78736B;        /* Annotation / caption ink */
-  --ink-faint: #9E998F;        /* Faint metadata */
+  --ink-primary: #0F172A;      /* Deep carbon slate (ultra crisp) */
+  --ink-secondary: #475569;    /* Refined slate reading ink */
+  --ink-muted: #64748B;        /* Annotation / caption ink */
+  --ink-faint: #94A3B8;        /* Faint metadata */
 
-  /* Single Accent: Deep Forest Pine Green */
-  --accent-pine: #1F5C46;
-  --accent-pine-hover: #164333;
-  --accent-pine-subtle: #E8F1EC;
-  --accent-pine-border: #C2D9CD;
+  /* Single Accent: Deep Forest Pine / Emerald */
+  --accent-pine: #0F766E;
+  --accent-pine-hover: #115E59;
+  --accent-pine-subtle: #F0FDFA;
+  --accent-pine-border: #CCFBF1;
 
   /* Strict Semantic Status Colors (Used consistently everywhere) */
-  --status-active: #1F5C46;
-  --status-active-bg: #E8F1EC;
-  --status-expiring: #B7791F;    /* Amber ochre — strictly "expiring soon" */
-  --status-expiring-bg: #FDF5E6;
-  --status-expired: #C53030;     /* Muted red — strictly "expired" */
-  --status-expired-bg: #FDE8E8;
+  --status-active: #047857;
+  --status-active-bg: #ECFDF5;
+  --status-expiring: #B45309;    /* Refined amber — strictly "expiring soon" */
+  --status-expiring-bg: #FFFBEB;
+  --status-expired: #B91C1C;     /* Crimson red — strictly "expired" */
+  --status-expired-bg: #FEF2F2;
 
   /* Typography Stacks */
-  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: 'Source Serif 4', Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-devanagari: 'Noto Sans Devanagari', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* Spacing & Layout */
   --content-max-width: 1200px;
@@ -100,9 +76,26 @@ body {
   flex-direction: column;
   color: var(--ink-primary);
   background-color: var(--bg-canvas);
-  background-image: radial-gradient(#E8E2D7 0.75px, transparent 0.75px);
-  background-size: 24px 24px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Hindi Specific Typography Rules ────────────── */
+html[lang="hi"], html[lang="hi"] body {
+  font-family: var(--font-devanagari);
+  line-height: 1.75;
+}
+
+html[lang="hi"] h1, html[lang="hi"] h2, html[lang="hi"] h3, html[lang="hi"] h4, html[lang="hi"] h5, html[lang="hi"] h6 {
+  font-family: var(--font-devanagari);
+  letter-spacing: normal;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+html[lang="hi"] .hero-kicker, html[lang="hi"] .badge-status, html[lang="hi"] .btn {
+  font-family: var(--font-devanagari);
+  letter-spacing: normal;
 }
 
 main {
@@ -506,14 +499,14 @@ code {
 
 .bubble-user {
   align-self: flex-end;
-  background-color: #E6EFEA;
+  background-color: var(--accent-pine-subtle);
   color: var(--ink-primary);
-  border: 1px solid #D2E4DA;
+  border: 1px solid var(--accent-pine-border);
 }
 
 .bubble-bot {
   align-self: flex-start;
-  background-color: #F8F5EE;
+  background-color: var(--bg-subtle);
   color: var(--ink-primary);
   border: 1px solid var(--border-hairline);
   width: 100%;
@@ -713,7 +706,7 @@ table.comparison-table td.col-vault {
 
 /* ── Footer ─────────────────────────────────────── */
 .site-footer {
-  background-color: #F4EFE6;
+  background-color: var(--bg-subtle);
   border-top: 1px solid var(--border-hairline);
   padding: 60px 0 32px;
   font-size: 0.88rem;

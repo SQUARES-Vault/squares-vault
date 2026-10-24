@@ -4,16 +4,23 @@ import { getAssetUrl } from '../config';
 
 <div class="chat-mockup-card">
   <div class="chat-header">
-    <img src={getAssetUrl('/logo-icon.png')} alt="" class="chat-avatar" />
+    <img
+      src={getAssetUrl('/logo-icon.png')}
+      alt="SQUARES Vault"
+      class="chat-avatar"
+      width="34"
+      height="34"
+      style="width: 34px; height: 34px; border-radius: 50%; object-fit: cover;"
+    />
     <div>
       <div class="chat-title">SQUARES Vault</div>
-      <div class="chat-subtitle">Verified Telegram Bot</div>
+      <div class="chat-subtitle">Verified Telegram Assistant</div>
     </div>
   </div>
 
   <div class="chat-stream">
     <div class="bubble bubble-user">
-      Show me all documents for my Venue car
+      Show me all documents for my Venue
     </div>
 
     <div class="bubble bubble-bot">
@@ -26,15 +33,15 @@ import { getAssetUrl } from '../config';
 
       <div class="mock-doc-row">
         <div>
-          <strong style="color: var(--ink-primary);">1. Vehicle RC — VENUE</strong>
-          <div style="color: var(--ink-muted); font-size: 0.75rem;">Registration: UP15EB3XX3 · Active</div>
+          <strong style="color: var(--ink-primary);">1. Vehicle Registration & Title</strong>
+          <div style="color: var(--ink-muted); font-size: 0.75rem;">Plate: UP15EB3XX3 · Verified</div>
         </div>
         <span class="badge-status active">Active</span>
       </div>
 
       <div class="mock-doc-row">
         <div>
-          <strong style="color: var(--ink-primary);">2. Motor Insurance Schedule</strong>
+          <strong style="color: var(--ink-primary);">2. Auto Insurance Policy</strong>
           <div style="color: var(--ink-muted); font-size: 0.75rem;">Expires 10 Nov 2026 · Comprehensive</div>
         </div>
         <span class="badge-status expiring">17 Days</span>
@@ -42,10 +49,10 @@ import { getAssetUrl } from '../config';
 
       <div class="mock-doc-row">
         <div>
-          <strong style="color: var(--ink-primary);">3. Traffic Camera Challan</strong>
-          <div style="color: var(--ink-muted); font-size: 0.75rem;">₹500 fine · Speed violation notice</div>
+          <strong style="color: var(--ink-primary);">3. Safety & Emissions Inspection</strong>
+          <div style="color: var(--ink-muted); font-size: 0.75rem;">Annual Inspection Certificate · Valid</div>
         </div>
-        <span class="badge-status" style="background-color: var(--bg-subtle); color: var(--ink-muted); border: 1px solid var(--border-hairline);">Pending</span>
+        <span class="badge-status active">Valid</span>
       </div>
 
       <div class="mock-btn-row">

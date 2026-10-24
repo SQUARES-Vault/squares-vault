@@ -5,7 +5,6 @@ import VideoPlaceholder from '../../components/VideoPlaceholder.astro';
 import ComparisonTable from '../../components/ComparisonTable.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
 import Testimonials from '../../components/Testimonials.astro';
-import EmailCapture from '../../components/EmailCapture.astro';
 import DocumentCard from '../../components/DocumentCard.astro';
 import LucideIcon from '../../components/icons/LucideIcon.astro';
 import documents from '../../data/documents.json';
@@ -18,31 +17,31 @@ const hindiFaqs = [
     a: siteConfig.pricingNotice,
   },
   {
-    q: 'मेरी असली फ़ाइलें और दस्तावेज़ कहाँ सेव होते हैं?',
-    a: 'SQUARES Vault ज़ीरो-कस्टोडियन (Zero-Custodian) सिद्धांत पर काम करता है। हम आपकी कोई भी असली फ़ाइल अपने सर्वर पर हमेशा के लिए स्टोर नहीं करते। आपके सभी दस्तावेज़ सीधे आपके निजी <strong>Google Drive</strong> खाते में <code>SQUARES Vault</code> फ़ोल्डर में सुरक्षित रूप से सेव होते हैं।',
+    q: 'मेरी मूल फ़ाइलें और दस्तावेज़ कहाँ सुरक्षित रहते हैं?',
+    a: 'SQUARES Vault ज़ीरो-कस्टोडियन (Zero-Custodian) आर्किटेक्चर पर काम करता है। हम आपकी कोई भी मूल फ़ाइल अपने सर्वर पर स्टोर नहीं करते। आपके सभी दस्तावेज़ सीधे आपके अपने निजी <strong>Google Drive</strong> खाते में <code>SQUARES Vault</code> फ़ोल्डर में सुरक्षित रूप से सहेजे जाते हैं।',
   },
   {
     q: 'SQUARES Vault मेरे Google Drive तक कैसे पहुँचता है?',
-    a: 'सेटअप के दौरान आप Google के आधिकारिक डिवाइस फ़्लो से अनुमति देते हैं। हम केवल एक सीमित अनुमति (<code>drive.file</code>) माँगते हैं, जिससे बॉट सिर्फ़ उन्हीं फ़ाइलों को देख और प्रबंधित कर सकता है जो उसने खुद बनाई हैं। बॉट आपके Google Drive के किसी अन्य फ़ोल्डर, फ़ाइल या फ़ोटो को कभी नहीं देख सकता।',
+    a: 'सेटअप के दौरान आप Google के आधिकारिक डिवाइस फ़्लो से सुरक्षित रूप से अनुमति देते हैं। हम केवल एक अत्यंत सीमित अनुमति (<code>drive.file</code>) माँगते हैं, जिससे बॉट सिर्फ़ उन्हीं फ़ाइलों को प्रबंधित कर सकता है जो उसने खुद बनाई हैं। बॉट आपके Google Drive के किसी अन्य मौजूदा फ़ोल्डर, फ़ाइल या फ़ोटो को कभी नहीं देख सकता।',
   },
   {
     q: 'AI मेरे दस्तावेज़ों का डेटा कैसे प्रोसेस करता है?',
-    a: 'दस्तावेज़ों से तारीख़ें और विवरण पढ़ने के लिए Google Gemini API का उपयोग किया जाता है। प्रोसेसिंग केवल अस्थायी (in-memory) रूप से होती है। अधिक जानकारी के लिए <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google Gemini API Terms</a> देखें।',
+    a: 'दस्तावेज़ों से तारीख़ें और विवरण पढ़ने के लिए Google Gemini API का उपयोग किया जाता है। प्रोसेसिंग केवल अस्थायी (in-memory) रूप से होती है। अधिक जानकारी और विवरण के लिए <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google Gemini API Terms</a> देखें।',
   },
   {
     q: 'अगर मैं अपना सारा डेटा मिटाना चाहूँ तो क्या करूँ?',
-    a: 'आप कभी भी टेलीग्राम में <code>/deletemydata</code> लिख सकते हैं। ऐसा करते ही हमारी डेटाबेस से आपका प्रोफ़ाइल और सारा इंडेक्स हमेशा के लिए मिटा दिया जाता है, Google OAuth अनुमति रद्द हो जाती है, और सभी रिमाइंडर बंद हो जाते हैं। आपके Google Drive में मौजूद आपकी असली फ़ाइलें पूरी तरह सुरक्षित रहती हैं।',
+    a: 'आप कभी भी टेलीग्राम में <code>/deletemydata</code> लिख सकते हैं। ऐसा करते ही हमारे डेटाबेस से आपका प्रोफ़ाइल और सारा इंडेक्स तुरंत मिटा दिया जाता है, Google OAuth अनुमति रद्द हो जाती है, और सभी रिमाइंडर बंद हो जाते हैं। आपके Google Drive में मौजूद आपकी असली फ़ाइलें पूरी तरह आपके पास सुरक्षित रहती हैं।',
   },
   {
     q: 'क्या परिवार का कोई दूसरा सदस्य भी मेरे दस्तावेज़ देख सकता है?',
-    a: 'नहीं, जब तक आप खुद अनुमति न दें। डिफ़ॉल्ट रूप से आपके दस्तावेज़ केवल आपके टेलीग्राम खाते से जुड़े होते हैं। यदि आप चाहें, तो फ़ैमिली एक्सेस शेयरिंग के ज़रिए अपने जीवनसाथी या बच्चों को विशिष्ट श्रेणियों (जैसे स्वास्थ्य बीमा या वारंटी) को देखने की अनुमति दे सकते हैं।',
+    a: 'नहीं, जब तक आप खुद अनुमति न दें। डिफ़ॉल्ट रूप से आपके दस्तावेज़ केवल आपके टेलीग्राम खाते से जुड़े होते हैं। यदि आप चाहें, तो फ़ैमिली एक्सेस शेयरिंग के ज़रिए अपने जीवनसाथी या परिवार के सदस्यों को विशिष्ट श्रेणियों (जैसे स्वास्थ्य बीमा या वारंटी) को देखने की अनुमति दे सकते हैं।',
   },
 ];
 ---
 
 <BaseLayout
   title="SQUARES Vault — निजी लाइफ़-एडमिन और दस्तावेज़ एक्सपायरी असिस्टेंट"
-  description="टेलीग्राम में अपनी गाड़ी की आरसी, इंश्योरेंस, वारंटी और बिल भेजें। AI तारीख़ें पढ़ेगा, एक्सपायरी से पहले सूचना देगा, और असली फ़ाइलें आपके निजी Google Drive में सुरक्षित रहेंगी।"
+  description="टेलीग्राम में अपनी गाड़ी के कागज़ात, बीमा पॉलिसी, वारंटी कार्ड और बिल भेजें। AI तारीख़ें पढ़ेगा, एक्सपायरी से पहले समय पर अलर्ट देगा, और मूल फ़ाइलें सीधे आपके निजी Google Drive में सुरक्षित रहेंगी।"
   canonicalPath="/hi/"
   currentLang="hi"
   hreflangEn="/"
@@ -53,14 +52,16 @@ const hindiFaqs = [
     <div class="container hero-grid">
       <div class="hero-content">
         <div class="hero-kicker">निजी लाइफ़-एडमिन · टेलीग्राम असिस्टेंट</div>
-        <h1 style="line-height: 1.25;">घर और गाड़ी के ज़रूरी दस्तावेज़ संभालें।<br />तारीख़ निकलने से पहले अलर्ट पाएं।</h1>
-        <p class="hero-subhead" style="font-size: 1.15rem; line-height: 1.65;">
-          टेलीग्राम में अपनी आरसी, इंश्योरेंस पॉलिसी, वारंटी कार्ड या बिल भेजें। जेमिनी AI तारीख़ें पढ़ेगा, समय पर रिमाइंडर भेजेगा, और सभी असली फ़ाइलें सुरक्षित <strong>आपके अपने Google Drive</strong> में सेव रहेंगी।
+        <h1>आपके सभी ज़रूरी दस्तावेज़ व्यवस्थित।<br />एक्सपायरी तारीख़ से पहले समय पर अलर्ट।</h1>
+
+        <p class="hero-subtitle">
+          गाड़ी का रजिस्ट्रेशन व टाइटल, मोटर व स्वास्थ्य बीमा, होम अप्लायंस वारंटी, रेंटल लीज़ और बिल टेलीग्राम में फॉरवर्ड करें।
+          Gemini AI मुख्य तारीख़ें पढ़ता है, मूल फ़ाइलें सीधे <strong>आपके निजी Google Drive</strong> में सहेजता है, और किसी भी तारीख़ के ख़त्म होने से पहले आपको अलर्ट करता है।
         </p>
 
         <div class="hero-actions">
           <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 14px 28px; font-size: 1.02rem;">
-            <LucideIcon name="message-square" size={18} />
+            <LucideIcon name="telegram" size={18} />
             <span>टेलीग्राम में शुरू करें (@squaresvaultbot)</span>
             <span aria-hidden="true">&rarr;</span>
           </a>
@@ -69,251 +70,295 @@ const hindiFaqs = [
           </a>
         </div>
 
-        <div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 20px; font-size: 0.88rem; color: var(--ink-secondary);">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <LucideIcon name="check-circle" size={15} color="var(--accent-pine)" />
-            <span>फाइलें आपके अपने Google Drive में</span>
+        <div class="hero-pricing-note">
+          <LucideIcon name="shield-check" size={16} color="var(--accent-pine)" />
+          <span>{siteConfig.pricingNotice}</span>
+        </div>
+
+        <div class="hero-stats-strip">
+          <div class="stat-item">
+            <span class="stat-value">10+ प्रकार</span>
+            <span class="stat-label">गाड़ी, बीमा, वारंटी, लीज़</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <LucideIcon name="check-circle" size={15} color="var(--accent-pine)" />
-            <span>कोई अलग ऐप डाउनलोड करने की ज़रूरत नहीं</span>
+          <div class="stat-item">
+            <span class="stat-value">आपका Drive</span>
+            <span class="stat-label">सर्वर पर शून्य फ़ाइल स्टोरेज</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <LucideIcon name="check-circle" size={15} color="var(--accent-pine)" />
-            <span>अर्ली एक्सेस में पूरी तरह मुफ़्त</span>
+          <div class="stat-item">
+            <span class="stat-value">10d / 2d / 0d</span>
+            <span class="stat-label">स्वचालित टेलीग्राम अलर्ट चक्र</span>
           </div>
         </div>
       </div>
 
-      <!-- Telegram Chat Mockup Side -->
+      <!-- Right Column: Demo Chat & Video Slot -->
       <div>
         <TelegramMockup />
+        <VideoPlaceholder />
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ DEMO VIDEO / INTERACTION SLOT ═══════════════════ -->
-  <section class="section section-bordered" style="background-color: var(--bg-paper);">
+  <!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+  <section class="section" id="how-it-works" style="background-color: var(--bg-paper);">
     <div class="container">
       <div class="section-header">
-        <span class="badge-status active">30 सेकंड का डेमो</span>
-        <h2>कागज़ात ढूँढने की परेशानी हमेशा के लिए ख़त्म</h2>
-        <p class="subhead">
-          देखें कि कैसे केवल एक फ़ोटो भेजने से एक्सपायरी तारीख़ अपने-आप दर्ज हो जाती है और फ़ाइल आपके Google Drive में व्यवस्थित हो जाती है।
-        </p>
+        <div class="section-kicker">सरल और घर्षण-रहित</div>
+        <h2>SQUARES Vault कैसे काम करता है</h2>
+        <p>कोई अलग ऐप डाउनलोड करने की ज़रूरत नहीं। कोई नया पासवर्ड नहीं। सब कुछ आपके मौजूदा टेलीग्राम में काम करता है।</p>
       </div>
 
-      <VideoPlaceholder />
-    </div>
-  </section>
-
-  <!-- ═══════════════════ HOW IT WORKS (4 STEPS) ═══════════════════ -->
-  <section class="section" id="how-it-works">
-    <div class="container">
-      <div class="section-header">
-        <span class="badge-status active">सरल प्रक्रिया</span>
-        <h2>यह कैसे काम करता है</h2>
-        <p class="subhead">चार आसान चरणों में अपनी ज़िंदगी के सभी ज़रूरी कागज़ात व्यवस्थित करें।</p>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;">
-        <div class="card-paper" style="padding: 28px;">
-          <div style="font-family: var(--font-serif); font-size: 2rem; color: var(--accent-pine); margin-bottom: 8px;">01</div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">टेलीग्राम में फ़ोटो या PDF भेजें</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            अपनी गाड़ी की आरसी, पॉल्यूशन (PUC) पर्ची, होम अप्लायंस का बिल या इंश्योरेंस पॉलिसी की तस्वीर <code>@squaresvaultbot</code> को भेजें।
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3 class="step-title">15 सेकंड में कनेक्ट करें</h3>
+          <p class="step-text">
+            टेलीग्राम में <code>/start</code> भेजें। Google के आधिकारिक डिवाइस फ़्लो से अपना Google Drive कनेक्ट करें। SQUARES Vault को केवल अपने द्वारा बनाई गई फ़ाइलों को प्रबंधित करने की अनुमति मिलती है।
           </p>
         </div>
 
-        <div class="card-paper" style="padding: 28px;">
-          <div style="font-family: var(--font-serif); font-size: 2rem; color: var(--accent-pine); margin-bottom: 8px;">02</div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">AI तुरंत तारीख़ें पहचानता है</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            जेमिनी AI दस्तावेज़ से गाड़ी नंबर, पॉलिसी नंबर, एक्सपायरी तारीख़ और राशि को सेकंडों में पहचान कर रिकॉर्ड बना देता है।
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3 class="step-title">फ़ोटो या PDF भेजें</h3>
+          <p class="step-text">
+            ईमेल से बीमा पॉलिसी की PDF फॉरवर्ड करें या गाड़ी के कागज़ात, उपकरण इनवॉइस या रसीद की तस्वीर खींचकर भेजें। मल्टी-पेज दस्तावेज़ भी एक साथ भेजे जा सकते हैं।
           </p>
         </div>
 
-        <div class="card-paper" style="padding: 28px;">
-          <div style="font-family: var(--font-serif); font-size: 2rem; color: var(--accent-pine); margin-bottom: 8px;">03</div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Google Drive में सुरक्षित स्टोरेज</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            दस्तावेज़ की मूल प्रति आपके अपने Google Drive में <code>SQUARES Vault</code> फ़ोल्डर में सहेजी जाती है। हमारे सर्वर पर नहीं।
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3 class="step-title">इन-मेमोरी AI रीडिंग</h3>
+          <p class="step-text">
+            Gemini AI श्रेणी, शीर्षक, एक्सपायरी तारीख़, प्रोवाइडर और विवरण पढ़ लेता है। चैट में बने ड्राफ़्ट रिकॉर्ड की समीक्षा करें और एक टैप में पुष्टि करें।
           </p>
         </div>
 
-        <div class="card-paper" style="padding: 28px;">
-          <div style="font-family: var(--font-serif); font-size: 2rem; color: var(--accent-pine); margin-bottom: 8px;">04</div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">समय से पहले रिमाइंडर पाएं</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            तारीख़ ख़त्म होने से 10 दिन पहले, 2 दिन पहले और उसी दिन टेलीग्राम पर सूचना पाएं ताकि कभी चालान या जुर्माना न भरना पड़े।
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <h3 class="step-title">स्वचालित रिन्यूअल अलर्ट</h3>
+          <p class="step-text">
+            एक्सपायरी से 10 दिन पहले, 2 दिन पहले और उसी दिन सुबह 9:00 बजे रिमाइंडर पाएं। 'स्नूज़' करें, 'रिन्यू' करें, या जब भी ज़रूरत हो सामान्य भाषा में सवाल पूछें।
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ POPULAR DOCUMENTS SECTION ═══════════════════ -->
-  <section class="section section-bordered" style="background-color: var(--bg-paper);">
-    <div class="container">
-      <div class="section-header">
-        <span class="badge-status active">दस्तावेज़ सहायता</span>
-        <h2>कौन-से दस्तावेज़ सहेज सकते हैं?</h2>
-        <p class="subhead">गाड़ी के कागज़ात से लेकर घर के इलेक्ट्रॉनिक सामान के बिल तक—सब कुछ एक जगह।</p>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-        {documents.slice(0, 6).map((doc) => (
-          <DocumentCard
-            title={doc.name}
-            category={doc.category}
-            summary={doc.summary}
-            slug={doc.slug}
-            icon={doc.icon}
-          />
-        ))}
-      </div>
-
-      <div style="text-align: center; margin-top: 36px;">
-        <a href={getAssetUrl('/guides/')} class="btn btn-secondary">
-          <span>सभी 10 दस्तावेज़ प्रकार और गाइड देखें &rarr;</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ FEATURES GRID ═══════════════════ -->
+  <!-- ═══════════════════ FEATURES ═══════════════════ -->
   <section class="section" id="features">
     <div class="container">
       <div class="section-header">
-        <span class="badge-status active">मुख्य खूबियाँ</span>
-        <h2>भरोसेमंद और सादगी भरा अनुभव</h2>
-        <p class="subhead">कोई तामझाम नहीं। सिर्फ़ वही सुविधाएँ जो आपकी ज़िंदगी को आसान बनाती हैं।</p>
+        <div class="section-kicker">घरेलू शांति के लिए तैयार</div>
+        <h2>आपकी ज़िंदगी को व्यवस्थित रखने वाली सुविधाएँ</h2>
+        <p>एक सुव्यवस्थित डिजिटल फ़ाइलिंग कैबिनेट जो आपके सभी कागज़ात की समय-सीमा का ध्यान रखती है।</p>
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
-        <div class="card-paper" style="padding: 24px;">
-          <div style="margin-bottom: 12px; color: var(--accent-pine);">
-            <LucideIcon name="car" size={24} />
-          </div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">मल्टी-हॉप गाड़ी ग्रुपिंग</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            गाड़ी की आरसी एक बार जोड़ें। इसके बाद उस गाड़ी का कोई भी इंश्योरेंस, PUC या चालान अपने-आप उस नंबर प्लेट से जुड़ जाता है।
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="car" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">गाड़ी मल्टी-हॉप लिंकिंग</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            अपनी गाड़ी का रजिस्ट्रेशन एक बार जोड़ें। इसके बाद उस गाड़ी का कोई भी बीमा, इंस्पेक्शन सर्टिफ़िकेट या सर्विस रसीद अपने-आप उस नंबर प्लेट से जुड़ जाती है।
           </p>
         </div>
 
-        <div class="card-paper" style="padding: 24px;">
-          <div style="margin-bottom: 12px; color: var(--accent-pine);">
-            <LucideIcon name="bell" size={24} />
-          </div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">तीन स्तर के सटीक रिमाइंडर</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            10 दिन पहले (तैयारी के लिए), 2 दिन पहले (कार्रवाई के लिए), और आखिरी दिन (अंतिम सूचना) टेलीग्राम पर अलर्ट। साथ में 1-टैप स्नूज़।
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="shield" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">आपके अपने Google Drive में स्टोरेज</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            हम सर्वर पर शून्य फ़ाइल कस्टडी के सिद्धांत पर काम करते हैं। मूल फ़ाइलें सीधे आपके निजी Google Drive में सहेजी जाती हैं और उनका पूर्ण स्वामित्व हमेशा आपके पास रहता है।
           </p>
         </div>
 
-        <div class="card-paper" style="padding: 24px;">
-          <div style="margin-bottom: 12px; color: var(--accent-pine);">
-            <LucideIcon name="hard-drive" size={24} />
-          </div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">आपके अपने Google Drive में स्टोर</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            फ़ाइलें आपके निजी ड्राइव में सेव होती हैं। अगर आप भविष्य में सेवा बंद भी कर दें, तो भी आपकी सारी फ़ाइलें आपके पास रहेंगी।
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="file-text" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">"वॉल्ट से पूछें" स्वाभाविक भाषा Q&amp;A</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            अपनी सामान्य भाषा में पूछें: <em>"अगले महीने क्या एक्सपायर हो रहा है?"</em> या <em>"गाड़ी का बीमा कब रिन्यू होना है?"</em>। बॉट तुरंत सटीक जवाब और फ़ाइल लिंक प्रस्तुत करता है।
           </p>
         </div>
 
-        <div class="card-paper" style="padding: 24px;">
-          <div style="margin-bottom: 12px; color: var(--accent-pine);">
-            <LucideIcon name="shield-check" size={24} />
-          </div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">सीमित अधिकार (drive.file)</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            हम Google से सिर्फ़ वही एक्सेस माँगते हैं जिससे बॉट द्वारा बनाई गई फ़ाइलें ही देखी जा सकें। आपकी निजी तस्वीरें या अन्य फ़ोल्डर पूरी तरह सुरक्षित हैं।
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="home" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">परिवार के साथ शेयरिंग</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            अस्पताल या सर्विस सेंटर पर खड़े होकर परिवार के चैट ग्रुप में कागज़ात ढूँढने की ज़रूरत नहीं। परिवार के सदस्यों को विशिष्ट श्रेणियों के लिए सुरक्षित व्यू एक्सेस दें।
           </p>
         </div>
 
-        <div class="card-paper" style="padding: 24px;">
-          <div style="margin-bottom: 12px; color: var(--accent-pine);">
-            <LucideIcon name="users" size={24} />
-          </div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">परिवार के साथ शेयरिंग</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            अस्पताल या सर्विस सेंटर पर खड़े होकर परिवार के व्हाट्सएप ग्रुप में कागज़ात ढूँढने की ज़रूरत नहीं। परिवार के सदस्यों को सीधे व्यू एक्सेस दें।
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="calendar" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">कैलेंडर एक्सपोर्ट व स्मार्ट सर्च</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            सभी आगामी अंतिम तारीख़ों को <code>.ics</code> फ़ाइल के रूप में Google Calendar या Apple Calendar में एक्सपोर्ट करें। लाइव स्थिति टैग (🟢 Active · 🟡 Expiring · 🔴 Expired) के साथ तुरंत खोजें।
           </p>
         </div>
 
-        <div class="card-paper" style="padding: 24px;">
-          <div style="margin-bottom: 12px; color: var(--accent-pine);">
-            <LucideIcon name="trash-2" size={24} />
-          </div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">/deletemydata की आज़ादी</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.6;">
-            किसी भी समय टेलीग्राम में <code>/deletemydata</code> टाइप करें। डेटाबेस से आपका सारा रिकॉर्ड तुरंत और हमेशा के लिए साफ़ कर दिया जाता है।
+        <div class="card-paper">
+          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="receipt" size={24} /></div>
+          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">मैन्युअल एंट्री व रिन्यूअल विज़ार्ड</h3>
+          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+            बिना AI के दस्तावेज़ जोड़ना चाहते हैं? चरण-दर-चरण विज़ार्ड और स्मार्ट तारीख़ शॉर्टकट (+6 महीने, +1 साल, +2 साल) का उपयोग करें। वार्षिक रिन्यूअल सेकंडों में दर्ज करें।
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ COMPARISON TABLE ═══════════════════ -->
-  <section class="section section-bordered" id="comparison" style="background-color: var(--bg-paper);">
+  <!-- ═══════════════════ PRIVACY & SECURITY ═══════════════════ -->
+  <section class="section" id="privacy" style="background-color: var(--bg-paper);">
     <div class="container">
       <div class="section-header">
-        <span class="badge-status active">निष्पक्ष तुलना</span>
-        <h2>DigiLocker या Google Drive से अलग क्यों?</h2>
-        <p class="subhead">
-          DigiLocker सरकारी प्रमाणपत्रों के लिए है। Google Drive फ़ाइलों को निष्क्रिय रखता है। SQUARES Vault हर कागज़ को पढ़कर समय पर याद दिलाता है।
-        </p>
+        <div class="section-kicker">ईमानदार और स्पष्ट गोपनीयता</div>
+        <h2>सुरक्षा नीति, नारों में नहीं बल्कि बनावट में</h2>
+        <p>आपकी फ़ाइलों, टोकन और डेटा के उपयोग का पारदर्शी विवरण।</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <div class="card-paper">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+            1. सर्वर पर शून्य फ़ाइल स्टोरेज
+          </strong>
+          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+            आपकी मूल फ़ाइलें सीधे आपके निजी Google Drive में अपलोड होती हैं। हम अपने सर्वर पर आपके दस्तावेज़ों की कोई स्थायी प्रति नहीं रखते।
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+            2. सीमित <code>drive.file</code> अनुमति
+          </strong>
+          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+            हम केवल उन फ़ाइलों की अनुमति माँगते हैं जो SQUARES Vault द्वारा बनाई गई हैं। हम आपके Drive की किसी अन्य पहले से मौजूद फ़ाइल को न देख सकते हैं, न बदल सकते हैं।
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+            3. Google Gemini API प्रोसेसिंग
+          </strong>
+          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+            दस्तावेज़ पढ़ने और तारीख़ निकालने का काम इन-ट्रांज़िट Google Gemini API द्वारा होता है। डेटा उपयोग के बारे में अधिक जानकारी के लिए <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google Gemini API Terms</a> देखें।
+          </p>
+        </div>
+
+        <div class="card-paper">
+          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
+            4. <code>/deletemydata</code> से तुरंत निष्कासन
+          </strong>
+          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+            टेलीग्राम में <code>/deletemydata</code> टाइप करते ही हमारा डेटाबेस आपका सारा डेटा हमेशा के लिए मिटा देता है और OAuth अनुमति रद्द हो जाती है। Drive की फ़ाइलें आपकी ही रहती हैं।
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ COMPARISON ═══════════════════ -->
+  <section class="section" id="comparison">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">निष्पक्ष तुलना</div>
+        <h2>क्लाउड फ़ोल्डर या सरकारी पोर्टल से अलग क्यों?</h2>
+        <p>अलग-अलग टूल अलग-अलग उद्देश्यों के लिए होते हैं। यहाँ एक निष्पक्ष और तथ्यपरक तुलना है।</p>
       </div>
 
       <ComparisonTable />
 
-      <div style="margin-top: 24px; text-align: center;">
-        <a href={getAssetUrl('/vs/digilocker/')} style="font-size: 0.95rem; color: var(--accent-pine); text-decoration: underline; margin-right: 24px;">
-          DigiLocker के साथ पूरी तुलना पढ़ें &rarr;
-        </a>
-        <a href={getAssetUrl('/vs/google-drive/')} style="font-size: 0.95rem; color: var(--accent-pine); text-decoration: underline;">
-          Google Drive के साथ पूरी तुलना पढ़ें &rarr;
-        </a>
+      <div style="margin-top: 20px; font-size: 0.88rem; color: var(--ink-muted); text-align: center;">
+        विस्तृत तुलना मार्गदर्शिका पढ़ें: <a href={getAssetUrl('/vs/digilocker/')}>SQUARES Vault बनाम सरकारी पोर्टल</a> · <a href={getAssetUrl('/vs/google-drive/')}>SQUARES Vault बनाम केवल Google Drive</a>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ FAQS ═══════════════════ -->
-  <section class="section" id="faq">
+  <!-- ═══════════════════ DOCUMENT TYPES DIRECTORY ═══════════════════ -->
+  <section class="section" id="documents" style="background-color: var(--bg-paper);">
     <div class="container">
       <div class="section-header">
-        <span class="badge-status active">अक्सर पूछे जाने वाले सवाल</span>
-        <h2>सच्चे और साफ़ जवाब</h2>
-        <p class="subhead">गोपनीयता, सुरक्षा और शुल्क से जुड़े आपके प्रमुख सवालों के जवाब।</p>
+        <div class="section-kicker">समर्थित दस्तावेज़</div>
+        <h2>आधुनिक परिवारों के लिए 10 आवश्यक दस्तावेज़ प्रकार</h2>
+        <p>विस्तृत गाइड, रिन्यूअल नियम और महत्वपूर्ण तारीख़ों की जानकारी देखें।</p>
       </div>
 
-      <div style="max-width: 820px; margin: 0 auto;">
-        <FaqAccordion items={hindiFaqs} />
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px;">
+        {documents.map((doc) => (
+          <DocumentCard
+            title={doc.name}
+            category={doc.category}
+            iconName={doc.icon}
+            slug={doc.slug}
+            summary={doc.summary}
+          />
+        ))}
       </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ AUDIENCE SOLUTIONS ═══════════════════ -->
+  <section class="section" id="audiences">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">विशेष समाधान</div>
+        <h2>SQUARES Vault किसके लिए उपयोगी है?</h2>
+        <p>रोज़मर्रा की वास्तविक ज़रूरतों को ध्यान में रखकर तैयार किए गए समाधान।</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+        {audiences.map((aud) => (
+          <div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3 style="font-size: 1.15rem; margin-bottom: 8px;">
+                <a href={getAssetUrl(`/for/${aud.slug}/`)} style="text-decoration: none; color: var(--ink-primary);">
+                  {aud.title}
+                </a>
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+                {aud.subtitle}
+              </p>
+            </div>
+            <a href={getAssetUrl(`/for/${aud.slug}/`)} style="font-size: 0.84rem; font-weight: 600; color: var(--accent-pine); text-decoration: none;">
+              समाधान गाइड पढ़ें &rarr;
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ TESTIMONIALS (CONDITIONAL) ═══════════════════ -->
+  <Testimonials />
+
+  <!-- ═══════════════════ FAQS ═══════════════════ -->
+  <section class="section" id="faq" style="background-color: var(--bg-paper);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">अक्सर पूछे जाने वाले सवाल</div>
+        <h2>सच्चे और स्पष्ट जवाब</h2>
+        <p>गोपनीयता, Google Gemini API और सुरक्षा से जुड़े मुख्य सवालों के उत्तर।</p>
+      </div>
+
+      <FaqAccordion items={hindiFaqs} />
     </div>
   </section>
 
   <!-- ═══════════════════ FINAL CALL TO ACTION ═══════════════════ -->
-  <section class="section section-bordered" style="background-color: var(--bg-paper); text-align: center;">
-    <div class="container" style="max-width: 700px;">
-      <h2 style="font-size: 2.2rem; margin-bottom: 16px;">आज ही अपने कागज़ात संभालें</h2>
-      <p style="font-size: 1.15rem; color: var(--ink-secondary); margin-bottom: 32px; line-height: 1.6;">
-        कोई क्रेडिट कार्ड नहीं। कोई अलग ऐप डाउनलोड नहीं। बस टेलीग्राम खोलें और अपना पहला दस्तावेज़ भेजें।
+  <section class="section" style="padding: 80px 0; text-align: center;">
+    <div class="container text-container" style="margin: 0 auto;">
+      <h2 style="font-size: 2.2rem; margin-bottom: 14px;">अपने सभी कागज़ात आज ही व्यवस्थित करें</h2>
+      <p style="font-size: 1.1rem; color: var(--ink-secondary); margin-bottom: 28px;">
+        किसी वारंटी की तारीख़ न भूलें, इंश्योरेंस समय पर रिन्यू करें और अनावश्यक जुर्माने से हमेशा बचें।
       </p>
 
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
-        <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 16px 36px; font-size: 1.05rem;">
-          <LucideIcon name="message-square" size={20} />
+      <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px;">
+        <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.05rem;">
+          <LucideIcon name="telegram" size={18} />
           <span>टेलीग्राम में @squaresvaultbot खोलें</span>
-          <span aria-hidden="true">&rarr;</span>
+          <span>&rarr;</span>
         </a>
-        <span style="font-size: 0.85rem; color: var(--ink-muted);">
-          {siteConfig.pricingNotice}
-        </span>
       </div>
 
-      <div style="margin-top: 48px; border-top: 1px solid var(--border-hairline); padding-top: 36px;">
-        <EmailCapture />
+      <div style="font-size: 0.84rem; color: var(--ink-muted);">
+        {siteConfig.pricingNotice} · आपके अपने Google Drive में सुरक्षित स्टोरेज
       </div>
     </div>
   </section>

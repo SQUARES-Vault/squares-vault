@@ -7,53 +7,53 @@ import LucideIcon from './icons/LucideIcon.astro';
     <thead>
       <tr>
         <th style="width: 25%;">Capability</th>
-        <th style="width: 27%; color: var(--accent-pine); font-weight: 700;">SQUARES Vault</th>
-        <th style="width: 24%;">DigiLocker</th>
-        <th style="width: 24%;">Google Drive Folders</th>
+        <th style="width: 28%; color: var(--accent-pine); font-weight: 700;">SQUARES Vault</th>
+        <th style="width: 24%;">Standard Cloud Folders (Drive / Dropbox)</th>
+        <th style="width: 23%;">Government Portals (e.g. DigiLocker)</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="col-feature">Primary Role</td>
-        <td class="col-vault">Proactive life-admin & expiry assistant</td>
-        <td>Official government document depository</td>
-        <td>General cloud file storage</td>
+        <td class="col-feature">Primary Purpose</td>
+        <td class="col-vault">Proactive life-admin & automated expiry assistant</td>
+        <td>Passive file storage & backup</td>
+        <td>Official government credential depository</td>
       </tr>
       <tr>
         <td class="col-feature">Document Scope</td>
-        <td class="col-vault">Any document (warranties, bills, receipts, insurance, RC)</td>
-        <td>Government-issued digital certificates</td>
+        <td class="col-vault">Any document: receipts, warranties, private insurance, leases, titles, bills</td>
         <td>Any file uploaded manually</td>
+        <td>Only government-issued certificates & IDs</td>
       </tr>
       <tr>
-        <td class="col-feature">AI Extraction</td>
-        <td class="col-vault">Reads dates, policy numbers, amounts via Gemini API</td>
-        <td>Reads issuer metadata via national APIs</td>
-        <td>Manual indexing / text OCR only</td>
+        <td class="col-feature">AI Extraction & Indexing</td>
+        <td class="col-vault">Reads dates, amounts, policy numbers via Gemini API</td>
+        <td>Basic keyword search / manual renaming only</td>
+        <td>Issuer metadata via government APIs only</td>
       </tr>
       <tr>
         <td class="col-feature">Automated Expiry Alerts</td>
-        <td class="col-vault">Automated 10-day, 2-day & same-day Telegram reminders</td>
-        <td>Limited or issuer-dependent</td>
-        <td>None (Requires manual calendar creation)</td>
+        <td class="col-vault">Multi-stage 10-day, 2-day & same-day Telegram reminders</td>
+        <td>None (Requires setting manual calendar alerts)</td>
+        <td>None or platform-dependent</td>
       </tr>
       <tr>
         <td class="col-feature">Original File Storage</td>
-        <td class="col-vault">Stored directly in your own Google Drive</td>
-        <td>Stored in Government of India cloud</td>
-        <td>Stored in your Google Drive</td>
+        <td class="col-vault">Stored directly in your own Google Drive (Zero-custodian)</td>
+        <td>Stored in your cloud account</td>
+        <td>Stored in government cloud infrastructure</td>
       </tr>
       <tr>
         <td class="col-feature">Vehicle Multi-Hop Linking</td>
-        <td class="col-vault">Links RC, insurance, PUC, challan by plate</td>
+        <td class="col-vault">Links registration, insurance, inspection & citations by plate</td>
+        <td>Manual folder sorting required</td>
         <td>Separate issuer cards</td>
-        <td>Manual folder sorting</td>
       </tr>
       <tr>
-        <td class="col-feature">Access Method</td>
-        <td class="col-vault">Telegram chat (@squaresvaultbot)</td>
-        <td>DigiLocker app / Web portal</td>
-        <td>Google Drive app / Web</td>
+        <td class="col-feature">Interactive Querying</td>
+        <td class="col-vault">Conversational Q&A in Telegram ("What is due this month?")</td>
+        <td>Keyword search only</td>
+        <td>None</td>
       </tr>
     </tbody>
   </table>

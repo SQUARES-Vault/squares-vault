@@ -1,370 +1,374 @@
 [
   {
     "slug": "vehicle-rc",
-    "name": "Vehicle Registration Certificate (RC)",
+    "name": "Vehicle Registration & Title Certificate",
     "category": "Vehicle",
     "icon": "car",
-    "summary": "Track your smart card or paper RC, engine/chassis numbers, and 15-year fitness renewal date.",
-    "whatItIs": "A Vehicle Registration Certificate (RC) is the official document issued by the Regional Transport Office (RTO) certifying that your motor vehicle is registered with the Government of India. In India, private vehicle registration is valid for 15 years from the initial purchase date, after which it must undergo fitness inspection and re-registration every 5 years.",
-    "wherePeopleLoseIt": "Most car owners leave the original laminated RC card inside the glove box, where it gets sun-damaged, misplaced during car servicing, or forgotten until a traffic stop. When needed for an insurance claim or vehicle resale, finding the exact registration date or chassis number becomes an ordeal.",
+    "summary": "Track vehicle registration renewals, titles, roadworthiness certificates, and ownership records worldwide.",
+    "whatItIs": "A Vehicle Registration Certificate or Title (such as an Indian RC, UK V5C logbook, US DMV title, or European vehicle registration document) is the legal proof certifying vehicle ownership and road authorization. Most jurisdictions require periodic registration renewals, road tax payments, or safety fitness inspections.",
+    "wherePeopleLoseIt": "Most drivers keep vehicle papers inside the dashboard glove compartment, where physical papers get damaged, misplaced during vehicle maintenance, or forgotten until an on-road traffic inspection or insurance claim.",
     "criticalDates": [
       {
-        "name": "Initial 15-Year Expiry",
-        "description": "Private non-transport vehicles in India require fitness renewal upon reaching 15 years."
+        "name": "Registration Renewal Date",
+        "description": "The statutory deadline to renew annual or multi-year vehicle registration fees."
       },
       {
-        "name": "Subsequent 5-Year Re-Registration",
-        "description": "Fitness certificates must be renewed every 5 years after the initial 15-year lifecycle."
+        "name": "Safety & Fitness Inspection",
+        "description": "Periodic inspection deadlines required by transport authorities to maintain road legality."
       }
     ],
     "whatVaultExtracts": [
-      "Registration Number (e.g., UP15EB3XX3)",
+      "License Plate Number (e.g., UP15EB3XX3)",
       "Owner Name & Vehicle Make / Model (e.g. Hyundai VENUE)",
-      "Registration Date & Expiry / Fitness Date",
-      "Chassis & Engine Number (masked for privacy)"
+      "Registration Issue Date & Expiry / Renewal Date",
+      "VIN / Chassis Number (masked for privacy)"
     ],
-    "howToUse": "Snap a photo of both sides of your RC card (or forward a PDF downloaded from Parivahan/mParivahan) to @squaresvaultbot in Telegram. The bot links the vehicle plate to all future insurance and challan uploads.",
+    "howToUse": "Photograph both sides of your registration card or forward an official PDF to @squaresvaultbot in Telegram. The bot links the vehicle plate to all future insurance, inspection, and citation uploads automatically.",
     "faqs": [
       {
-        "q": "Can I show SQUARES Vault's saved RC to traffic police in India?",
-        "a": "Traffic authorities legally require the original physical card, DigiLocker, or the mParivahan app during on-road checks. SQUARES Vault is your personal life-admin vault for rapid access, expiry tracking, insurance claims, and service records."
+        "q": "Can I use SQUARES Vault as official legal proof during traffic stops?",
+        "a": "Enforcement officers in many countries require physical originals or designated state government apps (such as DigiLocker or DMV portals). SQUARES Vault acts as your personal life-admin assistant for instant retrieval, proactive renewal reminders, and insurance claim reference."
       },
       {
-        "q": "What happens when my RC is close to 15 years old?",
-        "a": "SQUARES Vault dispatches proactive reminders before the expiry date so you can book your RTO fitness inspection and avoid running an unregistered vehicle."
+        "q": "How does vehicle linking work when I upload other documents?",
+        "a": "SQUARES Vault recognizes license plates and vehicle identifiers across documents. Once your vehicle is saved, any insurance schedule, emissions certificate, or service receipt matching that plate is linked under that vehicle."
       },
       {
-        "q": "Will uploading my RC automatically link my insurance policies?",
-        "a": "Yes. SQUARES Vault matches your vehicle registration number across documents. Once your RC is saved, any insurance policy, PUC certificate, or challan carrying that plate is automatically connected under that vehicle."
+        "q": "What happens when my registration approaches renewal?",
+        "a": "SQUARES Vault dispatches multi-stage notifications at 10 days, 2 days, and same-day with 1-tap Snooze and renewal links so you never drive with expired tags."
       }
     ],
     "relatedSlugs": ["puc-certificate", "car-insurance", "traffic-challans"]
   },
   {
     "slug": "puc-certificate",
-    "name": "Pollution Under Control (PUC) Certificate",
+    "name": "Safety & Emissions Inspection Certificate",
     "category": "Vehicle",
     "icon": "wind",
-    "summary": "Never pay a ₹10,000 challan for an expired 6-month or 1-year emissions certificate.",
-    "whatItIs": "A Pollution Under Control (PUC) Certificate confirms that your motor vehicle's emissions comply with national emission standards under the Motor Vehicles Act. New BS-IV and BS-VI vehicles receive an initial 1-year certificate, after which renewals are required every 6 months (or 12 months in select states for BS-VI vehicles).",
-    "wherePeopleLoseIt": "PUC slips are printed on flimsy thermal paper at roadside testing booths. Within weeks, the thermal ink fades into illegibility, or the paper gets crumpled under seat cushions, leaving drivers unaware that their validity has lapsed.",
+    "summary": "Track mandatory periodic vehicle inspections, emissions tests, MOT, and smog checks without costly penalties.",
+    "whatItIs": "Mandatory vehicle inspection certificates (such as emissions testing, UK MOT, US Smog Check, or state roadworthiness certificates) verify that your vehicle satisfies legal safety and environmental emissions standards. Validity cycles typically range between 6 and 24 months depending on jurisdiction and vehicle age.",
+    "wherePeopleLoseIt": "Inspection slips are often printed on flimsy thermal roll paper at roadside inspection stations or testing bays. Within weeks, the thermal ink fades to blank white paper, leaving vehicle owners unaware that their validity has lapsed.",
     "criticalDates": [
       {
-        "name": "Validity Expiry (6 or 12 Months)",
-        "description": "The exact date testing validity ends. Driving without a valid PUC invites a statutory penalty of up to ₹10,000 under Section 190(2) of the Motor Vehicles Act."
+        "name": "Inspection Validity Expiry",
+        "description": "The exact date testing validity ends. Operating an uninspected vehicle carries statutory fines, points on licenses, or insurance invalidation."
       }
     ],
     "whatVaultExtracts": [
       "Vehicle Plate Number",
-      "Certificate Number & Testing Center Code",
+      "Inspection Certificate Number & Center Code",
       "Date of Test & Exact Validity Expiry Date",
-      "Emission Standard (BS-IV, BS-VI)"
+      "Emissions / Safety Compliance Standards"
     ],
-    "howToUse": "Immediately after testing, take a clear photo of the printed paper certificate with your phone and send it to the Telegram bot. SQUARES Vault schedules precision alerts at 10 days, 2 days, and on the expiry day.",
+    "howToUse": "Immediately after testing, photograph the paper certificate with your phone and send it to the Telegram bot. SQUARES Vault schedules precision alerts at 10 days, 2 days, and on the expiry day.",
     "faqs": [
       {
-        "q": "Why does PUC tracking matter so much?",
-        "a": "Under Indian traffic regulations, driving with an expired PUC attracts a steep fine of ₹10,000 and potential suspension of your driving license for 3 months. In addition, insurance companies may deny own-damage claims if the vehicle lacked a valid PUC at the time of an accident."
+        "q": "Why does automated inspection tracking matter?",
+        "a": "Driving with an expired safety or emissions certificate attracts heavy fines, failed road checks, and in many jurisdictions, insurers can deny claims if the vehicle lacked a valid roadworthiness certificate at the time of an incident."
       },
       {
-        "q": "Can thermal paper PUC receipts be read accurately by Gemini AI?",
-        "a": "Yes. If photographed under decent lighting before the thermal ink fades, Gemini AI reliably extracts the validity date and registration plate."
+        "q": "Can thermal paper receipts be read accurately by Gemini AI?",
+        "a": "Yes. When photographed in reasonable lighting before thermal ink degrades, Gemini AI reliably extracts the validity date, testing center, and vehicle registration."
       },
       {
-        "q": "How does Snooze work when I get a PUC alert?",
-        "a": "When SQUARES Vault alerts you that your PUC expires in 2 days, you can tap 'Snooze' to get reminded again the next morning when you are driving past a testing center."
+        "q": "How does Snooze work when I get an inspection reminder?",
+        "a": "When you receive a reminder that your inspection is due in 2 days, you can tap 'Snooze' to get an alert the next morning during your commute."
       }
     ],
     "relatedSlugs": ["vehicle-rc", "car-insurance"]
   },
   {
     "slug": "car-insurance",
-    "name": "Comprehensive & Third-Party Car Insurance",
+    "name": "Auto & Motor Insurance Policy",
     "category": "Insurance",
     "icon": "shield-check",
-    "summary": "Protect your No Claim Bonus (NCB) and prevent policy lapses with advance renewal warnings.",
-    "whatItIs": "Motor insurance is mandatory under the Motor Vehicles Act in India. A Comprehensive policy covers both mandatory Third-Party legal liability and Own Damage (accidents, theft, fire, floods), accompanied by optional add-ons like Zero Depreciation, Engine Protection, and Return to Invoice.",
-    "wherePeopleLoseIt": "Policy schedules are typically emailed as multi-page PDFs by insurers or aggregators. They get buried under thousands of promotional emails. When an accident or breakdown occurs, drivers scramble to locate the policy number, cashless garage helpline, or RSA contact.",
+    "summary": "Track comprehensive and liability coverage, policy renewals, deductibles, and prevent coverage lapses.",
+    "whatItIs": "Motor insurance protects vehicle owners against third-party liabilities, vehicle damage (collision, fire, theft, natural disasters), and personal injury. Policies are issued on fixed-term cycles (typically annual) with a strict midnight expiration cutoff.",
+    "wherePeopleLoseIt": "Insurance policies are typically delivered as multi-page PDF schedules buried across email archives. In roadside breakdowns or accident emergencies, finding the policy number, roadside assistance helpline, or deductible terms causes needless panic.",
     "criticalDates": [
       {
         "name": "Annual Expiry Date",
-        "description": "The exact midnight deadline when coverage ceases. Allowing coverage to lapse by more than 90 days forfeits your accrued No Claim Bonus (NCB) discount (up to 50%)."
+        "description": "The exact midnight deadline when policy coverage ceases."
       },
       {
-        "name": "Break-in Inspection Window",
-        "description": "If renewed after expiry, insurers require a physical inspection before reissuing coverage."
+        "name": "Renewal Grace & No-Claim Discounts",
+        "description": "Lapsing beyond regulatory grace windows can forfeit accumulated safe-driver or no-claims discounts, requiring expensive re-inspection fees."
       }
     ],
     "whatVaultExtracts": [
       "Insurer Name & Policy Schedule Number",
-      "Vehicle Number & Insured Declared Value (IDV)",
+      "Vehicle Identifier & Insured Declared Value / Valuation",
       "Policy Start Date & Expiry Midnight Date",
       "Premium Amount Paid & Deductible Details"
     ],
-    "howToUse": "Forward the policy PDF directly from your email to @squaresvaultbot in Telegram. The bot logs the expiry date, calculates the 10-day renewal alert, and files the original PDF in your Google Drive.",
+    "howToUse": "Forward the policy PDF directly from your email to @squaresvaultbot in Telegram. The bot logs the expiry date, calculates the 10-day renewal alert, and files the original PDF in your personal Google Drive.",
     "faqs": [
       {
-        "q": "Why is a 10-day reminder critical for motor insurance?",
-        "a": "Comparing quotes and porting your policy to a new insurer takes 2–4 days. Receiving an alert 10 days in advance gives you adequate time to negotiate better IDV and add-on rates without risking a midnight lapse."
+        "q": "Why is a 10-day advance reminder so valuable for motor insurance?",
+        "a": "Comparing policy terms, evaluating deductibles, and switching insurers takes a few days. Getting alerted 10 days early gives you time to choose the best rate without emergency price spikes."
       },
       {
-        "q": "What happens to my No Claim Bonus if I miss renewal?",
-        "a": "If your policy lapses and is not renewed within 90 days of expiry, your entire accumulated No Claim Bonus (which can be as high as 50% discount on own-damage premium) drops to zero."
+        "q": "Does SQUARES Vault mask my sensitive policy information?",
+        "a": "Yes. Key identifiers are masked in our database indexes to protect your privacy while allowing full retrieval of the original policy PDF from your Google Drive at any moment."
       },
       {
-        "q": "Does SQUARES Vault mask my policy number?",
-        "a": "Yes. Document identifiers are masked in our database indexes to protect your privacy while allowing full retrieval of the original PDF from your Google Drive whenever needed."
+        "q": "Can I retrieve my policy details during an on-road emergency?",
+        "a": "Yes. Just open Telegram and type 'Send my car insurance' to receive your policy summary and original PDF in seconds."
       }
     ],
     "relatedSlugs": ["vehicle-rc", "extended-warranty", "puc-certificate"]
   },
   {
     "slug": "health-insurance",
-    "name": "Health Insurance (Mediclaim & Top-Up)",
+    "name": "Health & Medical Insurance Policy",
     "category": "Insurance",
     "icon": "heart-pulse",
-    "summary": "Preserve waiting-period credits for pre-existing diseases by never missing premium due dates.",
-    "whatItIs": "Health insurance (individual or family floater) covers hospitalization expenses, daycare procedures, and critical illness treatments. Maintaining continuous renewal is vital in India because statutory waiting periods for specific ailments and pre-existing diseases (usually 2 to 4 years) reset if the policy permanently lapses.",
-    "wherePeopleLoseIt": "Family health insurance cards and policy schedules are sent as separate PDFs per member. During hospital admission emergencies (TPA desk), relatives waste precious hours searching through phone folders for TPA Member IDs and policy validities.",
+    "summary": "Keep policy numbers, covered dependents, deductibles, and renewal dates accessible in any clinic or emergency.",
+    "whatItIs": "Health and medical insurance (individual or family coverage) covers inpatient hospitalizations, surgeries, prescription benefits, and emergency care. Maintaining continuous renewal is vital because pre-existing condition exclusions and waiting periods reset if a policy permanently lapses.",
+    "wherePeopleLoseIt": "Insurance member cards and policy certificates are sent as separate files for each family member. During emergency clinic admissions, family members often spend hours digging through old emails to verify coverage limits and member IDs.",
     "criticalDates": [
       {
-        "name": "Annual Renewal Date",
-        "description": "The target date to pay annual premiums."
+        "name": "Annual Premium Renewal Date",
+        "description": "The target date to renew coverage and maintain continuous health benefit protections."
       },
       {
-        "name": "30-Day Grace Period",
-        "description": "IRDAI mandates a 30-day grace period for premium payment. While continuity benefits remain protected during grace, no coverage is available for hospitalizations occurring during this unpaid window."
+        "name": "Grace Period Expiration",
+        "description": "The statutory window where payment must be completed before policy cancellation."
       }
     ],
     "whatVaultExtracts": [
-      "Insurance Provider & TPA Name",
-      "Policy Number & Sum Insured",
-      "Family Members Covered & Renewal Date",
-      "Premium Amount & Hospital Cashless Contacts"
+      "Insurance Provider & Plan Name",
+      "Policy Number & Total Coverage Sum",
+      "Covered Family Dependents & Expiry Date",
+      "Emergency Helpline & Cashless Network Contacts"
     ],
-    "howToUse": "Forward the policy schedule document to the bot. Ask 'When does my health insurance renew?' or 'Give me my health insurance policy number' whenever needed at a clinic or hospital desk.",
+    "howToUse": "Forward your policy certificate to the bot. Type 'When does my health insurance renew?' or 'Give me my health insurance member ID' whenever needed at a medical desk.",
     "faqs": [
       {
-        "q": "Why is health insurance continuity so valuable in India?",
-        "a": "Under IRDAI rules, continuous renewals count toward completing the waiting periods for pre-existing illnesses. If a policy lapses past the grace period, you lose those accrued years and must restart waiting periods from scratch."
+        "q": "Can I share access to medical cards with my partner or family?",
+        "a": "Yes. SQUARES Vault includes Family Access Sharing. You can authorize your spouse or adult children to access health insurance records directly from their own Telegram."
       },
       {
-        "q": "Can I share my family health insurance policy with my spouse?",
-        "a": "Yes. SQUARES Vault offers Family Access Sharing. You can grant your spouse read-only access to the 'insurance' category so they can retrieve policy details on their own Telegram."
+        "q": "Why does continuous renewal matter for medical policies?",
+        "a": "Most medical policies have waiting period credits for pre-existing conditions. If you allow coverage to lapse past grace periods, accrued credits can be lost."
+      },
+      {
+        "q": "Are my medical records kept confidential?",
+        "a": "Yes. Files are uploaded directly to your own Google Drive under zero-custodian architecture. SQUARES Vault does not store permanent copies on our servers."
       }
     ],
     "relatedSlugs": ["car-insurance", "extended-warranty"]
   },
   {
     "slug": "extended-warranty",
-    "name": "Extended Warranties & Annual Maintenance Contracts (AMC)",
+    "name": "Extended Warranties & Protection Plans",
     "category": "Warranty",
     "icon": "shield",
-    "summary": "Exercise free replacement and repair claims before manufacturer warranty windows snap shut.",
-    "whatItIs": "An Extended Warranty or AMC (Annual Maintenance Contract) extends manufacturer repair coverage for consumer electronics, major kitchen appliances, or vehicles beyond the standard 1-year factory warranty. They protect against expensive repair charges for motherboards, compressor units, and motor assemblies.",
-    "wherePeopleLoseIt": "Extended warranty certificates are often stapled to the original invoice booklet or emailed as an afterthought by third-party warranty companies. When an appliance breaks 2 years later, owners assume it is out of warranty and pay local technicians out of pocket.",
+    "summary": "Exercise repair and replacement claims on electronics, appliances, and vehicles before coverage expires.",
+    "whatItIs": "Extended warranties, protection plans, and service contracts provide extended repair and replacement protection on consumer electronics, major home appliances, and motor vehicles beyond standard 1-year factory warranties.",
+    "wherePeopleLoseIt": "Warranty agreements are often paper leaflets tucked into original boxes or third-party email receipts. When an appliance malfunctions 2 years after purchase, owners assume warranty has expired and pay out of pocket for repairs.",
     "criticalDates": [
       {
         "name": "Warranty Expiration Date",
-        "description": "The exact calendar date when free repair/replacement coverage terminates."
+        "description": "The exact date when manufacturer or third-party repair and replacement coverage terminates."
       }
     ],
     "whatVaultExtracts": [
-      "Product / Vehicle Brand & Model",
-      "Coverage Scope (Comprehensive vs Parts Only)",
-      "Warranty Certificate Number",
-      "Start Date & Final Expiry Date"
+      "Product Brand, Model & Serial Number",
+      "Coverage Scope (Parts, Labor, Accidental Damage)",
+      "Warranty Policy / Contract Number",
+      "Commencement Date & Expiration Date"
     ],
-    "howToUse": "Take a photo of the warranty booklet or certificate when purchasing the product. SQUARES Vault keeps track of the duration (e.g. 24 or 36 months) and notifies you before the warranty expires.",
+    "howToUse": "Photograph the warranty certificate or protection plan email when purchasing the product. SQUARES Vault logs the 24, 36, or 60-month duration and notifies you well before coverage lapses.",
     "faqs": [
       {
-        "q": "Can I claim repairs right before the warranty expires?",
-        "a": "Yes. Having an alert 10 days before expiry allows you to schedule a preventive service check for noisy fans, failing displays, or battery degradation while replacement is 100% free under warranty terms."
+        "q": "Why should I track warranties on electronics and home appliances?",
+        "a": "Major repairs (such as refrigerator compressors, TV display panels, or laptop motherboards) are costly. Tracking coverage ensures you claim free manufacturer service before expiration."
       },
       {
-        "q": "Does SQUARES Vault link warranties to purchase invoices?",
-        "a": "Yes. If the appliance name matches, SQUARES Vault's entity recognition links the warranty certificate to the original purchase invoice so you have both ready for service centers."
+        "q": "How does Gemini AI identify warranty terms?",
+        "a": "Gemini AI scans the document for model names, purchase dates, warranty duration terms (e.g., '3 Years Comprehensive'), and computes the exact end date."
       }
     ],
-    "relatedSlugs": ["appliance-invoices", "car-insurance"]
+    "relatedSlugs": ["appliance-invoices", "health-insurance"]
   },
   {
     "slug": "appliance-invoices",
-    "name": "Appliance Invoices & Cash Memos",
+    "name": "Appliance Invoices & Purchase Receipts",
     "category": "Purchases",
     "icon": "receipt",
-    "summary": "Preserve proof of purchase for laptops, phones, TVs, and air conditioners for warranty claims.",
-    "whatItIs": "Retail tax invoices, cash memos, and electronic purchase receipts serve as legal proof of purchase and mark the start date for all consumer warranty claims. Authorised service centers (Apple, Samsung, LG, Sony, etc.) strictly refuse warranty repairs without the tax invoice.",
-    "wherePeopleLoseIt": "Store receipts are almost universally printed on thermal roll paper. Within 6 to 9 months, heat and ambient light turn thermal paper completely blank, leaving no verifiable proof of purchase when an appliance breaks down in month 11.",
+    "summary": "Preserve proofs of purchase for laptops, phones, TVs, and home appliances for warranties, claims, and returns.",
+    "whatItIs": "Official purchase invoices, store cash memos, and tax receipts serve as conclusive proof of ownership and purchase date for warranty claims, insurance loss claims, and resale valuation.",
+    "wherePeopleLoseIt": "Retail receipts printed on thermal register rolls fade to unreadable blank paper within 6 to 12 months. When warranty service requires proof of purchase, degraded receipts get rejected.",
     "criticalDates": [
       {
-        "name": "Date of Purchase",
-        "description": "Marks the start of the 1-year or 2-year warranty clock."
+        "name": "Standard 1-Year Factory Warranty",
+        "description": "Manufacturer warranty window starting from the documented purchase date."
       },
       {
         "name": "Return / Exchange Window",
-        "description": "Store return period (typically 7 to 14 days)."
+        "description": "Retail return policy period (typically 14 to 30 days) from purchase."
       }
     ],
     "whatVaultExtracts": [
-      "Merchant / Store Name & Invoice Number",
-      "Item Purchased & Serial / IMEI Number (if listed)",
-      "Date of Purchase & Total Amount Paid",
-      "Standard Warranty Term (if mentioned)"
+      "Retailer / Merchant Name & Invoice Number",
+      "Item Purchased, Model & Serial Number",
+      "Purchase Date & Warranty Duration",
+      "Total Amount Paid & Payment Method"
     ],
-    "howToUse": "The moment you unbox an appliance or receive a tax invoice from an online delivery, snap a clear photo or forward the PDF invoice to @squaresvaultbot. The original file is stored in your Google Drive forever.",
+    "howToUse": "Snap a clear photo of paper store receipts right after unboxing. SQUARES Vault archives high-resolution image copies to your personal Google Drive and logs the item details.",
     "faqs": [
       {
-        "q": "What if my thermal store receipt is already fading?",
-        "a": "Photograph it immediately under bright natural light. Gemini AI can often reconstruct faint characters that are difficult for human eyes to parse. Once saved to your Drive, the digital copy will never fade."
+        "q": "Why photograph receipts immediately after buying?",
+        "a": "Thermal paper receipts fade rapidly due to heat and light exposure. Saving a digital copy to your Google Drive ensures indelible proof of purchase years later."
       },
       {
-        "q": "How does this help during consumer disputes?",
-        "a": "Under India's Consumer Protection Act 2019, an invoice specifying the GSTIN, date, and serial number is mandatory for filing redressals in the National Consumer Forum."
+        "q": "Can I search for receipts by item name?",
+        "a": "Yes. Search by product name (e.g. 'Sony TV', 'MacBook', 'Washing machine') and SQUARES Vault brings up the receipt date, amount, and Drive file link instantly."
       }
     ],
     "relatedSlugs": ["extended-warranty", "utility-bills"]
   },
   {
     "slug": "traffic-challans",
-    "name": "Traffic Challans & e-Challan Notices",
+    "name": "Traffic Citations & Violation Notices",
     "category": "Vehicle",
     "icon": "alert-triangle",
-    "summary": "Clear automated camera challans before they get referred to Virtual Courts.",
-    "whatItIs": "An e-Challan is an electronic notice issued by state traffic police or automated speed/signal cameras for traffic violations (speeding, red light jumping, stop line breaches, or wrong-side driving). Unpaid challans are eventually escalated to Virtual Courts or National Lok Adalats.",
-    "wherePeopleLoseIt": "SMS alerts sent by transport departments often get filtered into spam or forgotten. Drivers only discover months later that multiple unpaid camera challans have piled up against their registration plate, preventing vehicle sale, fitness renewal, or NOC issuance.",
+    "summary": "Track automated camera citations, parking notices, and toll invoices before late fees and court dates.",
+    "whatItIs": "Traffic violation notices, automated speed camera tickets, parking citations, and electronic toll invoices issued against vehicle registrations. Most citations carry statutory payment windows before late surcharges or legal escalations.",
+    "wherePeopleLoseIt": "Digital camera citations sent via SMS or postal mail are easily forgotten amidst everyday life. Unresolved notices accumulate late penalties, prevent vehicle title transfers, or result in court summons.",
     "criticalDates": [
       {
-        "name": "Payment Due Date (Usually 60 Days)",
-        "description": "Window to pay online at the standard compound rate before the notice is forwarded to the Virtual Court."
+        "name": "Due Date for Online Settlement",
+        "description": "Deadline to pay without late penalties or escalation to virtual courts or collections."
       }
     ],
     "whatVaultExtracts": [
-      "Vehicle Plate Number (e.g. UP15EB3XX3)",
-      "Challan Number & Violation Date/Time",
-      "Location of Offence & Violation Offence Code",
-      "Penalty Amount Due in INR"
+      "Citation / Notice Reference Number",
+      "Vehicle Registration Plate",
+      "Violation Reason, Date & Location",
+      "Penalty Amount & Settlement Deadline"
     ],
-    "howToUse": "Forward the e-challan PDF or snapshot the Parivahan portal receipt to the bot. SQUARES Vault logs the fine, connects it to your car, and schedules reminders so you settle it before court referral.",
+    "howToUse": "Forward the violation notice PDF or SMS screenshot to the bot. SQUARES Vault links the ticket to your vehicle plate and schedules proactive payment alerts.",
     "faqs": [
       {
-        "q": "Can unpaid challans stop me from renewing my RC or selling my car?",
-        "a": "Yes. RTO systems block vehicle ownership transfers, fitness renewals, and NOC issuance if any pending e-challans are registered against the vehicle plate."
+        "q": "Why link citations to a vehicle record?",
+        "a": "Grouping citations under your vehicle plate ensures you can review all outstanding violation notices in one place before selling or re-registering your car."
       },
       {
-        "q": "How does SQUARES Vault link challans to my car?",
-        "a": "The bot's entity engine recognizes the vehicle plate on the challan and automatically groups it with your existing car records. When you ask 'Show all records for my Venue', the challan appears with your RC and insurance."
+        "q": "Does SQUARES Vault pay the fine for me?",
+        "a": "No. SQUARES Vault is a personal life-admin assistant that extracts dates, tracks deadlines, and reminds you before penalties escalate."
       }
     ],
-    "relatedSlugs": ["vehicle-rc", "car-insurance"]
+    "relatedSlugs": ["vehicle-rc", "puc-certificate"]
   },
   {
     "slug": "utility-bills",
-    "name": "Electricity, Water & Piped Gas Bills",
+    "name": "Utility Bills & Proof of Address",
     "category": "Bills",
     "icon": "file-text",
-    "summary": "Keep proof of residence up to date and pay monthly utilities without late surcharges.",
-    "whatItIs": "Periodic utility bills (electricity distribution, piped natural gas, broadband, water supply) establish continuous proof of residence for banking, passport verification, and address change applications across India.",
-    "wherePeopleLoseIt": "Digital utility bills are delivered via SMS links or WhatsApp bots. They get lost in chat histories, leaving residents scrambling to find an active electricity bill under 3 months old when visiting a bank or passport office.",
+    "summary": "Keep electricity, water, gas, and internet bills organized for proof of residence and on-time payments.",
+    "whatItIs": "Monthly recurring utility bills (electricity, water, piped gas, municipal taxes, broadband) serve a dual purpose: ensuring on-time household payments and providing fresh, verifiable proof of residence for banks, passport applications, and leases.",
+    "wherePeopleLoseIt": "Utility statements arrive across varied channels (paper mail, WhatsApp notifications, email alerts). When an organization asks for a 'recent utility bill from the last 3 months', households waste time retrieving portal credentials.",
     "criticalDates": [
       {
-        "name": "Bill Due Date",
-        "description": "Deadline to pay without late fee surcharges or supply disconnection."
+        "name": "Bill Payment Due Date",
+        "description": "Deadline to pay without late surcharges or disconnection risk."
       },
       {
-        "name": "Address Proof Validity Window",
-        "description": "Most Indian authorities (passport offices, banks, UIDAI) require utility bills to be less than 3 months old to qualify as valid proof of address."
+        "name": "Address Proof Freshness Window",
+        "description": "Most financial and government bodies require utility bills dated within the last 90 days."
       }
     ],
     "whatVaultExtracts": [
-      "Utility Provider (e.g. BSES, Tata Power, Adani Gas, MGL)",
-      "Consumer Account / CA Number",
-      "Bill Date & Exact Payment Due Date",
+      "Utility Provider & Consumer Account Number",
+      "Billing Period, Due Date & Surcharge Date",
+      "Service Address as Documented",
       "Total Amount Due"
     ],
-    "howToUse": "Forward the monthly bill PDF from WhatsApp or email to @squaresvaultbot. The bot registers the due date and saves the original PDF to your Drive so you always have recent address proof.",
+    "howToUse": "Forward your e-bill PDF to @squaresvaultbot each month. The bot logs the payment deadline, tracks address proof recency, and files the PDF in your Google Drive.",
     "faqs": [
       {
-        "q": "Why do Indian authorities demand a bill less than 3 months old?",
-        "a": "Proof of residence rules under KYC guidelines mandate recent documentation to confirm the applicant actively resides at the claimed address."
+        "q": "Why is utility bill organization useful beyond payment reminders?",
+        "a": "Having your latest utility bill accessible in Telegram means you can download valid proof of address in 5 seconds while at a bank or administrative office."
       },
       {
-        "q": "Does SQUARES Vault track historical utility spend?",
-        "a": "Yes. You can ask 'How much did I spend on electricity in the last 6 months?' and the bot calculates the total from your indexed records."
+        "q": "Can I ask the bot how much I spent on utilities?",
+        "a": "Yes. SQUARES Vault indexes billing amounts so you can ask 'How much were my electricity bills in the last 6 months?'."
       }
     ],
     "relatedSlugs": ["rental-agreements", "appliance-invoices"]
   },
   {
     "slug": "passport",
-    "name": "Passports & Visas",
+    "name": "Passports, Visas & Travel Credentials",
     "category": "Identity",
     "icon": "globe",
-    "summary": "Prevent cancelled international travel with the 6-month validity countdown.",
-    "whatItIs": "An Indian Passport is issued with a standard 10-year validity for adults. Visas (tourist, business, employment) carry distinct validity periods and permissible lengths of stay.",
-    "wherePeopleLoseIt": "Passports sit inside locked home safes for months. Travellers often book non-refundable international flights without realizing their passport has under 6 months of remaining validity, resulting in denied boarding at airport immigration.",
+    "summary": "Never miss the mandatory 6-month validity window for international travel, visa renewals, and entry requirements.",
+    "whatItIs": "National passports, residence permits, and travel visas certify citizenship and international travel clearance. Most countries enforce the '6-Month Passport Rule', which denies airline boarding and entry if a passport has less than 6 months of validity remaining.",
+    "wherePeopleLoseIt": "Because passports last 5 or 10 years, expiry dates are easily forgotten until booking an international flight, leading to cancelled vacations or costly expedited renewal emergencies.",
     "criticalDates": [
       {
-        "name": "6-Month International Travel Rule",
-        "description": "Almost all international destinations and airlines mandate that your passport have at least 6 months of validity beyond your date of departure."
+        "name": "6-Month International Travel Cutoff",
+        "description": "The effective travel expiration date, after which airlines and immigration deny departure."
       },
       {
-        "name": "Final Expiration Date",
-        "description": "Date when the passport book becomes invalid for travel and identity verification."
+        "name": "Final Passport Expiration Date",
+        "description": "The nominal expiration date of the passport document."
       }
     ],
     "whatVaultExtracts": [
-      "Issuing Country & Passport Number (masked)",
-      "Full Legal Name of Holder",
-      "Date of Issue & Final Expiry Date",
-      "Place of Issue"
+      "Holder Full Name (as documented)",
+      "Passport Number (masked in database indexes)",
+      "Issue Date & Final Expiration Date",
+      "Calculated 6-Month Travel Advisory Date"
     ],
-    "howToUse": "Photograph the personal particulars page of your passport and send it to the bot. SQUARES Vault flags the critical 6-month pre-expiry milestone so you can apply for reissue smoothly.",
+    "howToUse": "Photograph your passport biographical page. SQUARES Vault calculates the 6-month travel advisory window, schedules timely renewal alerts, and securely archives the image to your personal Google Drive.",
     "faqs": [
       {
-        "q": "What is the 6-month validity rule?",
-        "a": "Airlines and immigration authorities across the world (including US, UK, Schengen, UAE, Singapore) will refuse boarding if your passport expires within 6 months of your planned arrival, even if your return flight is immediate."
+        "q": "What is the 6-Month Passport Rule?",
+        "a": "Most countries require that international travelers possess a passport valid for at least 6 months beyond their planned stay. SQUARES Vault alerts you when your passport crosses this threshold."
       },
       {
-        "q": "Is my passport number kept private?",
-        "a": "Yes. Identification numbers are masked in our database (e.g. keeping only the last 4 characters). Your original scanned image goes straight to your personal Google Drive."
+        "q": "How is my passport privacy protected?",
+        "a": "Passport numbers are masked by default in our database indexes (showing only the last 4 digits). The original image is saved to your personal Google Drive under zero-custodian architecture."
       }
     ],
-    "relatedSlugs": ["utility-bills", "health-insurance"]
+    "relatedSlugs": ["rental-agreements", "utility-bills"]
   },
   {
     "slug": "rental-agreements",
-    "name": "Home Rental & Lease Agreements",
+    "name": "Residential Leases & Rental Agreements",
     "category": "Home",
     "icon": "home",
-    "summary": "Track 11-month lease expirations, notice periods, and security deposit returns.",
-    "whatItIs": "Residential lease agreements in India are traditionally executed for 11 months to avoid mandatory registration requirements under the Registration Act of 1908. They govern rent payment dates, annual escalation percentages (usually 5% to 10%), notice periods, and security deposit refunds.",
-    "wherePeopleLoseIt": "Stamp paper lease agreements are kept in bulky physical files or signed electronically via PDF. Tenants and landlords regularly forget the 1-month or 2-month advance notice deadline required to vacate or negotiate extension terms.",
+    "summary": "Track lease start/end dates, notice period deadlines, security deposit returns, and rent adjustments.",
+    "whatItIs": "Residential lease and tenancy agreements define the contractual relationship between tenants and property owners, establishing rental rates, term duration (typically 12 or 24 months), mandatory notice windows, and security deposit terms.",
+    "wherePeopleLoseIt": "Physical paper lease deeds end up inside drawers while emailed digital scans get forgotten until the final month. Missing the mandatory 30-day or 60-day notice period frequently causes security deposit disputes or automatic renewals.",
     "criticalDates": [
       {
-        "name": "11-Month Term Expiry Date",
-        "description": "The date when the tenancy contract terminates or requires formal renewal."
+        "name": "Mandatory Notice Window Deadline",
+        "description": "The exact date by which notice to vacate or renew must be formally served."
       },
       {
-        "name": "Notice Period Window",
-        "description": "Typically 30 to 60 days before termination. Failing to serve notice in time can lead to forfeiture of security deposit interest or penalties."
+        "name": "Lease Expiration Date",
+        "description": "The end of the contractual lease term."
       }
     ],
     "whatVaultExtracts": [
-      "Property Address / Description",
-      "Landlord & Tenant Names",
-      "Lease Commencement Date & Expiry Date",
-      "Monthly Rent & Security Deposit Amount"
+      "Property Address as Registered",
+      "Landlord & Tenant Parties",
+      "Lease Term Commencement & Expiration Date",
+      "Monthly Rent & Security Deposit Terms"
     ],
-    "howToUse": "Upload the registered or signed PDF of your rent agreement to the bot. SQUARES Vault tracks the 11-month milestone and alerts both parties ahead of the required notice window.",
+    "howToUse": "Upload your lease agreement PDF to the bot. SQUARES Vault registers the term duration, schedules alerts before mandatory notice windows, and stores the signed contract in your Google Drive.",
     "faqs": [
       {
-        "q": "Why are Indian rental agreements usually for 11 months?",
-        "a": "Under Section 17 of the Registration Act 1908, leases of immovable property for a term exceeding one year require mandatory registration and high stamp duty. 11-month agreements avoid this statutory friction."
+        "q": "How does SQUARES Vault protect my lease notice period?",
+        "a": "The bot schedules alerts 60 and 30 days prior to lease termination so you have sufficient time to negotiate renewals or serve notice without deposit forfeiture."
       },
       {
-        "q": "How does the notice period reminder protect tenants?",
-        "a": "Most rental contracts specify that failure to provide 30 days written notice before vacating allows the landlord to deduct a full month's rent from your security deposit. SQUARES Vault alerts you well before the notice deadline."
+        "q": "Can both landlords and tenants use this?",
+        "a": "Yes. Landlords use SQUARES Vault to track lease expirations and rent reviews across multiple rental units, while tenants track their notice periods and deposit receipts."
       }
     ],
     "relatedSlugs": ["utility-bills", "appliance-invoices"]
