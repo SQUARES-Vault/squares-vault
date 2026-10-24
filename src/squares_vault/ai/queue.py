@@ -18,16 +18,18 @@ from squares_vault.ops.images import process_image
 log = get_logger(__name__)
 
 
-async def queue_document(user_id: int, file_id: str, file_unique_id: str) -> str:
+async def queue_document(user_id: int, file_id: str, file_unique_id: str, mime: str = "image/jpeg") -> str:
     """Add a telegram document to the AI queue."""
     draft_id = str(ulid.ULID())
     queue_id = str(ulid.ULID())
+    import json
+    paths_data = json.dumps({"file_id": file_id, "mime": mime})
     
     async with get_db() as db:
         # Create a draft
         await db.execute(
             "INSERT INTO drafts (id, user_id, state, temp_paths, created_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)",
-            (draft_id, user_id, "queued", file_id) # Storing telegram file_id in temp_paths for now
+            (draft_id, user_id, "queued", paths_data)
         )
         # Create queue item
         await db.execute(
@@ -79,13 +81,15 @@ async def process_queue_item(bot, item_id: str, user_id: int, draft_id: str, fil
         # 1. Check quota
         await check_and_increment_quota(user_id)
 
-        # 2. Check if multi-file album
+        # 2. Check if multi-file album or dict metadata
         import json
         files_to_fetch = []
         try:
             meta = json.loads(file_id)
-            if "files" in meta:
+            if isinstance(meta, dict) and "files" in meta:
                 files_to_fetch = meta["files"]
+            elif isinstance(meta, dict) and "file_id" in meta:
+                files_to_fetch = [{"file_id": meta["file_id"], "mime": meta.get("mime", "image/jpeg")}]
         except Exception:
             pass
 
@@ -93,6 +97,7 @@ async def process_queue_item(bot, item_id: str, user_id: int, draft_id: str, fil
             files_to_fetch = [{"file_id": file_id, "mime": "image/jpeg"}]
 
         # 3. Download files from Telegram
+        from squares_vault.ops.office import is_supported_office_doc
         await bot.send_chat_action(user_id, "typing")
         page_msg = f" ({len(files_to_fetch)} pages)" if len(files_to_fetch) > 1 else ""
         msg_obj = await bot.send_message(user_id, f"🔍 *Scanning text{page_msg}...*", parse_mode="Markdown")
@@ -104,6 +109,8 @@ async def process_queue_item(bot, item_id: str, user_id: int, draft_id: str, fil
             file_info = await bot.get_file(fid)
             f_bytes = await bot.download_file(file_info.file_path)
             raw_data = f_bytes.getvalue()
+            fn = getattr(file_info, "file_path", "") or ""
+            decl_mime = item.get("mime", "")
             
             if raw_data[:4] == b"%PDF":
                 all_bytes.append(raw_data)
@@ -112,11 +119,31 @@ async def process_queue_item(bot, item_id: str, user_id: int, draft_id: str, fil
             elif raw_data[:8] == b"\x89PNG\r\n\x1a\n":
                 all_bytes.append(raw_data)
                 item["mime"] = "image/png"
+                dominant_mime = "image/png"
             elif raw_data[:4] == b"RIFF" and raw_data[8:12] == b"WEBP":
                 all_bytes.append(raw_data)
                 item["mime"] = "image/webp"
-            else:
+                dominant_mime = "image/webp"
+            elif raw_data[:3] == b"\xff\xd8\xff":
                 item["mime"] = "image/jpeg"
+                dominant_mime = "image/jpeg"
+                try:
+                    all_bytes.append(process_image(raw_data))
+                except Exception:
+                    all_bytes.append(raw_data)
+            elif is_supported_office_doc(fn, decl_mime):
+                all_bytes.append(raw_data)
+                if fn.endswith(".docx") or "wordprocessingml" in decl_mime:
+                    item["mime"] = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                elif fn.endswith(".xlsx") or "spreadsheetml" in decl_mime:
+                    item["mime"] = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                elif fn.endswith(".csv") or decl_mime == "text/csv":
+                    item["mime"] = "text/csv"
+                else:
+                    item["mime"] = "text/plain"
+                dominant_mime = item["mime"]
+            else:
+                item["mime"] = decl_mime or "image/jpeg"
                 try:
                     all_bytes.append(process_image(raw_data))
                 except Exception:

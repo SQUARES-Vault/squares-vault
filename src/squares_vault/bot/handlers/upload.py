@@ -10,6 +10,7 @@ from aiogram.types import Message
 
 from squares_vault.i18n.loader import t
 from squares_vault.ai.queue import queue_document, queue_multi_document
+from squares_vault.ops.office import is_supported_office_doc
 
 router = Router(name="upload")
 
@@ -54,7 +55,7 @@ async def _process_media_group_after_delay(group_id: str, user_id: int) -> None:
         return
 
     if len(files) == 1:
-        await queue_document(user_id, files[0]["file_id"], files[0]["file_id"])
+        await queue_document(user_id, files[0]["file_id"], files[0]["file_id"], mime=files[0].get("mime", "image/jpeg"))
     else:
         await queue_multi_document(user_id, files)
 
@@ -75,9 +76,10 @@ async def handle_media_group(message: Message) -> None:
         file_id = message.photo[-1].file_id
         mime = "image/jpeg"
     elif message.document:
-        if message.document.mime_type in ["application/pdf", "image/jpeg", "image/png"]:
-            file_id = message.document.file_id
-            mime = message.document.mime_type
+        doc = message.document
+        if is_supported_office_doc(doc.file_name, doc.mime_type):
+            file_id = doc.file_id
+            mime = doc.mime_type or "application/pdf"
 
     if not file_id:
         return
@@ -100,21 +102,53 @@ async def handle_media_group(message: Message) -> None:
 async def handle_photo(message: Message) -> None:
     """Handle single photo uploads."""
     photo = message.photo[-1]
-    await _handle_file(message, photo.file_id)
+    await _handle_file(message, photo.file_id, mime="image/jpeg")
 
 
 @router.message(StateFilter(None), F.document)
 async def handle_document(message: Message) -> None:
-    """Handle single document uploads (PDFs/Images)."""
-    mime = message.document.mime_type
-    if mime not in ["application/pdf", "image/jpeg", "image/png"]:
-        await message.reply("❌ I can only process PDFs and images.")
+    """Handle single document uploads (PDFs, Images, Word, Excel, CSV, Text)."""
+    doc = message.document
+    mime = doc.mime_type or ""
+    filename = doc.file_name or ""
+    
+    if not is_supported_office_doc(filename, mime):
+        # File cannot be parsed automatically with AI.
+        # Preserve attachment in draft and offer Add Manually button so user doesn't have to re-upload!
+        from squares_vault.db.connection import get_db
+        import ulid
+        from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+        
+        user_id = message.from_user.id
+        draft_id = str(ulid.ULID())
+        
+        async with get_db() as db:
+            await db.execute("INSERT OR IGNORE INTO users (id, chat_id) VALUES (?, ?)", (user_id, user_id))
+            await db.execute(
+                "INSERT INTO drafts (id, user_id, state, temp_paths, created_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)",
+                (draft_id, user_id, "failed", doc.file_id)
+            )
+            await db.commit()
+
+        kb = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="✏️ Add Manually (Keep File Attached)", callback_data=f"add_manual_fail:{draft_id}")],
+            [InlineKeyboardButton(text="❌ Cancel", callback_data="man_cancel")]
+        ])
+        
+        display_name = filename or "document"
+        await message.reply(
+            f"⚠️ **I cannot automatically read this file type ({display_name}) with AI.**\n\n"
+            "You can still save and track this document in your Google Drive Vault:\n"
+            "Tap below to add it manually with your file already attached.",
+            reply_markup=kb,
+            parse_mode="Markdown"
+        )
         return
         
-    await _handle_file(message, message.document.file_id)
+    await _handle_file(message, doc.file_id, mime=mime)
 
 
-async def _handle_file(message: Message, file_id: str) -> None:
+async def _handle_file(message: Message, file_id: str, mime: str = "image/jpeg") -> None:
     """Common logic to queue a single file."""
     from squares_vault.db.connection import get_db
     user_id = message.from_user.id
@@ -140,5 +174,5 @@ async def _handle_file(message: Message, file_id: str) -> None:
         )
         return
 
-    await queue_document(user_id, file_id, file_id)
+    await queue_document(user_id, file_id, file_id, mime=mime)
     await message.reply("⏳ Upload received! I am reading the document...")

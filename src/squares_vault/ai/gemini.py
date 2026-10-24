@@ -83,11 +83,17 @@ async def extract_document_data(
         }
     ]
 
+    from squares_vault.ops.office import extract_text_from_document
+
     files_list = file_bytes if isinstance(file_bytes, list) else [file_bytes]
     for fb in files_list:
         m = mime_type if (mime_type and mime_type != "application/octet-stream") else _detect_mime(fb)
-        b64 = base64.b64encode(fb).decode("utf-8")
-        parts.append({"inline_data": {"mime_type": m, "data": b64}})
+        extracted_txt = extract_text_from_document(fb, mime=m)
+        if extracted_txt:
+            parts.append({"text": f"--- Document Content ---\n{extracted_txt}"})
+        else:
+            b64 = base64.b64encode(fb).decode("utf-8")
+            parts.append({"inline_data": {"mime_type": m, "data": b64}})
 
     payload = {
         "system_instruction": {

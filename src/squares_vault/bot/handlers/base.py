@@ -164,6 +164,7 @@ async def _render_upcoming(target, user_id: int, months_limit: int | None = 3, *
         filter_sql = """
             AND (
                 (r.key_date IS NOT NULL AND r.key_date != '' 
+                 AND r.key_date_type IN ('expiry', 'due')
                  AND r.key_date >= date('now', '-10 days') AND r.key_date <= date('now', '+3 months'))
                 OR EXISTS (
                     SELECT 1 FROM reminders rem2 
@@ -179,6 +180,7 @@ async def _render_upcoming(target, user_id: int, months_limit: int | None = 3, *
         filter_sql = """
             AND (
                 (r.key_date IS NOT NULL AND r.key_date != '' 
+                 AND r.key_date_type IN ('expiry', 'due')
                  AND r.key_date >= date('now', '-10 days'))
                 OR EXISTS (
                     SELECT 1 FROM reminders rem2 
@@ -224,6 +226,7 @@ async def _render_upcoming(target, user_id: int, months_limit: int | None = 3, *
         all_filter = """
             AND (
                 (r.key_date IS NOT NULL AND r.key_date != '' 
+                 AND r.key_date_type IN ('expiry', 'due')
                  AND r.key_date >= date('now', '-10 days'))
                 OR EXISTS (
                     SELECT 1 FROM reminders rem2 
@@ -280,6 +283,14 @@ async def _render_upcoming(target, user_id: int, months_limit: int | None = 3, *
             }
         if row["kind"] and row["reminder_state"] == "pending":
             grouped[rid]["items"].append(row)
+
+    # Filter out any records that lack an expiry/due date AND lack pending reminders
+    filtered_grouped = OrderedDict()
+    for rid, data in grouped.items():
+        is_expiry = data["key_date_type"] in ("expiry", "due") and bool(data["key_date"])
+        if is_expiry or data["items"]:
+            filtered_grouped[rid] = data
+    grouped = filtered_grouped
 
     # Check if there are any records with pending reminders to show cancel option
     async with get_db() as db:

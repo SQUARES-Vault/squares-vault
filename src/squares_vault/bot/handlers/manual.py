@@ -10,11 +10,39 @@ from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKe
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 
+from aiogram.exceptions import TelegramBadRequest
+
 from squares_vault.db.repositories import create_record
 from squares_vault.drive.naming import generate_coded_name
 from squares_vault.db.connection import get_db
 
 router = Router(name="manual")
+
+
+def _escape_md(text: str | None) -> str:
+    """Escape Telegram Markdown special characters safely."""
+    if not text:
+        return ""
+    # Standard Markdown special chars: _ * ` [ ]
+    return re.sub(r"([_*`\[\]])", r"\\\1", str(text))
+
+
+async def _safe_send_or_edit(target, text: str, *, edit: bool = False, reply_markup=None, parse_mode="Markdown") -> None:
+    """Send or edit message with fallback to plain text if Markdown entity parsing fails."""
+    try:
+        if edit:
+            await target.edit_text(text, reply_markup=reply_markup, parse_mode=parse_mode)
+        else:
+            await target.reply(text, reply_markup=reply_markup, parse_mode=parse_mode)
+    except TelegramBadRequest as e:
+        err_msg = str(e).lower()
+        if "can't parse entities" in err_msg or "entity" in err_msg or "can't find end" in err_msg:
+            if edit:
+                await target.edit_text(text, reply_markup=reply_markup, parse_mode=None)
+            else:
+                await target.reply(text, reply_markup=reply_markup, parse_mode=None)
+        else:
+            raise
 
 
 # ─── States ──────────────────────────────────────────────────────────────────
@@ -142,9 +170,9 @@ def _summary(data: dict) -> str:
         "──────────────────────"
     ]
     if data.get("category"):
-        lines.append(f"📁 *Category:* {data['category']}")
+        lines.append(f"📁 *Category:* {_escape_md(data['category'])}")
     if data.get("title"):
-        lines.append(f"📄 *Title:* {data['title']}")
+        lines.append(f"📄 *Title:* {_escape_md(data['title'])}")
     if data.get("amount"):
         lines.append(f"💰 *Amount:* ₹{data['amount']/100:.2f}")
     if data.get("start_date"):
@@ -160,7 +188,7 @@ def _summary(data: dict) -> str:
         else:
             lines.append("📎 *Attachment:* Document attached")
     if data.get("notes"):
-        lines.append(f"📝 *Notes:* {data['notes']}")
+        lines.append(f"📝 *Notes:* {_escape_md(data['notes'])}")
     lines.append("──────────────────────")
     return "\n".join(lines)
 
@@ -671,7 +699,7 @@ async def on_skip_notes(cq: CallbackQuery, state: FSMContext) -> None:
 
 @router.message(ManualEntry.notes)
 async def on_manual_notes(message: Message, state: FSMContext) -> None:
-    notes = message.text.strip()[:250]
+    notes = message.text.strip()[:2000]
     await state.update_data(notes=notes)
     data = await state.get_data()
     await _show_confirm(message, data, edit=False)
@@ -687,10 +715,7 @@ async def _show_confirm(msg, data: dict, *, edit: bool) -> None:
         [InlineKeyboardButton(text="⬅️ Back to Category", callback_data="man_restart")],
     ])
     text = f"{_summary(data)}\n\n_Confirm and save?_"
-    if edit:
-        await msg.edit_text(text, reply_markup=kb, parse_mode="Markdown")
-    else:
-        await msg.reply(text, reply_markup=kb, parse_mode="Markdown")
+    await _safe_send_or_edit(msg, text, edit=edit, reply_markup=kb, parse_mode="Markdown")
 
 
 @router.callback_query(F.data == "man_restart")
@@ -713,8 +738,11 @@ async def on_man_restart(cq: CallbackQuery, state: FSMContext) -> None:
         [InlineKeyboardButton(text="❌ Cancel",     callback_data="man_cancel")],
     ])
     text = f"{_summary(data)}\n\n*Step 1/6 ➔ Category*\n\nSelect a category:"
-    await cq.message.edit_text(text, reply_markup=kb, parse_mode="Markdown")
-    await cq.answer()
+    await _safe_send_or_edit(cq.message, text, edit=True, reply_markup=kb, parse_mode="Markdown")
+    try:
+        await cq.answer()
+    except Exception:
+        pass
 
 
 @router.callback_query(F.data == "man_save", ManualEntry.confirm)
@@ -832,17 +860,20 @@ async def on_man_save(cq: CallbackQuery, state: FSMContext) -> None:
             await db.commit()
 
     amt_str = f"₹{amount/100:.2f}" if amount else "—"
+    clean_title = _escape_md(title)
+    clean_cat = _escape_md(category)
+    clean_notes = _escape_md(notes) if notes else None
     lines = [
         f"✅ *Saved!*",
         f"",
-        f"📌 *{title}*",
-        f"Category: {category}",
+        f"📌 *{clean_title}*",
+        f"Category: {clean_cat}",
         f"Amount: {amt_str}",
         f"Start date: {_fmt_date(start_dt)}",
         f"End/Expiry: {'— (No reminders needed)' if (data.get('no_reminders') or not end_dt) else _fmt_date(end_dt)}",
     ]
-    if notes:
-        lines.append(f"Notes: {notes}")
+    if clean_notes:
+        lines.append(f"Notes: {clean_notes}")
     if files_to_attach:
         count_txt = f"{len(files_to_attach)} document{'s' if len(files_to_attach) > 1 else ''}"
         lines.append(f"📎 Attached ({count_txt})")
@@ -872,15 +903,19 @@ async def on_man_save(cq: CallbackQuery, state: FSMContext) -> None:
             import logging
             logging.getLogger(__name__).error(f"Failed to generate reminders in manual: {e}")
 
-    if reminders_set:
-        lines.append("\n🔔 *Reminders have been set.*")
-        kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="📅 Add to Phone Calendar", callback_data=f"send_ics:{record_db_id}")]])
-        await cq.message.edit_text("\n".join(lines), reply_markup=kb, parse_mode="Markdown")
-    else:
-        await cq.message.edit_text("\n".join(lines), parse_mode="Markdown")
-
-    await state.clear()
-    await cq.answer("Saved!")
+    try:
+        if reminders_set:
+            lines.append("\n🔔 *Reminders have been set.*")
+            kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="📅 Add to Phone Calendar", callback_data=f"send_ics:{record_db_id}")]])
+            await _safe_send_or_edit(cq.message, "\n".join(lines), edit=True, reply_markup=kb, parse_mode="Markdown")
+        else:
+            await _safe_send_or_edit(cq.message, "\n".join(lines), edit=True, parse_mode="Markdown")
+    finally:
+        await state.clear()
+        try:
+            await cq.answer("Saved!")
+        except Exception:
+            pass
 
 
 @router.callback_query(F.data == "man_cancel")
@@ -1321,14 +1356,18 @@ async def _render_edit_dashboard(msg, data: dict, *, edit: bool) -> None:
     fc = data.get("file_count", 0)
     attach_str = f"{fc} file(s) attached" if fc > 0 else "None"
 
+    clean_title = _escape_md(data.get("title") or "Untitled")
+    clean_cat = _escape_md((data.get("category") or "").title())
+    notes_val = _escape_md(data.get("notes")) if data.get("notes") else "—"
+
     text = (
         f"✏️ **EDIT DOCUMENT**\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"📄 **Title:** {data['title']}\n"
-        f"🏷️ **Category:** {data['category'].title()}\n"
+        f"📄 **Title:** {clean_title}\n"
+        f"🏷️ **Category:** {clean_cat}\n"
         f"💰 **Amount:** {amt_str}\n"
         f"📅 **Key Date:** {_fmt_date(data.get('key_date'))}\n"
-        f"📝 **Notes:** {data.get('notes') or '—'}\n"
+        f"📝 **Notes:** {notes_val}\n"
         f"📎 **Attachment:** {attach_str}\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         f"_Tap a field below to change it:_"
@@ -1342,18 +1381,20 @@ async def _render_edit_dashboard(msg, data: dict, *, edit: bool) -> None:
          InlineKeyboardButton(text="📎 Add File", callback_data="edit_field:attachment")],
         [InlineKeyboardButton(text="✅ Done (Back to Document)", callback_data=f"view_record:{rid}")]
     ])
-    if edit:
-        await msg.edit_text(text, reply_markup=kb, parse_mode="Markdown")
-    else:
-        await msg.reply(text, reply_markup=kb, parse_mode="Markdown")
+    await _safe_send_or_edit(msg, text, edit=edit, reply_markup=kb, parse_mode="Markdown")
 
 
 @router.callback_query(F.data == "edit_cancel_field")
 async def on_edit_cancel_field(cq: CallbackQuery, state: FSMContext) -> None:
-    await state.set_state(EditEntry.menu)
-    data = await state.get_data()
-    await _render_edit_dashboard(cq.message, data, edit=True)
-    await cq.answer()
+    try:
+        await state.set_state(EditEntry.menu)
+        data = await state.get_data()
+        await _render_edit_dashboard(cq.message, data, edit=True)
+    finally:
+        try:
+            await cq.answer()
+        except Exception:
+            pass
 
 
 @router.callback_query(F.data == "edit_field:title", EditEntry.menu)
@@ -1598,43 +1639,56 @@ async def _apply_new_edit_date(target, state: FSMContext, new_date: str, is_msg:
 @router.callback_query(F.data == "edit_field:notes", EditEntry.menu)
 async def on_edit_field_notes(cq: CallbackQuery, state: FSMContext) -> None:
     data = await state.get_data()
-    notes_str = f"`{data['notes']}`" if data.get("notes") else "None"
+    raw_notes = data.get("notes") or ""
+    clean_notes = _escape_md(raw_notes[:100] + ("…" if len(raw_notes) > 100 else "")) if raw_notes else "None"
     kb = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🗑️ Clear Notes", callback_data="clear_edit_notes")],
         [InlineKeyboardButton(text="❌ Cancel", callback_data="edit_cancel_field")]
     ])
-    await cq.message.edit_text(
-        f"📝 **Edit Notes**\n\nCurrent: {notes_str}\n\n_Send new notes in chat, or tap Clear:_",
-        reply_markup=kb,
-        parse_mode="Markdown"
-    )
-    await state.set_state(EditEntry.edit_notes)
-    await cq.answer()
+    try:
+        await _safe_send_or_edit(
+            cq.message,
+            f"📝 **Edit Notes**\n\nCurrent: {clean_notes}\n\n_Send new notes in chat, or tap Clear:_",
+            edit=True,
+            reply_markup=kb,
+            parse_mode="Markdown"
+        )
+        await state.set_state(EditEntry.edit_notes)
+    finally:
+        try:
+            await cq.answer()
+        except Exception:
+            pass
 
 
 @router.callback_query(F.data == "clear_edit_notes", EditEntry.edit_notes)
 async def on_clear_edit_notes(cq: CallbackQuery, state: FSMContext) -> None:
-    data = await state.get_data()
-    rid = data["record_id"]
-    from squares_vault.db.repositories import update_record
-    await update_record(
-        record_id=rid,
-        user_id=cq.from_user.id,
-        title=data["title"],
-        category=data["category"],
-        amount_minor=data.get("amount"),
-        key_date=data.get("key_date"),
-        notes=""
-    )
-    await state.update_data(notes="")
-    await state.set_state(EditEntry.menu)
-    await _render_edit_dashboard(cq.message, await state.get_data(), edit=True)
-    await cq.answer("Notes cleared!")
+    try:
+        data = await state.get_data()
+        rid = data["record_id"]
+        from squares_vault.db.repositories import update_record
+        await update_record(
+            record_id=rid,
+            user_id=cq.from_user.id,
+            title=data["title"],
+            category=data["category"],
+            amount_minor=data.get("amount"),
+            key_date=data.get("key_date"),
+            notes=""
+        )
+        await state.update_data(notes="")
+        await state.set_state(EditEntry.menu)
+        await _render_edit_dashboard(cq.message, await state.get_data(), edit=True)
+    finally:
+        try:
+            await cq.answer("Notes cleared!")
+        except Exception:
+            pass
 
 
 @router.message(EditEntry.edit_notes)
 async def on_save_edit_notes(message: Message, state: FSMContext) -> None:
-    new_notes = message.text.strip()[:250]
+    new_notes = message.text.strip()[:2000]
     data = await state.get_data()
     rid = data["record_id"]
     from squares_vault.db.repositories import update_record
