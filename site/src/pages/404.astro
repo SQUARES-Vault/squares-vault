@@ -8,33 +8,32 @@ const description = 'The document or page you requested could not be located.';
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/404.html">
-  <div class="container" style="padding: 90px 0 120px; text-align: center; max-width: 640px;">
-    <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: var(--radius-sm); background-color: var(--bg-paper); border: 1px solid var(--border-hairline); margin-bottom: 24px; color: var(--ink-secondary);">
+  <div class="container" style="padding: 100px 0 140px; text-align: center; max-width: 600px;">
+    <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: var(--radius-card); background-color: var(--surface); margin-bottom: 24px; color: var(--muted);">
       <LucideIcon name="file-question" size={32} />
     </div>
 
-    <div style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--status-expired); margin-bottom: 12px;">
+    <div style="font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--danger); margin-bottom: 12px;">
       404 · Unfiled Record
     </div>
 
-    <h1 style="font-size: 2.2rem; margin-bottom: 16px;">This page could not be found.</h1>
+    <h1 style="font-size: clamp(32px, 5vw, 48px); margin-bottom: 16px;">This page could not be found.</h1>
 
-    <p style="font-size: 1.1rem; color: var(--ink-secondary); line-height: 1.65; margin-bottom: 36px;">
+    <p style="font-size: 17px; color: var(--muted); line-height: 1.5; margin-bottom: 36px;">
       The page or document reference you were looking for does not exist, may have been relocated, or is temporarily unavailable.
     </p>
 
     <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-      <a href={getAssetUrl('/')} class="btn btn-primary" style="padding: 12px 24px;">
+      <a href={getAssetUrl('/')} class="btn-apple-primary">
         <span>Return to Homepage</span>
-        <span>&rarr;</span>
       </a>
-      <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 12px 20px;">
-        <span>Open Telegram Bot</span>
+      <a href={siteConfig.inviteEmailUrl} class="btn-apple-secondary">
+        <span>Request Invite Code</span>
       </a>
     </div>
 
-    <div style="margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--border-hairline); font-size: 0.9rem; color: var(--ink-muted);">
-      Looking for something specific? Browse our <a href={getAssetUrl('/guides/')} style="color: var(--accent-pine); text-decoration: underline;">Guides</a>, <a href={getAssetUrl('/#features')} style="color: var(--accent-pine); text-decoration: underline;">Features</a>, or <a href={getAssetUrl('/vs/digilocker/')} style="color: var(--accent-pine); text-decoration: underline;">DigiLocker Comparison</a>.
+    <div style="margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--hairline); font-size: 14px; color: var(--muted);">
+      Looking for something specific? Browse our <a href={getAssetUrl('/guides/')} class="link-apple"><span>Guides</span> <span class="chevron">›</span></a> or <a href={getAssetUrl('/vs/digilocker/')} class="link-apple"><span>Comparisons</span> <span class="chevron">›</span></a>.
     </div>
   </div>
 </BaseLayout>

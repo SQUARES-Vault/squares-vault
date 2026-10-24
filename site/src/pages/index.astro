@@ -5,7 +5,6 @@ import VideoPlaceholder from '../components/VideoPlaceholder.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import Testimonials from '../components/Testimonials.astro';
-import EmailCapture from '../components/EmailCapture.astro';
 import DocumentCard from '../components/DocumentCard.astro';
 import LucideIcon from '../components/icons/LucideIcon.astro';
 import documents from '../data/documents.json';
@@ -42,97 +41,93 @@ const homeFaqs = [
   canonicalPath="/"
   hreflangHi="/hi/"
 >
-  <!-- ═══════════════════ HERO ═══════════════════ -->
-  <section class="section" style="padding-top: 56px; padding-bottom: 64px;">
-    <div class="container hero-grid">
-      <div class="hero-content">
-        <div class="hero-kicker">Personal Life-Admin · Telegram Assistant</div>
-        <h1>Your vital documents, organised.<br />Expiries tracked before they cost you.</h1>
+  <!-- ═══════════════════ 1. HERO (Apple Centered Display) ═══════════════════ -->
+  <section class="section hero-apple">
+    <div class="container">
+      <div class="hero-eyebrow">Personal Life-Admin · Telegram Assistant</div>
+      <h1 class="hero-title">Your vital documents, organised.<br />Expiries tracked before they cost you.</h1>
 
-        <p class="hero-subtitle">
-          Forward your vehicle titles & registrations, auto and medical insurance, appliance warranties, rental leases, and utility bills in Telegram.
-          Gemini AI extracts key renewal dates, saves the original files directly into <strong>your personal Google Drive</strong>, and alerts you before anything expires.
-        </p>
+      <p class="hero-subhead">
+        Forward your vehicle titles & registrations, auto and medical insurance, appliance warranties, rental leases, and utility bills in Telegram.
+        Gemini AI extracts key renewal dates, saves the original files directly into <strong>your personal Google Drive</strong>, and alerts you before anything expires.
+      </p>
 
-        <div class="hero-actions">
-          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 14px 28px; font-size: 1.05rem;">
-            <LucideIcon name="telegram" size={18} />
+      <div class="hero-cta-cluster">
+        <div class="hero-buttons-row">
+          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary">
+            <span>Request Free Invite Code</span>
+          </a>
+          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="link-apple">
             <span>Open in Telegram</span>
-            <span>&rarr;</span>
+            <span class="chevron">›</span>
           </a>
-          <a href="#how-it-works" class="btn btn-secondary" style="padding: 14px 24px; font-size: 1.05rem;">
+          <a href="#how-it-works" class="link-apple">
             <span>See How It Works</span>
+            <span class="chevron">›</span>
           </a>
         </div>
 
-        <div class="hero-pricing-note">
-          <strong>Pricing:</strong> {siteConfig.pricingNotice}
+        <div class="hero-invite-notice">
+          Early access beta is currently invite-only · {siteConfig.inviteNotice}
         </div>
 
-        <EmailCapture />
-
-        <div class="hero-stats-strip">
-          <div class="stat-item">
-            <span class="stat-value">10+ Types</span>
-            <span class="stat-label">Vehicles, policies, warranties, leases</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">Your Drive</span>
-            <span class="stat-label">Zero server file custody</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">10d / 2d / 0d</span>
-            <span class="stat-label">Automated alert cadence</span>
-          </div>
+        <div class="hero-chips-row">
+          <span>10+ Types</span>
+          <span class="sep">·</span>
+          <span>Your Google Drive</span>
+          <span class="sep">·</span>
+          <span>10d / 2d / 0d Alerts</span>
         </div>
       </div>
 
-      <!-- Right Column: Demo Chat & Video Slot -->
-      <div>
+      <!-- Telegram Chat Mockup Centered with Parallax & Video Placeholder -->
+      <div class="hero-mockup-wrapper reveal">
         <TelegramMockup />
-        <VideoPlaceholder />
+        <div style="margin-top: 24px; width: 100%; max-width: 420px;">
+          <VideoPlaceholder />
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
-  <section class="section" id="how-it-works" style="background-color: var(--bg-paper);">
-    <div class="container">
+  <!-- ═══════════════════ 2. HOW IT WORKS (Surface #F5F5F7) ═══════════════════ -->
+  <section class="section section-surface" id="how-it-works">
+    <div class="container reveal">
       <div class="section-header">
-        <div class="section-kicker">Simple &amp; Frictionless</div>
+        <span class="section-eyebrow">Simple &amp; Frictionless</span>
         <h2>How SQUARES Vault Works</h2>
         <p>No separate app download. No passwords to remember. Everything operates inside your existing Telegram app.</p>
       </div>
 
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-num">01</div>
-          <h3 class="step-title">Connect in 15 seconds</h3>
-          <p class="step-text">
+      <div class="steps-cards-grid">
+        <div class="apple-step-card">
+          <div class="apple-step-num">01</div>
+          <h3 class="apple-step-title">Connect in 15 seconds</h3>
+          <p class="apple-step-text">
             Send <code>/start</code> in Telegram. Connect your personal Google Drive via Google's secure Device Flow. SQUARES Vault only receives permission to manage files it creates.
           </p>
         </div>
 
-        <div class="step-card">
-          <div class="step-num">02</div>
-          <h3 class="step-title">Snap or forward any paper</h3>
-          <p class="step-text">
-            Forward an insurance PDF from your email, or photograph a vehicle RC, appliance invoice, or PUC slip. Multi-page documents can be sent in a single photo batch.
+        <div class="apple-step-card">
+          <div class="apple-step-num">02</div>
+          <h3 class="apple-step-title">Snap or forward any paper</h3>
+          <p class="apple-step-text">
+            Forward an insurance PDF from your email, or photograph a vehicle registration, appliance invoice, or inspection slip. Multi-page documents can be sent in a single photo batch.
           </p>
         </div>
 
-        <div class="step-card">
-          <div class="step-num">03</div>
-          <h3 class="step-title">In-memory AI reading</h3>
-          <p class="step-text">
+        <div class="apple-step-card">
+          <div class="apple-step-num">03</div>
+          <h3 class="apple-step-title">In-memory AI reading</h3>
+          <p class="apple-step-text">
             Gemini AI extracts the category, title, expiry date, provider, and vehicle number. Review the drafted record in chat and confirm with one tap.
           </p>
         </div>
 
-        <div class="step-card">
-          <div class="step-num">04</div>
-          <h3 class="step-title">Automated renewal alerts</h3>
-          <p class="step-text">
+        <div class="apple-step-card">
+          <div class="apple-step-num">04</div>
+          <h3 class="apple-step-title">Automated renewal alerts</h3>
+          <p class="apple-step-text">
             Receive reminders at 10 days, 2 days, and same-day at 09:00 AM local time. Tap 'Snooze', 'Renew', or ask natural language questions whenever you need answers.
           </p>
         </div>
@@ -140,109 +135,124 @@ const homeFaqs = [
     </div>
   </section>
 
-  <!-- ═══════════════════ FEATURES ═══════════════════ -->
+  <!-- ═══════════════════ 3. FEATURES BENTO GRID (White Surface) ═══════════════════ -->
   <section class="section" id="features">
-    <div class="container">
+    <div class="container-bento reveal">
       <div class="section-header">
-        <div class="section-kicker">Built for Real Life</div>
+        <span class="section-eyebrow">Built for Real Life</span>
         <h2>Features engineered for household peace of mind</h2>
         <p>A structured filing cabinet that actively keeps track of your household compliance.</p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
-        <div class="card-paper">
-          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="car" size={24} /></div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Vehicle Multi-Hop Linking</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
-            Save your car's RC once. SQUARES Vault automatically groups your insurance policies, PUC slips, service invoices, and traffic challans under your vehicle registration plate. Ask about your <em>"Venue"</em> and every related document surfaces together.
-          </p>
+      <!-- Apple Bento Grid: 6 tiles in 4-column layout -->
+      <div class="bento-grid">
+        <!-- Tile 1: 2x2 Hero Tile -->
+        <div class="bento-tile bento-tile-hero">
+          <div>
+            <div class="bento-icon"><LucideIcon name="car" size={32} /></div>
+            <h3 class="bento-title">Vehicle Multi-Hop Linking</h3>
+            <p class="bento-desc">
+              Save your car's registration once. SQUARES Vault automatically groups your insurance policies, inspection slips, service invoices, and traffic citations under your vehicle registration plate. Ask about your <em>"Venue"</em> and every related document surfaces together.
+            </p>
+          </div>
+          <div style="margin-top: 24px; padding: 14px 18px; background-color: #ffffff; border-radius: 14px; border: 1px solid var(--hairline); display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-size: 13px; font-weight: 500; color: var(--text);">Linked Plate: UP15EB3XX3</div>
+            <span class="badge-status active">3 Connected Docs</span>
+          </div>
         </div>
 
-        <div class="card-paper">
-          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="shield" size={24} /></div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Your Own Google Drive Storage</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
-            We operate with zero file custody. Uploaded documents are saved directly into your personal Google Drive folder. You retain 100% legal ownership of your original files, completely independent of our service.
-          </p>
+        <!-- Tile 2: 2x1 Wide Tile -->
+        <div class="bento-tile bento-tile-wide">
+          <div>
+            <div class="bento-icon"><LucideIcon name="shield" size={28} /></div>
+            <h3 class="bento-title">Your Own Google Drive Storage</h3>
+            <p class="bento-desc">
+              We operate with zero file custody. Uploaded documents are saved directly into your personal Google Drive folder. You retain 100% legal ownership of your original files, completely independent of our service.
+            </p>
+          </div>
         </div>
 
-        <div class="card-paper">
-          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="file-text" size={24} /></div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">"Ask Your Vault" Natural Language Q&amp;A</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
-            Ask questions in plain conversational language: <em>"What is due between Jan and June?"</em> or <em>"How much did I spend on maintenance?"</em>. The bot parses your indexed records and returns concise answers with clickable attachment links.
-          </p>
+        <!-- Tile 3: 2x1 Wide Tile -->
+        <div class="bento-tile bento-tile-wide">
+          <div>
+            <div class="bento-icon"><LucideIcon name="file-text" size={28} /></div>
+            <h3 class="bento-title">"Ask Your Vault" Natural Language Q&amp;A</h3>
+            <p class="bento-desc">
+              Ask questions in plain conversational language: <em>"What is due between Jan and June?"</em> or <em>"How much did I spend on maintenance?"</em>. The bot parses your indexed records and returns concise answers with clickable attachment links.
+            </p>
+          </div>
         </div>
 
-        <div class="card-paper">
-          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="home" size={24} /></div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Family Access Sharing</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
-            Grant family members read access to specific categories (such as 'vehicle' or 'health') without duplicating files. They can retrieve policies and vehicle papers from their own Telegram during emergencies.
-          </p>
+        <!-- Tile 4: 1x1 Single Tile -->
+        <div class="bento-tile bento-tile-single">
+          <div>
+            <div class="bento-icon"><LucideIcon name="home" size={26} /></div>
+            <h3 class="bento-title" style="font-size: 20px;">Family Access Sharing</h3>
+            <p class="bento-desc" style="font-size: 14px;">
+              Grant family members read access to specific categories without duplicating files during emergencies.
+            </p>
+          </div>
         </div>
 
-        <div class="card-paper">
-          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="calendar" size={24} /></div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Calendar Export &amp; Smart Search</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
-            Export all upcoming deadlines as a standard <code>.ics</code> file into Google Calendar or Apple Calendar. Use full-text search across titles, provider names, and notes with live validity tags (🟢 Active · 🟡 Expiring · 🔴 Expired).
-          </p>
+        <!-- Tile 5: 1x1 Single Tile -->
+        <div class="bento-tile bento-tile-single">
+          <div>
+            <div class="bento-icon"><LucideIcon name="calendar" size={26} /></div>
+            <h3 class="bento-title" style="font-size: 20px;">Calendar Export &amp; Search</h3>
+            <p class="bento-desc" style="font-size: 14px;">
+              Export all upcoming deadlines as a standard <code>.ics</code> file into Google Calendar or Apple Calendar.
+            </p>
+          </div>
         </div>
 
-        <div class="card-paper">
-          <div style="color: var(--accent-pine); margin-bottom: 12px;"><LucideIcon name="receipt" size={24} /></div>
-          <h3 style="font-size: 1.18rem; margin-bottom: 8px;">Manual Entry &amp; Renewal Wizard</h3>
-          <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
-            Prefer manual entry? Add any document without AI using our step-by-step wizard, equipped with smart date shortcuts (+6 Months, +1 Year, +2 Years). Edit existing records or record annual renewals in seconds.
-          </p>
+        <!-- Tile 6: 2x1 Double Tile -->
+        <div class="bento-tile bento-tile-double">
+          <div>
+            <div class="bento-icon"><LucideIcon name="receipt" size={26} /></div>
+            <h3 class="bento-title" style="font-size: 20px;">Manual Entry &amp; Renewal Wizard</h3>
+            <p class="bento-desc" style="font-size: 14px;">
+              Prefer manual entry? Add any document without AI using our step-by-step wizard, equipped with smart date shortcuts (+6 Months, +1 Year, +2 Years). Record renewals in seconds.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ PRIVACY & SECURITY ═══════════════════ -->
-  <section class="section" id="privacy" style="background-color: var(--bg-paper);">
+  <!-- ═══════════════════ 4. PRIVACY BY ARCHITECTURE (Dramatic Black) ═══════════════════ -->
+  <section class="section section-dark reveal" id="privacy">
     <div class="container">
       <div class="section-header">
-        <div class="section-kicker">Honest &amp; Plain Language</div>
-        <h2>Privacy by Architecture, Not Slogans</h2>
-        <p>A transparent breakdown of how your files, tokens, and data are treated.</p>
+        <span class="section-eyebrow" style="color: var(--accent);">Honest &amp; Plain Language</span>
+        <h2 style="color: #f5f5f7;">Privacy by Architecture, Not Slogans</h2>
+        <p style="color: #86868b;">A transparent breakdown of how your files, tokens, and data are treated.</p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-        <div class="card-paper">
-          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
-            1. Zero Server File Custody
-          </strong>
-          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+      <div class="privacy-grid">
+        <div class="privacy-tile">
+          <strong>1. Zero Server File Custody</strong>
+          <p>
             Your original files are uploaded directly to your own Google Drive. We do not store permanent copies of your documents on our servers.
           </p>
         </div>
 
-        <div class="card-paper">
-          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
-            2. Narrow <code>drive.file</code> Scope
-          </strong>
-          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+        <div class="privacy-tile">
+          <strong>2. Narrow <code>drive.file</code> Scope</strong>
+          <p>
             We only request access to files created by SQUARES Vault itself. We cannot view, open, or edit any pre-existing files in your Google Drive.
           </p>
         </div>
 
-        <div class="card-paper">
-          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
-            3. Google Gemini API Processing
-          </strong>
-          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+        <div class="privacy-tile">
+          <strong>3. Google Gemini API Processing</strong>
+          <p>
             Document OCR and date extraction are handled via Google's Gemini API in transit. For details on Google's API data practices, review <a href="https://ai.google.dev/terms" target="_blank" rel="noopener noreferrer">Google's Gemini API terms</a>.
           </p>
         </div>
 
-        <div class="card-paper">
-          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 6px;">
-            4. Simple Deletion via <code>/deletemydata</code>
-          </strong>
-          <p style="font-size: 0.9rem; color: var(--ink-secondary); margin: 0;">
+        <div class="privacy-tile">
+          <strong>4. Simple Deletion via <code>/deletemydata</code></strong>
+          <p>
             Typing <code>/deletemydata</code> permanently deletes all your metadata from our database, revokes OAuth access, and cancels active reminders. Your Drive files remain yours.
           </p>
         </div>
@@ -250,33 +260,33 @@ const homeFaqs = [
     </div>
   </section>
 
-  <!-- ═══════════════════ COMPARISON ═══════════════════ -->
-  <section class="section" id="comparison">
+  <!-- ═══════════════════ 5. COMPARISON TABLE (White Surface) ═══════════════════ -->
+  <section class="section reveal" id="comparison">
     <div class="container">
       <div class="section-header">
-        <div class="section-kicker">Factual Comparison</div>
+        <span class="section-eyebrow">Factual Comparison</span>
         <h2>Why not a cloud folder or government portal alone?</h2>
         <p>Different tools serve different purposes. Here is a fair and factual breakdown.</p>
       </div>
 
       <ComparisonTable />
 
-      <div style="margin-top: 20px; font-size: 0.88rem; color: var(--ink-muted); text-align: center;">
-        Read our in-depth guides: <a href={getAssetUrl('/vs/digilocker/')}>SQUARES Vault vs Government Portals</a> · <a href={getAssetUrl('/vs/google-drive/')}>SQUARES Vault vs Drive Alone</a>
+      <div style="margin-top: 32px; font-size: 14px; color: var(--muted); text-align: center;">
+        Read our in-depth guides: <a href={getAssetUrl('/vs/digilocker/')} class="link-apple"><span>SQUARES Vault vs Government Portals</span><span class="chevron">›</span></a> · <a href={getAssetUrl('/vs/google-drive/')} class="link-apple"><span>SQUARES Vault vs Drive Alone</span><span class="chevron">›</span></a>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════ DOCUMENT TYPES DIRECTORY ═══════════════════ -->
-  <section class="section" id="documents" style="background-color: var(--bg-paper);">
-    <div class="container">
+  <!-- ═══════════════════ 6. DOCUMENT TYPES DIRECTORY (Surface #F5F5F7) ═══════════════════ -->
+  <section class="section section-surface reveal" id="documents">
+    <div class="container docs-horizontal-container">
       <div class="section-header">
-        <div class="section-kicker">Supported Documents</div>
+        <span class="section-eyebrow">Supported Documents</span>
         <h2>10 Essential Document Types Built for Modern Households</h2>
         <p>Explore detailed guides, renewal validity rules, and what dates matter for each document worldwide.</p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px;">
+      <div class="docs-grid-apple">
         {documents.map((doc) => (
           <DocumentCard
             title={doc.name}
@@ -290,30 +300,31 @@ const homeFaqs = [
     </div>
   </section>
 
-  <!-- ═══════════════════ AUDIENCE SOLUTIONS ═══════════════════ -->
-  <section class="section" id="audiences">
+  <!-- ═══════════════════ 7. AUDIENCE SOLUTIONS (White Surface) ═══════════════════ -->
+  <section class="section reveal" id="audiences">
     <div class="container">
       <div class="section-header">
-        <div class="section-kicker">Tailored Solutions</div>
+        <span class="section-eyebrow">Tailored Solutions</span>
         <h2>Who uses SQUARES Vault?</h2>
         <p>Specific life-admin setups designed around real household pain points.</p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+      <div class="audiences-grid-apple">
         {audiences.map((aud) => (
-          <div class="card-paper" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div class="audience-card-apple">
             <div>
-              <h3 style="font-size: 1.15rem; margin-bottom: 8px;">
-                <a href={getAssetUrl(`/for/${aud.slug}/`)} style="text-decoration: none; color: var(--ink-primary);">
+              <h3>
+                <a href={getAssetUrl(`/for/${aud.slug}/`)}>
                   {aud.title}
                 </a>
               </h3>
-              <p style="font-size: 0.9rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+              <p>
                 {aud.subtitle}
               </p>
             </div>
-            <a href={getAssetUrl(`/for/${aud.slug}/`)} style="font-size: 0.84rem; font-weight: 600; color: var(--accent-pine); text-decoration: none;">
-              Read solution guide &rarr;
+            <a href={getAssetUrl(`/for/${aud.slug}/`)} class="link-apple">
+              <span>Read solution guide</span>
+              <span class="chevron">›</span>
             </a>
           </div>
         ))}
@@ -321,14 +332,14 @@ const homeFaqs = [
     </div>
   </section>
 
-  <!-- ═══════════════════ TESTIMONIALS (CONDITIONAL) ═══════════════════ -->
+  <!-- ═══════════════════ 8. TESTIMONIALS (CONDITIONAL) ═══════════════════ -->
   <Testimonials />
 
-  <!-- ═══════════════════ FAQ ═══════════════════ -->
-  <section class="section" id="faq" style="background-color: var(--bg-paper);">
+  <!-- ═══════════════════ 9. FAQ ACCORDION (White Surface) ═══════════════════ -->
+  <section class="section reveal" id="faq">
     <div class="container">
       <div class="section-header">
-        <div class="section-kicker">Common Inquiries</div>
+        <span class="section-eyebrow">Common Inquiries</span>
         <h2>Frequently Asked Questions</h2>
         <p>Direct answers about permissions, Google Gemini API handling, and security.</p>
       </div>
@@ -337,24 +348,22 @@ const homeFaqs = [
     </div>
   </section>
 
-  <!-- ═══════════════════ FINAL CALL TO ACTION ═══════════════════ -->
-  <section class="section" style="padding: 80px 0; text-align: center;">
-    <div class="container text-container" style="margin: 0 auto;">
-      <h2 style="font-size: 2.2rem; margin-bottom: 14px;">Take control of your household life-admin</h2>
-      <p style="font-size: 1.1rem; color: var(--ink-secondary); margin-bottom: 28px;">
-        Never lose a warranty receipt, miss an insurance renewal, or pay an avoidable traffic fine again.
+  <!-- ═══════════════════ 10. FINAL CALL TO ACTION (Dramatic Black) ═══════════════════ -->
+  <section class="section section-dark final-cta-apple reveal">
+    <div class="container text-container">
+      <h2>Take control of your household life-admin.</h2>
+      <p>
+        Currently in private early access beta. Request your free invite code to start organizing your vital documents in Telegram.
       </p>
 
-      <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 18px;">
-        <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.05rem;">
-          <LucideIcon name="telegram" size={18} />
-          <span>Launch SQUARES Vault in Telegram</span>
-          <span>&rarr;</span>
+      <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
+        <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="padding: 14px 32px; font-size: 18px;">
+          <span>Request Free Invite Code</span>
         </a>
       </div>
 
-      <div style="font-size: 0.84rem; color: var(--ink-muted);">
-        {siteConfig.pricingNotice} · Zero-custodian Google Drive storage
+      <div style="font-size: 14px; color: #86868b; line-height: 1.6;">
+        {siteConfig.inviteNotice} · {siteConfig.pricingNotice} · Zero server file custody
       </div>
     </div>
   </section>

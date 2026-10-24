@@ -130,40 +130,47 @@ const jsonLd = {
         <!-- CTA Callout -->
         <div style="background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); padding: 28px; margin-top: 40px;">
           <h3 style="font-size: 1.25rem; margin-bottom: 10px;">Turn your Google Drive into an active vault</h3>
-          <p style="font-size: 0.95rem; color: var(--ink-secondary); margin-bottom: 18px;">
+          <p style="font-size: 0.95rem; color: var(--muted); margin-bottom: 18px;">
             Set up in 60 seconds with Telegram and Google Sign-In. Free during early access.
           </p>
-          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            <span>Connect @squaresvaultbot</span>
-            <span>&rarr;</span>
+          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="font-size: 15px; padding: 10px 20px;">
+            <span>Request Free Invite Code</span>
           </a>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 8px;">
+            {siteConfig.inviteNotice}
+          </div>
         </div>
       </article>
 
       <!-- Sidebar -->
-      <aside style="position: sticky; top: 90px; display: flex; flex-direction: column; gap: 24px;">
-        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
-          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 8px;">
+      <aside style="position: sticky; top: 70px; display: flex; flex-direction: column; gap: 24px;">
+        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 24px;">
+          <strong style="color: var(--text); font-size: 1rem; display: block; margin-bottom: 8px;">
             Zero-Custodian Security
           </strong>
-          <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 14px;">
+          <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.55; margin-bottom: 14px;">
             Your files never sit permanently on our servers. They reside in your own Google Drive under your personal ownership.
           </p>
-          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
-            <span>Get Started in Telegram</span>
-            <span>&rarr;</span>
+          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="width: 100%; margin-bottom: 12px; font-size: 14px; padding: 10px 16px;">
+            <span>Request Invite Code</span>
           </a>
-          <div style="font-size: 0.78rem; color: var(--ink-muted); text-align: center;">
-            {siteConfig.pricingNotice}
+          <div style="text-align: center; margin-bottom: 12px;">
+            <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="link-apple" style="font-size: 13px;">
+              <span>Open in Telegram</span>
+              <span class="chevron">›</span>
+            </a>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--muted); text-align: center;">
+            {siteConfig.inviteNotice} · {siteConfig.pricingNotice}
           </div>
         </div>
 
-        <div class="card-paper" style="padding: 24px;">
+        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 24px;">
           <h3 style="font-size: 1rem; margin-bottom: 12px;">Related Reading</h3>
           <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
-            <li><a href={getAssetUrl('/vs/digilocker/')} style="color: var(--ink-secondary); text-decoration: none;">SQUARES Vault vs DigiLocker &rarr;</a></li>
-            <li><a href={getAssetUrl('/guides/how-to-organise-warranty-cards-and-bills/')} style="color: var(--ink-secondary); text-decoration: none;">Organising Warranty Cards & Bills &rarr;</a></li>
-            <li><a href={getAssetUrl('/guides/how-to-share-documents-with-family-safely/')} style="color: var(--ink-secondary); text-decoration: none;">Sharing Documents with Family Safely &rarr;</a></li>
+            <li><a href={getAssetUrl('/vs/digilocker/')} class="link-apple"><span>SQUARES Vault vs DigiLocker</span> <span class="chevron">›</span></a></li>
+            <li><a href={getAssetUrl('/guides/how-to-organise-warranty-cards-and-bills/')} class="link-apple"><span>Organising Warranty Cards &amp; Bills</span> <span class="chevron">›</span></a></li>
+            <li><a href={getAssetUrl('/guides/how-to-share-family-documents-securely/')} class="link-apple"><span>Sharing Documents with Family Safely</span> <span class="chevron">›</span></a></li>
           </ul>
         </div>
       </aside>

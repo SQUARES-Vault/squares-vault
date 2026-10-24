@@ -1,8 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { siteConfig, getAssetUrl, getCanonicalUrl } from '../config';
+import { siteConfig, getAssetUrl } from '../config';
 import documents from '../data/documents.json';
-import LucideIcon from '../components/icons/LucideIcon.astro';
 
 interface Props {
   guide: any;
@@ -15,19 +14,18 @@ const jsonLd = {
   '@type': 'Article',
   headline: guide.title,
   description: guide.summary,
-  datePublished: guide.publishedDate,
   author: {
     '@type': 'Person',
     name: siteConfig.builderName,
   },
+  datePublished: '2026-10-10',
   publisher: {
     '@type': 'Organization',
     name: siteConfig.siteName,
   },
-  mainEntityOfPage: getCanonicalUrl(`/guides/${guide.slug}/`),
 };
 
-const relatedDocs = documents.filter((d) => (guide.relatedDocuments || []).includes(d.slug));
+const relatedDocs = documents.filter((d) => (guide.relatedDocSlugs || []).includes(d.slug));
 ---
 
 <BaseLayout
@@ -37,69 +35,68 @@ const relatedDocs = documents.filter((d) => (guide.relatedDocuments || []).inclu
   type="article"
   jsonLd={jsonLd}
 >
-  <div class="container" style="padding: 40px 0 70px;">
+  <div class="container" style="padding: 48px 0 80px;">
     <!-- Breadcrumb -->
-    <nav aria-label="Breadcrumb" style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 24px;">
-      <a href={getAssetUrl('/')} style="color: var(--ink-secondary); text-decoration: none;">Home</a>
+    <nav aria-label="Breadcrumb" style="font-size: 13px; color: var(--muted); margin-bottom: 24px;">
+      <a href={getAssetUrl('/')} style="color: var(--muted); text-decoration: none;">Home</a>
       <span style="margin: 0 8px;">/</span>
-      <a href={getAssetUrl('/guides/')} style="color: var(--ink-secondary); text-decoration: none;">Guides</a>
+      <a href={getAssetUrl('/guides/')} style="color: var(--muted); text-decoration: none;">Guides</a>
       <span style="margin: 0 8px;">/</span>
-      <span style="color: var(--ink-primary); font-weight: 500;">{guide.title}</span>
+      <span style="color: var(--text); font-weight: 500;">{guide.title}</span>
     </nav>
 
     <!-- Header Block -->
-    <header style="margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--border-hairline);">
-      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 0.85rem; color: var(--ink-muted);">
-        <span class="badge-status active">{guide.category}</span>
-        <span>·</span>
-        <span>{guide.readingTime}</span>
-        <span>·</span>
-        <span>Published {guide.publishedDate}</span>
+    <header style="margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--hairline);">
+      <div style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px;">
+        {guide.readTime} · Practical Life-Admin Guide
       </div>
-      <h1 style="margin-bottom: 16px;">{guide.title}</h1>
-      <p style="font-size: 1.15rem; color: var(--ink-secondary); max-width: var(--text-max-width);">
+      <h1 style="font-size: clamp(32px, 5vw, 56px); margin-bottom: 14px;">{guide.title}</h1>
+      <p style="font-size: 19px; color: var(--muted); max-width: var(--text-max-width); line-height: 1.45;">
         {guide.summary}
       </p>
     </header>
 
     <div style="display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start;">
       <!-- Main Content -->
-      <article class="text-container" style="font-size: 1.05rem; line-height: 1.75;">
-        <p style="font-size: 1.15rem; color: var(--ink-primary); font-weight: 450; margin-bottom: 32px; border-left: 2px solid var(--accent-pine); padding-left: 18px;">
+      <article class="text-container" style="font-size: 17px; line-height: 1.6;">
+        <p style="font-size: 19px; color: var(--text); font-weight: 500; margin-bottom: 36px; border-left: 3px solid var(--accent); padding-left: 20px;">
           {guide.intro}
         </p>
 
         {guide.sections.map((sec: any) => (
           <section style="margin-bottom: 40px;">
-            <h2 style="font-size: 1.45rem; margin-bottom: 14px; color: var(--ink-primary);">{sec.heading}</h2>
-            <div style="white-space: pre-line; color: var(--ink-secondary);">
+            <h2 style="font-size: 24px; margin-bottom: 14px; color: var(--text);">{sec.heading}</h2>
+            <div style="white-space: pre-line; color: var(--muted); font-size: 16px; line-height: 1.65;">
               {sec.content}
             </div>
           </section>
         ))}
 
         <!-- Next Steps Callout -->
-        <section style="margin: 48px 0; background-color: var(--bg-paper); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); padding: 28px;">
-          <h3 style="font-size: 1.2rem; margin-bottom: 8px;">Automate this routine today</h3>
-          <p style="font-size: 0.95rem; color: var(--ink-secondary); margin-bottom: 16px;">
+        <section style="margin: 48px 0; background-color: var(--surface); border-radius: var(--radius-card); padding: 32px;">
+          <h3 style="font-size: 20px; margin-bottom: 8px;">Automate this routine today</h3>
+          <p style="font-size: 15px; color: var(--muted); margin-bottom: 20px;">
             Forward your papers to SQUARES Vault in Telegram. Gemini AI logs the expiry date, schedules notifications, and files the original securely to your Google Drive.
           </p>
-          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            <span>Launch @squaresvaultbot in Telegram</span>
-            <span>&rarr;</span>
+          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="font-size: 15px; padding: 10px 20px;">
+            <span>Request Free Invite Code</span>
           </a>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 8px;">
+            {siteConfig.inviteNotice}
+          </div>
         </section>
 
         <!-- Related Documents -->
         {relatedDocs.length > 0 && (
           <section style="margin-top: 40px;">
-            <h3 style="font-size: 1.2rem; margin-bottom: 14px;">Related Document Guides</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+            <h3 style="font-size: 20px; margin-bottom: 16px;">Related Document Guides</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
               {relatedDocs.map((doc) => (
                 <a href={getAssetUrl(`/documents/${doc.slug}/`)} style="text-decoration: none; color: inherit;">
-                  <div class="card-paper" style="padding: 14px;">
+                  <div style="background-color: var(--surface); border-radius: var(--radius-sm); padding: 16px;">
                     <span class="badge-status active" style="margin-bottom: 6px;">{doc.category}</span>
-                    <strong style="display: block; font-size: 0.92rem; color: var(--ink-primary);">{doc.name}</strong>
+                    <strong style="display: block; font-size: 15px; color: var(--text); margin-top: 4px;">{doc.name}</strong>
+                    <span class="link-apple" style="font-size: 13px; margin-top: 6px;">View Guide <span class="chevron">›</span></span>
                   </div>
                 </a>
               ))}
@@ -109,22 +106,28 @@ const relatedDocs = documents.filter((d) => (guide.relatedDocuments || []).inclu
       </article>
 
       <!-- Sidebar -->
-      <aside style="position: sticky; top: 90px;">
-        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
-          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 8px;">
+      <aside style="position: sticky; top: 70px;">
+        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 28px;">
+          <strong style="color: var(--text); font-size: 16px; display: block; margin-bottom: 8px;">
             About SQUARES Vault
           </strong>
-          <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+          <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
             Zero-custodian document management in Telegram. Your original files are stored exclusively in your personal Google Drive.
           </p>
 
-          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
-            <span>Try Free in Telegram</span>
-            <span>&rarr;</span>
+          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="width: 100%; margin-bottom: 12px; font-size: 15px; padding: 10px 18px;">
+            <span>Request Invite Code</span>
           </a>
 
-          <div style="font-size: 0.78rem; color: var(--ink-muted); text-align: center;">
-            {siteConfig.pricingNotice}
+          <div style="text-align: center; margin-bottom: 12px;">
+            <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="link-apple" style="font-size: 13px;">
+              <span>Open in Telegram</span>
+              <span class="chevron">›</span>
+            </a>
+          </div>
+
+          <div style="font-size: 12px; color: var(--muted); text-align: center; line-height: 1.4;">
+            {siteConfig.inviteNotice} · {siteConfig.pricingNotice}
           </div>
         </div>
       </aside>

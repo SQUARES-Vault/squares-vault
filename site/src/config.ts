@@ -21,9 +21,13 @@ export const siteConfig = {
   botUsername: '@squaresvaultbot',
   botUrl: 'https://t.me/squaresvaultbot',
 
-  // Pricing Fact
+  // Pricing & Beta Invite Fact
   pricingNotice:
     'Free during early access. Core features (Limited AI document reading, vault, expiry alerts) will stay free. Optional paid plans may come later.',
+  inviteEmailUrl:
+    'mailto:shikharsinghpatel07@gmail.com?subject=Request%20for%20Free%20SQUARES%20Vault%20Beta%20Invite%20Code&body=Hi%20Shikhar%2C%0A%0AI%20would%20like%20to%20request%20a%20free%20invite%20code%20for%20the%20SQUARES%20Vault%20early%20access%20beta.%0A%0AThank%20you!',
+  inviteNotice: 'You will receive your invite code within 12 hours.',
+  inviteNoticeHi: 'आपको 12 घंटे के भीतर आपका इनवाइट कोड मिल जाएगा।',
 
   // External Form & Analytics (Disabled by default until owner provides endpoint / ID)
   formspreeEndpoint: '', // E.g. "https://formspree.io/f/xyz..."

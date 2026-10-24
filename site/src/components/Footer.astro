@@ -8,17 +8,17 @@ import audiences from '../data/audiences.json';
   <div class="container">
     <div class="footer-columns">
       <div class="footer-col" style="grid-column: span 1;">
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-          <img src={getAssetUrl('/logo-icon.png')} alt="" width="26" height="26" style="border-radius: 4px; border: 1px solid var(--border-muted);" />
-          <strong style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--ink-primary);">{siteConfig.siteName}</strong>
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+          <img src={getAssetUrl('/logo-icon.png')} alt="" width="20" height="20" style="border-radius: 4px;" loading="lazy" decoding="async" />
+          <strong style="font-size: 14px; font-weight: 600; color: var(--text);">{siteConfig.siteName}</strong>
         </div>
-        <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+        <p style="font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 14px;">
           A private, zero-custodian document management assistant for Telegram.
           Files stored exclusively in your own Google Drive.
         </p>
-        <p style="font-size: 0.82rem; color: var(--ink-muted); line-height: 1.5;">
-          Built by <strong>{siteConfig.builderName}</strong>.<br />
-          Contact: <a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--ink-secondary);">{siteConfig.contactEmail}</a>
+        <p style="font-size: 12px; color: var(--muted); line-height: 1.5;">
+          Built by <strong style="color: var(--text);">{siteConfig.builderName}</strong>.<br />
+          Contact: <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
         </p>
       </div>
 
@@ -28,7 +28,7 @@ import audiences from '../data/audiences.json';
           {documents.slice(0, 5).map((doc) => (
             <li><a href={getAssetUrl(`/documents/${doc.slug}/`)}>{doc.name}</a></li>
           ))}
-          <li><a href={getAssetUrl('/#documents')} style="font-weight: 600; color: var(--accent-pine);">View all 10 documents &rarr;</a></li>
+          <li><a href={getAssetUrl('/#documents')} style="color: var(--accent);">View all 10 documents ›</a></li>
         </ul>
       </div>
 
@@ -44,9 +44,10 @@ import audiences from '../data/audiences.json';
       </div>
 
       <div class="footer-col">
-        <h5>Resources & Trust</h5>
+        <h5>Resources &amp; Beta</h5>
         <ul>
-          <li><a href={getAssetUrl('/guides/')}>Guides & Checklists</a></li>
+          <li><a href={siteConfig.inviteEmailUrl} style="color: var(--accent); font-weight: 500;">Request Free Invite Code ›</a></li>
+          <li><a href={getAssetUrl('/guides/')}>Guides &amp; Checklists</a></li>
           <li><a href={getAssetUrl('/about/')}>About the Project</a></li>
           <li><a href={getAssetUrl('/privacy.html')}>Privacy Policy</a></li>
           <li><a href={getAssetUrl('/terms.html')}>Terms of Service</a></li>
@@ -58,7 +59,7 @@ import audiences from '../data/audiences.json';
 
     <div class="footer-bottom">
       <div>
-        © {new Date().getFullYear()} SQUARES Vault. Zero-custodian document management.
+        © {new Date().getFullYear()} SQUARES Vault. Zero-custodian document management. Currently in private beta.
       </div>
       <div style="display: flex; gap: 20px;">
         <a href={getAssetUrl('/privacy.html')}>Privacy Policy</a>

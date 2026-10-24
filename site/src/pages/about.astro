@@ -114,10 +114,16 @@ const jsonLd = {
           </p>
           <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.95rem;">
             <div>
-              <strong>Email:</strong> <a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--accent-pine); text-decoration: underline;">{siteConfig.contactEmail}</a>
+              <strong>Email:</strong> <a href={`mailto:${siteConfig.contactEmail}`} style="color: var(--accent); text-decoration: underline;">{siteConfig.contactEmail}</a>
             </div>
-            <div>
-              <strong>Telegram Support:</strong> <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" style="color: var(--accent-pine); text-decoration: underline;">@squaresvaultbot</a> (type <code>/help</code>)
+          </div>
+
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--hairline);">
+            <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="font-size: 15px; padding: 10px 20px;">
+              <span>Request Free Invite Code</span>
+            </a>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 8px;">
+              {siteConfig.inviteNotice}
             </div>
           </div>
         </section>
@@ -125,22 +131,24 @@ const jsonLd = {
 
       <!-- Sidebar -->
       <aside style="position: sticky; top: 90px; display: flex; flex-direction: column; gap: 24px;">
-        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
-          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 8px;">
+        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 24px;">
+          <strong style="color: var(--text); font-size: 1rem; display: block; margin-bottom: 8px;">
             Quick Facts
           </strong>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--ink-secondary);">
-            <li><strong>Builder:</strong> {siteConfig.builderName}</li>
-            <li><strong>Primary Platform:</strong> Telegram bot</li>
-            <li><strong>Storage Provider:</strong> User's Google Drive</li>
-            <li><strong>AI Engine:</strong> Google Gemini API</li>
-            <li><strong>Status:</strong> Free during early access</li>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--muted);">
+            <li><strong style="color: var(--text);">Builder:</strong> {siteConfig.builderName}</li>
+            <li><strong style="color: var(--text);">Primary Platform:</strong> Telegram bot</li>
+            <li><strong style="color: var(--text);">Storage Provider:</strong> User's Google Drive</li>
+            <li><strong style="color: var(--text);">AI Engine:</strong> Google Gemini API</li>
+            <li><strong style="color: var(--text);">Status:</strong> Invite-only early access beta</li>
           </ul>
-          <hr style="border: 0; border-top: 1px solid var(--border-hairline); margin: 16px 0;" />
-          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%;">
-            <span>Launch Bot</span>
-            <span>&rarr;</span>
+          <hr style="border: 0; border-top: 1px solid var(--hairline); margin: 16px 0;" />
+          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="width: 100%; font-size: 15px; padding: 10px 18px;">
+            <span>Request Invite Code</span>
           </a>
+          <div style="font-size: 12px; color: var(--muted); margin-top: 8px; text-align: center;">
+            {siteConfig.inviteNotice}
+          </div>
         </div>
       </aside>
     </div>

@@ -29,29 +29,29 @@ const description = 'Practical, step-by-step guides on tracking vehicle RC and P
       <!-- Guides List -->
       <div style="display: flex; flex-direction: column; gap: 24px;">
         {guides.map((guide) => (
-          <article class="card-paper" style="padding: 28px; display: flex; flex-direction: column; gap: 12px; transition: border-color var(--transition-fast);">
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--ink-muted);">
+          <article style="background-color: var(--surface); border-radius: var(--radius-card); padding: 32px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted);">
               <span class="badge-status active">{guide.category}</span>
               <span>·</span>
-              <span>{guide.readingTime}</span>
+              <span>{guide.readTime}</span>
               <span>·</span>
               <span>Published {guide.publishedDate}</span>
             </div>
 
-            <h2 style="font-size: 1.35rem; margin: 0; line-height: 1.35;">
-              <a href={getAssetUrl(`/guides/${guide.slug}/`)} style="color: var(--ink-primary); text-decoration: none;">
+            <h2 style="font-size: 24px; margin: 0; line-height: 1.3;">
+              <a href={getAssetUrl(`/guides/${guide.slug}/`)} style="color: var(--text); text-decoration: none;">
                 {guide.title}
               </a>
             </h2>
 
-            <p style="font-size: 0.95rem; color: var(--ink-secondary); line-height: 1.6; margin: 0;">
+            <p style="font-size: 16px; color: var(--muted); line-height: 1.55; margin: 0;">
               {guide.summary}
             </p>
 
-            <div style="margin-top: 8px;">
-              <a href={getAssetUrl(`/guides/${guide.slug}/`)} class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.88rem;">
+            <div style="margin-top: 10px;">
+              <a href={getAssetUrl(`/guides/${guide.slug}/`)} class="link-apple">
                 <span>Read Full Guide</span>
-                <span>&rarr;</span>
+                <span class="chevron">›</span>
               </a>
             </div>
           </article>
@@ -59,32 +59,37 @@ const description = 'Practical, step-by-step guides on tracking vehicle RC and P
       </div>
 
       <!-- Sidebar -->
-      <aside style="position: sticky; top: 90px; display: flex; flex-direction: column; gap: 24px;">
-        <div class="card-paper" style="padding: 24px; border: 1px solid var(--border-muted);">
-          <strong style="color: var(--ink-primary); font-size: 1rem; display: block; margin-bottom: 8px;">
+      <aside style="position: sticky; top: 70px; display: flex; flex-direction: column; gap: 24px;">
+        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 28px;">
+          <strong style="color: var(--text); font-size: 16px; display: block; margin-bottom: 8px;">
             Automate with SQUARES Vault
           </strong>
-          <p style="font-size: 0.88rem; color: var(--ink-secondary); line-height: 1.55; margin-bottom: 16px;">
+          <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 20px;">
             Instead of tracking dates on wall calendars, forward your documents to our Telegram assistant. Expiry reminders run on your schedule, and original files live in your Google Drive.
           </p>
-          <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; margin-bottom: 12px;">
-            <span>Launch @squaresvaultbot</span>
-            <span>&rarr;</span>
+          <a href={siteConfig.inviteEmailUrl} class="btn-apple-primary" style="width: 100%; margin-bottom: 12px; font-size: 15px; padding: 10px 18px;">
+            <span>Request Invite Code</span>
           </a>
-          <div style="font-size: 0.78rem; color: var(--ink-muted); text-align: center;">
-            {siteConfig.pricingNotice}
+          <div style="text-align: center; margin-bottom: 12px;">
+            <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="link-apple" style="font-size: 13px;">
+              <span>Open in Telegram</span>
+              <span class="chevron">›</span>
+            </a>
+          </div>
+          <div style="font-size: 12px; color: var(--muted); text-align: center; line-height: 1.4;">
+            {siteConfig.inviteNotice} · {siteConfig.pricingNotice}
           </div>
         </div>
 
-        <div class="card-paper" style="padding: 24px;">
-          <h3 style="font-size: 1rem; margin-bottom: 12px;">Browse by Document Type</h3>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
-            <li><a href={getAssetUrl('/documents/vehicle-rc/')} style="color: var(--ink-secondary); text-decoration: none;">Vehicle Registration (RC) &rarr;</a></li>
-            <li><a href={getAssetUrl('/documents/puc-certificate/')} style="color: var(--ink-secondary); text-decoration: none;">Pollution (PUC) Certificate &rarr;</a></li>
-            <li><a href={getAssetUrl('/documents/car-insurance/')} style="color: var(--ink-secondary); text-decoration: none;">Car Insurance Policy &rarr;</a></li>
-            <li><a href={getAssetUrl('/documents/extended-warranty/')} style="color: var(--ink-secondary); text-decoration: none;">Extended Warranties &rarr;</a></li>
-            <li><a href={getAssetUrl('/documents/appliance-invoices/')} style="color: var(--ink-secondary); text-decoration: none;">Appliance Invoices & Bills &rarr;</a></li>
-            <li><a href={getAssetUrl('/documents/passport/')} style="color: var(--ink-secondary); text-decoration: none;">Passport Expiry & Renewals &rarr;</a></li>
+        <div style="background-color: var(--surface); border-radius: var(--radius-card); padding: 24px;">
+          <h3 style="font-size: 15px; margin-bottom: 12px;">Browse by Document Type</h3>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
+            <li><a href={getAssetUrl('/documents/vehicle-rc/')} class="link-apple"><span>Vehicle Registration Guide</span> <span class="chevron">›</span></a></li>
+            <li><a href={getAssetUrl('/documents/puc-certificate/')} class="link-apple"><span>Inspection Certificate Tracker</span> <span class="chevron">›</span></a></li>
+            <li><a href={getAssetUrl('/documents/car-insurance/')} class="link-apple"><span>Car Insurance Policy</span> <span class="chevron">›</span></a></li>
+            <li><a href={getAssetUrl('/documents/extended-warranty/')} class="link-apple"><span>Extended Warranties</span> <span class="chevron">›</span></a></li>
+            <li><a href={getAssetUrl('/documents/appliance-invoices/')} class="link-apple"><span>Appliance Invoices &amp; Bills</span> <span class="chevron">›</span></a></li>
+            <li><a href={getAssetUrl('/documents/passport/')} class="link-apple"><span>Passport Expiry &amp; Renewals</span> <span class="chevron">›</span></a></li>
           </ul>
         </div>
       </aside>

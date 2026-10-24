@@ -10,8 +10,8 @@ const { currentLang = 'en' } = Astro.props;
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href={getAssetUrl(currentLang === 'hi' ? '/hi/' : '/')} class="header-brand">
-      <img src={getAssetUrl('/logo-icon.png')} alt="SQUARES Vault Emblem" class="brand-emblem" width="34" height="34" />
+    <a href={getAssetUrl(currentLang === 'hi' ? '/hi/' : '/')} class="header-brand" aria-label="SQUARES Vault Home">
+      <img src={getAssetUrl('/logo-icon.png')} alt="" class="brand-emblem" width="20" height="20" loading="eager" />
       <span class="brand-title">{siteConfig.siteName}</span>
     </a>
 
@@ -34,9 +34,12 @@ const { currentLang = 'en' } = Astro.props;
         </a>
       )}
 
-      <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.88rem;">
-        <span>Open in Telegram</span>
-        <span aria-hidden="true">&rarr;</span>
+      <a href={siteConfig.inviteEmailUrl} class="header-invite-btn" title={currentLang === 'hi' ? siteConfig.inviteNoticeHi : siteConfig.inviteNotice}>
+        <span>{currentLang === 'hi' ? 'इनवाइट कोड मांगें' : 'Request Invite'}</span>
+      </a>
+
+      <a href={siteConfig.botUrl} target="_blank" rel="noopener noreferrer" class="header-link-right">
+        <span>{currentLang === 'hi' ? 'टेलीग्राम खोलें ›' : 'Open in Telegram ›'}</span>
       </a>
     </div>
   </div>
