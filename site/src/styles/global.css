@@ -80,6 +80,9 @@ html {
   background-color: var(--bg);
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 body {
@@ -90,6 +93,10 @@ body {
   background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
 }
 
 /* ── Hindi Specific Typography Rules ────────────────────────── */
@@ -473,8 +480,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 /* ── Hero Section (Centered Display, Fit-to-Page Balanced) ──── */
 .hero-apple {
   text-align: center;
-  padding-top: clamp(36px, 5vh, 60px);
-  padding-bottom: clamp(40px, 6vh, 68px);
+  padding-top: clamp(24px, 3vh, 38px);
+  padding-bottom: clamp(32px, 4.5vh, 50px);
 }
 
 .hero-eyebrow {
@@ -484,33 +491,39 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--muted);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .hero-title {
-  font-size: clamp(32px, 4.2vw, 54px);
+  font-size: clamp(28px, 3.6vw, 46px);
   font-weight: 600;
   letter-spacing: -0.022em;
-  line-height: 1.14;
+  line-height: 1.16;
   color: var(--text);
-  max-width: 860px;
-  margin: 0 auto 16px;
+  max-width: 980px;
+  margin: 0 auto 14px;
+  text-wrap: balance;
+}
+
+.hero-line {
+  display: block;
+  text-wrap: balance;
 }
 
 .hero-subhead {
-  font-size: clamp(15px, 1.2vw, 17px);
-  line-height: 1.5;
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.48;
   color: var(--muted);
-  max-width: 720px;
-  margin: 0 auto 24px;
+  max-width: 680px;
+  margin: 0 auto 18px;
 }
 
 .hero-cta-cluster {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .hero-buttons-row {
@@ -522,7 +535,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 }
 
 .hero-invite-notice {
-  font-size: 13.5px;
+  font-size: 13px;
   color: var(--muted);
 }
 
@@ -530,10 +543,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   font-size: 13px;
   color: var(--muted);
-  margin-top: 12px;
+  margin-top: 6px;
 }
 
 .hero-chips-row span.sep {
@@ -542,7 +555,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 
 /* Centered Telegram Mockup with Floating Shadow & Parallax */
 .hero-mockup-wrapper {
-  margin-top: 36px;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1032,6 +1045,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   padding: 8px 12px;
   margin-top: 8px;
   background-color: #ffffff;
@@ -1056,6 +1070,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   background-color: #ffffff;
   border: 1px solid var(--hairline);
   color: var(--accent);
+  white-space: nowrap;
 }
 
 .badge-status {
@@ -1065,6 +1080,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   border-radius: 980px;
   font-size: 12px;
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 .badge-status.active {
@@ -1120,49 +1136,241 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 }
 
 @media (max-width: 768px) {
+  /* Navigation & Header */
   .header-nav {
     display: none;
   }
+  .header-link-bot {
+    display: none;
+  }
+  .header-actions {
+    gap: 8px;
+  }
+  .header-invite-btn {
+    padding: 4px 10px;
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+  .brand-title {
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
+
+  /* Containers & Section Spacing */
+  .container,
+  .container-bento {
+    width: 100% !important;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .section {
+    padding: clamp(36px, 5vw, 60px) 0;
+  }
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  /* Hero Section */
+  .hero-apple {
+    padding-top: 20px;
+    padding-bottom: 36px;
+  }
+  .hero-title {
+    font-size: clamp(24px, 6.2vw, 32px);
+    line-height: 1.22;
+    margin-bottom: 12px;
+    padding: 0 4px;
+  }
+  .hero-line {
+    display: inline;
+    text-wrap: balance;
+  }
+  .hero-subhead {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+    padding: 0 4px;
+  }
+  .hero-buttons-row {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  .btn-apple-primary {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    justify-content: center;
+  }
+  .hero-chips-row {
+    flex-wrap: wrap;
+    font-size: 12px;
+    gap: 6px 8px;
+  }
+  .hero-mockup-wrapper {
+    margin-top: 20px;
+    width: 100%;
+  }
+  .hero-mockup-floating {
+    max-width: 100%;
+    border-radius: 18px;
+  }
+  .chat-stream {
+    padding: 14px 12px;
+  }
+  .bubble {
+    max-width: 96%;
+    font-size: 13.5px;
+    padding: 8px 12px;
+  }
+
+  /* Bento Features Grid */
   .bento-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  .bento-tile-hero, .bento-tile-wide, .bento-tile-single, .bento-tile-double {
+  .bento-tile-hero,
+  .bento-tile-wide,
+  .bento-tile-single,
+  .bento-tile-double {
     grid-column: span 1;
     grid-row: span 1;
   }
+  .bento-tile {
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+  .bento-title {
+    font-size: 20px;
+  }
+  .bento-desc {
+    font-size: 15px;
+  }
+
+  /* How It Works Steps */
   .steps-cards-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
+  .apple-step-card {
+    padding: 22px 18px;
+  }
+
+  /* Privacy Section */
   .privacy-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
+  .privacy-tile {
+    padding: 24px 20px;
+  }
+
+  /* Audiences Grid */
   .audiences-grid-apple {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
-  .footer-columns {
-    grid-template-columns: 1fr;
+  .audience-card-apple {
+    padding: 24px 20px;
   }
+
+  /* Final CTA */
+  .final-cta-apple {
+    padding: clamp(60px, 8vw, 90px) 0;
+  }
+  .final-cta-apple h2 {
+    font-size: clamp(28px, 6vw, 40px);
+  }
+  .final-cta-apple p {
+    font-size: 16px;
+    margin-bottom: 26px;
+  }
+
   /* Mobile Horizontal Snap-Scroll for Document Cards */
   .docs-grid-apple {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    gap: 14px;
-    padding-bottom: 14px;
+    gap: 12px;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+  }
+  .docs-grid-apple::-webkit-scrollbar {
+    display: none;
   }
   .doc-card-apple {
-    flex: 0 0 260px;
+    flex: 0 0 250px;
     scroll-snap-align: start;
+    padding: 20px 18px;
+    min-height: 200px;
   }
-  /* Sticky First Column on Mobile for Comparison Table */
+
+  /* Comparison Table Mobile Scroll & Sticky First Col */
+  .table-wrapper-apple {
+    margin: 0 -16px;
+    padding: 0 16px;
+    width: calc(100% + 32px);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .comparison-table-apple {
+    min-width: 620px;
+    font-size: 13.5px;
+  }
+  .comparison-table-apple th,
+  .comparison-table-apple td {
+    padding: 14px 12px;
+  }
   .comparison-table-apple td:first-child,
   .comparison-table-apple th:first-child {
     position: sticky;
     left: 0;
     background-color: var(--bg);
     z-index: 2;
+    box-shadow: 2px 0 6px -2px rgba(0, 0, 0, 0.08);
+  }
+  .comparison-table-apple th:first-child {
+    z-index: 3;
+  }
+
+  /* Legal body table mobile scroll */
+  .legal-body table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Footer */
+  .footer-columns {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-title {
+    font-size: 13px;
+  }
+  .header-brand {
+    gap: 6px;
+  }
+  .header-actions {
+    gap: 6px;
+  }
+  .header-invite-btn {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+  .lang-switch {
+    font-size: 11px;
+    padding: 2px 6px;
   }
 }
 
