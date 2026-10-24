@@ -13,7 +13,6 @@ const { currentLang = 'en' } = Astro.props;
     <a href={getAssetUrl(currentLang === 'hi' ? '/hi/' : '/')} class="header-brand" aria-label="SQUARES Vault Home">
       <img src={getAssetUrl('/logo-icon.png')} alt="" class="brand-emblem" width="24" height="24" loading="eager" />
       <span class="brand-title">{siteConfig.siteName}</span>
-      <span class="brand-badge">Beta</span>
     </a>
 
     <nav class="header-nav" aria-label="Main Navigation">
