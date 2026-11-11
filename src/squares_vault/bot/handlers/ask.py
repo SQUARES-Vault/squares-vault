@@ -338,9 +338,10 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
     raw_lower = raw_query.lower()
 
     # 1. Seamless Menu Navigation: If user tapped ANY persistent menu button, clear state & execute destination!
+    from squares_vault.bot.middlewares.menu_interrupt import MENU_BUTTON_EXACT
     is_menu_button = (
-        raw_query.startswith(("➕", "🔍", "📁", "💬", "📅", "🗓️", "⚙️"))
-        or raw_lower in ("upcoming", "add", "search", "find", "browse", "settings", "ask your vault", "ask vault")
+        raw_lower in MENU_BUTTON_EXACT
+        or (raw_query.startswith(("➕", "🔍", "📁", "💬", "📅", "🗓️", "⚙️")) and len(raw_query) <= 25)
         or any(btn in raw_lower for btn in ("menu_add", "menu_upcoming", "menu_search", "menu_browse", "menu_settings"))
     )
     if is_menu_button:
@@ -376,10 +377,11 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
             )
             return
         elif cmd in ("/start", "/help"):
-            from squares_vault.bot.handlers.base import cmd_start, cmd_help
             if cmd == "/start":
-                await cmd_start(message)
+                from squares_vault.flows.onboarding import start_onboarding
+                await start_onboarding(message, state)
             else:
+                from squares_vault.bot.handlers.base import cmd_help
                 await cmd_help(message)
             return
 

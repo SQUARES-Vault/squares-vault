@@ -22,6 +22,19 @@ class SearchState(StatesGroup):
     query = State()
 
 @router.message(Command("search"))
+def _escape_md(text: str) -> str:
+    """Escape Telegram Markdown special characters."""
+    if not text:
+        return ""
+    return (
+        text.replace("\\", "\\\\")
+        .replace("_", "\\_")
+        .replace("*", "\\*")
+        .replace("`", "\\`")
+        .replace("[", "\\[")
+    )
+
+
 async def cmd_search(message: Message, state: FSMContext) -> None:
     """Prompt user for a search query."""
     await message.reply("🔍 What are you looking for? (e.g. 'Car RC', 'Passport')")
@@ -48,7 +61,10 @@ async def handle_search_query(message: Message, state: FSMContext) -> None:
 
     text, kb = await _render_search_page(message.from_user.id, query, 0)
     if kb:
-        await message.reply(text, reply_markup=kb, parse_mode="Markdown")
+        try:
+            await message.reply(text, reply_markup=kb, parse_mode="Markdown")
+        except Exception:
+            await message.reply(text, reply_markup=kb)
     else:
         await message.reply(text)
 
@@ -113,8 +129,9 @@ async def _render_search_page(user_id: int, query: str, page: int = 0):
     ])
     kb = InlineKeyboardMarkup(inline_keyboard=kb_buttons)
 
+    query_esc = _escape_md(query)
     text = (
-        f"🔍 **SEARCH RESULTS** • _{query}_ (Page {page + 1}/{total_pages})\n"
+        f"🔍 **SEARCH RESULTS** • _{query_esc}_ (Page {page + 1}/{total_pages})\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         f"_Tap a document below to view details:_\n\n"
         f"_Legend: 🟢 Active  •  🟡 Expiring Soon  •  🔴 Expired  •  📄 General_"
@@ -147,7 +164,10 @@ async def on_search_page_change(cq: CallbackQuery) -> None:
 
     text, kb = await _render_search_page(cq.from_user.id, query, page)
     if kb:
-        await cq.message.edit_text(text, reply_markup=kb, parse_mode="Markdown")
+        try:
+            await cq.message.edit_text(text, reply_markup=kb, parse_mode="Markdown")
+        except Exception:
+            await cq.message.edit_text(text, reply_markup=kb)
     await cq.answer()
 
 
@@ -448,7 +468,10 @@ async def on_view_record(cq: CallbackQuery, state: FSMContext = None) -> None:
 
     kb = InlineKeyboardMarkup(inline_keyboard=kb_buttons)
 
-    await cq.message.edit_text("\n".join(lines), reply_markup=kb, parse_mode="Markdown")
+    try:
+        await cq.message.edit_text("\n".join(lines), reply_markup=kb, parse_mode="Markdown")
+    except Exception:
+        await cq.message.edit_text("\n".join(lines), reply_markup=kb)
     try:
         await cq.answer()
     except Exception:
@@ -930,13 +953,17 @@ async def on_browse_category(cq: CallbackQuery) -> None:
     kb_buttons.append([InlineKeyboardButton(text="⬅️ Back to Categories", callback_data="search_back")])
     kb = InlineKeyboardMarkup(inline_keyboard=kb_buttons)
     
+    cat_esc = _escape_md(cat_display.upper())
     msg_text = (
-        f"📁 **{cat_display.upper()}** • Page {page + 1}/{total_pages}\n"
+        f"📁 **{cat_esc}** • Page {page + 1}/{total_pages}\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         f"_Tap a document below to view details:_\n\n"
         f"_Legend: 🟢 Active  •  🟡 Expiring Soon  •  🔴 Expired  •  📄 General_"
     )
-    await cq.message.edit_text(msg_text, reply_markup=kb, parse_mode="Markdown")
+    try:
+        await cq.message.edit_text(msg_text, reply_markup=kb, parse_mode="Markdown")
+    except Exception:
+        await cq.message.edit_text(msg_text, reply_markup=kb)
     await cq.answer()
 
 

@@ -173,19 +173,27 @@ async def process_queue_item(bot, item_id: str, user_id: int, draft_id: str, fil
         amt = f"\nAmount: ₹{record.amount_minor/100:.2f}" if record.amount_minor else ""
         dt = f"\nDate: {record.key_date}" if record.key_date else ""
         notes_preview = f"\n\n📝 {record.notes[:200]}" if record.notes else ""
-        await bot.send_message(
-            chat_id=user_id,
-            text=(
-                f"✅ *AI Read Complete!*\n\n"
-                f"📄 *{record.title}*\n"
-                f"Category: {record.category}"
-                f"{amt}{dt}"
-                f"{notes_preview}\n\n"
-                f"Review this draft before saving."
-            ),
-            reply_markup=kb,
-            parse_mode="Markdown"
+        draft_text = (
+            f"✅ *AI Read Complete!*\n\n"
+            f"📄 *{record.title}*\n"
+            f"Category: {record.category}"
+            f"{amt}{dt}"
+            f"{notes_preview}\n\n"
+            f"Review this draft before saving."
         )
+        try:
+            await bot.send_message(
+                chat_id=user_id,
+                text=draft_text,
+                reply_markup=kb,
+                parse_mode="Markdown"
+            )
+        except Exception:
+            await bot.send_message(
+                chat_id=user_id,
+                text=draft_text,
+                reply_markup=kb
+            )
         
     except (QuotaExceededError, GlobalCeilingExceededError) as e:
         log.warning("quota_exceeded_deferred", error=str(e))

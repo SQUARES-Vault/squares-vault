@@ -7,10 +7,12 @@ from typing import Dict, List
 from aiogram import Router, F
 from aiogram.filters import StateFilter
 from aiogram.types import Message
+from aiogram.fsm.context import FSMContext
 
 from squares_vault.i18n.loader import t
 from squares_vault.ai.queue import queue_document, queue_multi_document
 from squares_vault.ops.office import is_supported_office_doc
+from squares_vault.bot.states import AskVault
 
 router = Router(name="upload")
 
@@ -64,9 +66,11 @@ async def _process_media_group_after_delay(group_id: str, user_id: int) -> None:
         await msg.reply(f"⏳ Upload received{count_str}! I am reading the document...")
 
 
-@router.message(StateFilter(None), F.media_group_id)
-async def handle_media_group(message: Message) -> None:
+@router.message(StateFilter(None, AskVault.chatting), F.media_group_id)
+async def handle_media_group(message: Message, state: FSMContext = None) -> None:
     """Handle photos/documents sent together in a Telegram album."""
+    if state:
+        await state.clear()
     group_id = message.media_group_id
     user_id = message.from_user.id
     
@@ -98,16 +102,20 @@ async def handle_media_group(message: Message) -> None:
     _MEDIA_GROUP_TIMERS[group_id] = asyncio.create_task(_process_media_group_after_delay(group_id, user_id))
 
 
-@router.message(StateFilter(None), F.photo)
-async def handle_photo(message: Message) -> None:
+@router.message(StateFilter(None, AskVault.chatting), F.photo)
+async def handle_photo(message: Message, state: FSMContext = None) -> None:
     """Handle single photo uploads."""
+    if state:
+        await state.clear()
     photo = message.photo[-1]
     await _handle_file(message, photo.file_id, mime="image/jpeg")
 
 
-@router.message(StateFilter(None), F.document)
-async def handle_document(message: Message) -> None:
+@router.message(StateFilter(None, AskVault.chatting), F.document)
+async def handle_document(message: Message, state: FSMContext = None) -> None:
     """Handle single document uploads (PDFs, Images, Word, Excel, CSV, Text)."""
+    if state:
+        await state.clear()
     doc = message.document
     mime = doc.mime_type or ""
     filename = doc.file_name or ""

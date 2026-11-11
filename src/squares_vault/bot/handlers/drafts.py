@@ -140,9 +140,15 @@ async def on_draft_save(cq: CallbackQuery) -> None:
     if reminders_set:
         msg += "\nReminders have been set."
         kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="📅 Add to Phone Calendar", callback_data=f"send_ics:{record_db_id}")]])
-        await cq.message.reply(msg, reply_markup=kb, parse_mode="Markdown")
+        try:
+            await cq.message.reply(msg, reply_markup=kb, parse_mode="Markdown")
+        except Exception:
+            await cq.message.reply(msg, reply_markup=kb)
     else:
-        await cq.message.reply(msg, parse_mode="Markdown")
+        try:
+            await cq.message.reply(msg, parse_mode="Markdown")
+        except Exception:
+            await cq.message.reply(msg)
     
     
 @router.callback_query(F.data.startswith("undo:"))

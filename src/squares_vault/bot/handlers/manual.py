@@ -1746,18 +1746,27 @@ async def on_save_edit_photo(message: Message, state: FSMContext) -> None:
 
 @router.message(EditEntry.edit_attachment, F.document)
 async def on_save_edit_doc(message: Message, state: FSMContext) -> None:
+    from squares_vault.ops.office import is_supported_office_doc
+    filename = message.document.file_name or ""
     mime = message.document.mime_type or "application/octet-stream"
-    if mime not in ["application/pdf", "image/jpeg", "image/png"]:
-        await message.reply("❌ Please send a PDF or image (JPEG/PNG), or tap Cancel.")
+    if not (mime in ["application/pdf", "image/jpeg", "image/png"] or is_supported_office_doc(filename, mime)):
+        await message.reply("❌ Please send a supported document (PDF, Image, Word, Excel, CSV, Text), or tap Cancel.")
         return
     file_id = message.document.file_id
-    await _attach_new_file_to_record(message, state, file_id, mime, is_msg=True)
+    await _attach_new_file_to_record(message, state, file_id, mime, is_msg=True, filename=filename)
 
 
-async def _attach_new_file_to_record(message: Message, state: FSMContext, file_id: str, mime: str, is_msg: bool) -> None:
+async def _attach_new_file_to_record(message: Message, state: FSMContext, file_id: str, mime: str, is_msg: bool, filename: str = "") -> None:
     data = await state.get_data()
     rid = data["record_id"]
-    ext = ".pdf" if "pdf" in mime.lower() else (".png" if "png" in mime.lower() else ".jpg")
+    if filename and "." in filename:
+        ext = "." + filename.rsplit(".", 1)[-1].lower()
+    elif "pdf" in mime.lower():
+        ext = ".pdf"
+    elif "png" in mime.lower():
+        ext = ".png"
+    else:
+        ext = ".jpg"
     code = generate_coded_name(ext)
 
     import ulid as _ulid

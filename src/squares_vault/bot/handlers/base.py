@@ -28,6 +28,12 @@ async def cmd_help(message: Message) -> None:
     await message.answer(t("help_text"))
 
 
+async def cmd_start(message: Message, state: FSMContext = None) -> None:
+    """Handle /start by delegating to onboarding."""
+    from squares_vault.flows.onboarding import start_onboarding
+    await start_onboarding(message, state)
+
+
 @router.message(Command("menu"))
 async def cmd_menu(message: Message) -> None:
     """Show the main keyboard."""
