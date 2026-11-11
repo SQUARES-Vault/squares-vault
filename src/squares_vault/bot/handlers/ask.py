@@ -103,65 +103,6 @@ def _get_end_chat_kb(extra_buttons: Optional[list[list[InlineKeyboardButton]]] =
     return InlineKeyboardMarkup(inline_keyboard=rows)
 
 
-def _compute_vault_blindspots(records: list[dict]) -> list[str]:
-    """Analyze user's active records across asset clusters to flag missing essential documents."""
-    blindspots: list[str] = []
-    today = datetime.now(timezone.utc).date()
-
-    # 1. Vehicle Cluster Analysis
-    vehicles: dict[str, list[dict]] = {}
-    for r in records:
-        v_num = r.get("vehicle_number") or ""
-        cat = (r.get("category") or "").lower()
-        title = (r.get("title") or "").lower()
-        notes = (r.get("notes") or "").lower()
-        extra = str(r.get("extra_json") or "").lower()
-
-        if not v_num:
-            m = PLATE_PATTERN.search(f"{title} {notes} {extra}")
-            if m:
-                match_str = m.group(1) or m.group(2)
-                v_num = re.sub(r"[\s\-]", "", match_str).upper()
-
-        if v_num or cat == "vehicle":
-            key = v_num if v_num else r.get("title")
-            vehicles.setdefault(key, []).append(r)
-
-    for v_key, v_recs in vehicles.items():
-        v_text = " ".join(f"{r.get('title', '')} {r.get('notes', '')} {r.get('subtype', '')}".lower() for r in v_recs)
-        has_rc = any(kw in v_text for kw in ["rc", "registration certificate", "smart card"])
-        has_ins = any(kw in v_text for kw in ["insurance", "policy", "cover", "comprehensive", "third party"])
-        has_puc = any(kw in v_text for kw in ["puc", "pollution", "emission"])
-
-        label = f"Vehicle {v_key}"
-        if (has_rc or has_ins) and not has_puc:
-            blindspots.append(f"{label}: Has active Insurance/RC, but MISSING: active Pollution Under Control (PUC) certificate.")
-        if has_rc and not has_ins:
-            blindspots.append(f"{label}: Has RC, but MISSING: active vehicle insurance policy.")
-
-    # 2. Passport 6-month validity rule
-    for r in records:
-        cat = (r.get("category") or "").lower()
-        title = (r.get("title") or "").lower()
-        if "passport" in title or (cat == "ids & government docs" and "passport" in title):
-            kd = r.get("key_date")
-            if kd:
-                try:
-                    exp_date = datetime.strptime(kd[:10], "%Y-%m-%d").date()
-                    days_left = (exp_date - today).days
-                    if 0 < days_left <= 185:
-                        blindspots.append(
-                            f"Passport ({r['title']}): Expiry date is within 6 months ({kd[:10]}) — "
-                            "international travel and visas may be restricted under the 6-month passport validity rule."
-                        )
-                    elif days_left <= 0:
-                        blindspots.append(f"Passport ({r['title']}): Expired on {kd[:10]}.")
-                except Exception:
-                    pass
-
-    return blindspots
-
-
 def _fmt_date(iso_str: Optional[str]) -> str:
     if not iso_str:
         return "No Date"
@@ -490,13 +431,6 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
         context_lines.append(
             f"- ID: {r['id']} | Title: \"{r['title']}\" | Category: {r['category']} | Added: {added_str} | Document Date: {dt} | Amount: {amt}{notes_clean}{ent_clean}{veh_clean}{lineage_clean}"
         )
-
-    # Compute contextual life-admin blindspots
-    blindspots = _compute_vault_blindspots(records)
-    if blindspots:
-        context_lines.append("\n--- KNOWN VAULT BLINDSPOTS & HEALTH CHECKS ---")
-        for bs in blindspots:
-            context_lines.append(f"- {bs}")
 
     context_text = "\n".join(context_lines)
 
