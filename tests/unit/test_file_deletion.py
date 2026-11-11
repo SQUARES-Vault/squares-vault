@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from aiogram.types import CallbackQuery, User, Message, Chat
 from aiogram.fsm.context import FSMContext
 
-from squares_vault.bot.handlers.search import on_delete_file_confirm, on_delete_file_exec
+from squares_vault.bot.handlers.search import on_delete_file_confirm, on_delete_file_exec, on_view_record
 from squares_vault.db.connection import get_db
 
 @pytest.fixture
@@ -50,10 +50,10 @@ async def test_delete_individual_file_removes_from_drive_and_db(dummy_user, dumm
         )
         await db.commit()
 
-    # Step 1: Confirm dialog
+    # Step 1: Confirm dialog using shortened callback_data (<= 64 bytes)
     cq_confirm = MagicMock(spec=CallbackQuery)
     cq_confirm.from_user = dummy_user
-    cq_confirm.data = f"del_file_confirm:{file1_id}:{record_id}"
+    cq_confirm.data = f"del_file_cnf:{file1_id}"
     cq_confirm.message = MagicMock(spec=Message)
     cq_confirm.message.edit_text = AsyncMock()
     cq_confirm.answer = AsyncMock()
@@ -62,10 +62,10 @@ async def test_delete_individual_file_removes_from_drive_and_db(dummy_user, dumm
     cq_confirm.message.edit_text.assert_called_once()
     assert "DELETE FILE" in cq_confirm.message.edit_text.call_args[0][0].upper()
 
-    # Step 2: Execute deletion
+    # Step 2: Execute deletion using shortened callback_data (<= 64 bytes)
     cq_exec = MagicMock(spec=CallbackQuery)
     cq_exec.from_user = dummy_user
-    cq_exec.data = f"del_file_exec:{file1_id}:{record_id}"
+    cq_exec.data = f"del_file_exe:{file1_id}"
     cq_exec.message = MagicMock(spec=Message)
     cq_exec.message.edit_text = AsyncMock()
     cq_exec.answer = AsyncMock()
@@ -124,7 +124,7 @@ async def test_delete_file_authorization_security(dummy_user):
     hacker_user = User(id=hacker_id, is_bot=False, first_name="Intruder")
     cq_exec = MagicMock(spec=CallbackQuery)
     cq_exec.from_user = hacker_user
-    cq_exec.data = f"del_file_exec:{file_id}:{record_id}"
+    cq_exec.data = f"del_file_exe:{file_id}"
     cq_exec.message = MagicMock(spec=Message)
     cq_exec.message.edit_text = AsyncMock()
     cq_exec.answer = AsyncMock()
@@ -140,3 +140,58 @@ async def test_delete_file_authorization_security(dummy_user):
     async with get_db() as db:
         async with db.execute("SELECT * FROM files WHERE id = ?", (file_id,)) as cur:
             assert await cur.fetchone() is not None
+
+
+@pytest.mark.asyncio
+async def test_all_record_view_buttons_strictly_under_64_bytes(dummy_user):
+    """Every single inline button callback_data in document view must be <= 64 bytes (Telegram limit)."""
+    user_id = dummy_user.id
+    record_id = "01M759NAAM19FK206RTYKBBB0F"  # 26-char real ULID
+    file1_id = "01M759NAAM19FK206RTYKFFF01"   # 26-char real ULID
+    file2_id = "01M759NAAM19FK206RTYKFFF02"   # 26-char real ULID
+
+    async with get_db() as db:
+        await db.execute("INSERT OR IGNORE INTO users (id, chat_id) VALUES (?, ?)", (user_id, user_id))
+        await db.execute(
+            """
+            INSERT INTO records (id, user_id, category, title, code, created_at, status)
+            VALUES (?, ?, 'vehicle', 'Car Policy Documents', 'CODE_64', '2026-10-01', 'active')
+            ON CONFLICT(id) DO UPDATE SET status = 'active'
+            """,
+            (record_id, user_id)
+        )
+        await db.execute(
+            """
+            INSERT INTO files (id, record_id, user_id, drive_file_id, coded_name, mime, size_bytes, created_at)
+            VALUES (?, ?, ?, 'drive_f1_xyz', 'car_policy.pdf', 'application/pdf', 1024, CURRENT_TIMESTAMP)
+            ON CONFLICT(id) DO NOTHING
+            """,
+            (file1_id, record_id, user_id)
+        )
+        await db.execute(
+            """
+            INSERT INTO files (id, record_id, user_id, drive_file_id, coded_name, mime, size_bytes, created_at)
+            VALUES (?, ?, ?, 'drive_f2_abc', 'car_receipt.jpg', 'image/jpeg', 2048, CURRENT_TIMESTAMP)
+            ON CONFLICT(id) DO NOTHING
+            """,
+            (file2_id, record_id, user_id)
+        )
+        await db.commit()
+
+    cq = MagicMock(spec=CallbackQuery)
+    cq.from_user = dummy_user
+    cq.data = f"view_record:{record_id}:search"
+    cq.message = MagicMock(spec=Message)
+    cq.message.edit_text = AsyncMock()
+    cq.answer = AsyncMock()
+
+    await on_view_record(cq)
+
+    cq.message.edit_text.assert_called_once()
+    kb = cq.message.edit_text.call_args[1]["reply_markup"]
+
+    for row in kb.inline_keyboard:
+        for btn in row:
+            if btn.callback_data:
+                cb_bytes = len(btn.callback_data.encode("utf-8"))
+                assert cb_bytes <= 64, f"Button '{btn.text}' callback_data '{btn.callback_data}' is {cb_bytes} bytes (exceeds 64 limit)!"

@@ -332,6 +332,7 @@ async def on_ask_vault_exit(cq: CallbackQuery, state: FSMContext) -> None:
 @router.message(AskVault.chatting, F.text)
 async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
     """Process dynamic questions asked while in Ask Your Vault mode."""
+    await state.set_state(AskVault.chatting)
     user_id = message.from_user.id
     raw_query = message.text.strip()
     raw_lower = raw_query.lower()

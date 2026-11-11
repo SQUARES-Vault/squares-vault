@@ -147,9 +147,23 @@ async def handle_menu_buttons(message: Message, state: FSMContext) -> None:
                 parse_mode="Markdown",
             )
         else:
-            await message.reply(
-                "If you want to find something please use the 🔍 Search button below. To add something, please use the ➕ Add button."
-            )
+            # Smart Natural Language Auto-Routing:
+            # If user sends any question/query from main menu, automatically enter Ask Your Vault
+            # and evaluate it immediately instead of rejecting with a rigid fallback!
+            from squares_vault.bot.states import AskVault
+            from squares_vault.bot.handlers.ask import handle_ask_vault_query
+            from squares_vault.bot.handlers.admin import get_system_setting
+
+            ai_enabled = (await get_system_setting("ai_enabled", "1")) == "1"
+            if ai_enabled and len(text.strip()) >= 2:
+                await state.set_state(AskVault.chatting)
+                await handle_ask_vault_query(message, state)
+            else:
+                await message.reply(
+                    "💡 You can type any question about your documents, use 🔍 **Search** to find files, or ➕ **Add** to upload new documents.",
+                    reply_markup=get_main_keyboard(),
+                    parse_mode="Markdown",
+                )
     except Exception as e:
         log.exception("Error in handle_menu_buttons: %s", e)
         await message.reply(

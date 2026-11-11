@@ -414,7 +414,7 @@ async def on_view_record(cq: CallbackQuery, state: FSMContext = None) -> None:
             del_label = "🗑️ Delete File" if len(file_rows) == 1 else f"🗑️ Del {idx}"
             kb_buttons.append([
                 InlineKeyboardButton(text=label, callback_data=f"get_file:{fid_db}"),
-                InlineKeyboardButton(text=del_label, callback_data=f"del_file_confirm:{fid_db}:{record_id}")
+                InlineKeyboardButton(text=del_label, callback_data=f"del_file_cnf:{fid_db}")
             ])
         else:
             kb_buttons.append([InlineKeyboardButton(text=label, callback_data=f"get_file:{fid_db}")])
@@ -654,22 +654,20 @@ async def on_delete_record_confirm(cq: CallbackQuery) -> None:
     await cq.answer("Deleted")
 
 
-@router.callback_query(F.data.startswith("del_file_confirm:"))
+@router.callback_query(F.data.startswith("del_file_cnf:"))
 async def on_delete_file_confirm(cq: CallbackQuery) -> None:
     """Prompt user for confirmation before deleting a single attached file."""
-    parts = cq.data.split(":")
-    file_id = parts[1]
-    record_id = parts[2]
+    file_id = cq.data.split(":")[1]
 
     async with get_db() as db:
         async with db.execute(
             """
-            SELECT f.id, f.coded_name, f.drive_file_id, r.title, r.user_id 
+            SELECT f.id, f.record_id, f.coded_name, f.drive_file_id, r.title, r.user_id 
             FROM files f
             JOIN records r ON f.record_id = r.id
-            WHERE f.id = ? AND r.id = ? AND r.user_id = ?
+            WHERE f.id = ? AND r.user_id = ?
             """,
-            (file_id, record_id, cq.from_user.id)
+            (file_id, cq.from_user.id)
         ) as cur:
             row = await cur.fetchone()
 
@@ -677,11 +675,12 @@ async def on_delete_file_confirm(cq: CallbackQuery) -> None:
         await cq.answer("File or record not found.", show_alert=True)
         return
 
+    record_id = row["record_id"]
     filename = row["coded_name"] or "Attachment"
     title = row["title"]
 
     kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🗑️ Yes, Delete File", callback_data=f"del_file_exec:{file_id}:{record_id}")],
+        [InlineKeyboardButton(text="🗑️ Yes, Delete File", callback_data=f"del_file_exe:{file_id}")],
         [InlineKeyboardButton(text="❌ Cancel", callback_data=f"view_record:{record_id}")]
     ])
     await cq.message.edit_text(
@@ -697,22 +696,20 @@ async def on_delete_file_confirm(cq: CallbackQuery) -> None:
     await cq.answer()
 
 
-@router.callback_query(F.data.startswith("del_file_exec:"))
+@router.callback_query(F.data.startswith("del_file_exe:"))
 async def on_delete_file_exec(cq: CallbackQuery, state: FSMContext = None) -> None:
     """Execute deletion of a single attached file from Google Drive and database."""
-    parts = cq.data.split(":")
-    file_id = parts[1]
-    record_id = parts[2]
+    file_id = cq.data.split(":")[1]
 
     async with get_db() as db:
         async with db.execute(
             """
-            SELECT f.id, f.drive_file_id, r.user_id 
+            SELECT f.id, f.record_id, f.drive_file_id, r.user_id 
             FROM files f
             JOIN records r ON f.record_id = r.id
-            WHERE f.id = ? AND r.id = ? AND r.user_id = ?
+            WHERE f.id = ? AND r.user_id = ?
             """,
-            (file_id, record_id, cq.from_user.id)
+            (file_id, cq.from_user.id)
         ) as cur:
             row = await cur.fetchone()
 
@@ -720,6 +717,7 @@ async def on_delete_file_exec(cq: CallbackQuery, state: FSMContext = None) -> No
         await cq.answer("File not found or permission denied.", show_alert=True)
         return
 
+    record_id = row["record_id"]
     drive_file_id = row["drive_file_id"]
 
     # Delete from Google Drive if valid Drive ID
@@ -734,7 +732,7 @@ async def on_delete_file_exec(cq: CallbackQuery, state: FSMContext = None) -> No
 
     # Delete from files table
     async with get_db() as db:
-        await db.execute("DELETE FROM files WHERE id = ? AND record_id = ?", (file_id, record_id))
+        await db.execute("DELETE FROM files WHERE id = ?", (file_id,))
         await db.commit()
 
     await cq.answer("🗑️ File attachment permanently deleted.", show_alert=True)

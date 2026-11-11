@@ -1720,7 +1720,7 @@ async def on_edit_field_attachment(cq: CallbackQuery, state: FSMContext) -> None
     for idx, f_row in enumerate(file_rows, 1):
         name = f_row["coded_name"] or f"File #{idx}"
         kb_rows.append([
-            InlineKeyboardButton(text=f"🗑️ Delete {name[:24]}", callback_data=f"del_file_confirm:{f_row['id']}:{rid}")
+            InlineKeyboardButton(text=f"🗑️ Delete {name[:24]}", callback_data=f"del_file_cnf:{f_row['id']}")
         ])
     kb_rows.append([InlineKeyboardButton(text="❌ Cancel", callback_data="edit_cancel_field")])
     kb = InlineKeyboardMarkup(inline_keyboard=kb_rows)
