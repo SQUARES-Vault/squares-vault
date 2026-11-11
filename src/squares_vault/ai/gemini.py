@@ -109,10 +109,9 @@ async def extract_document_data(
     raw_models = [
         config.settings.ai_model_name,
         *config.settings.ai_fallback_chain,
-        "gemini-3.1-flash-lite",
-        "gemini-3.5-flash",
-        "gemini-flash-latest",
-        "gemini-3.8-flash",
+        "gemini-2.0-flash",
+        "gemini-2.0-flash-lite",
+        "gemini-1.5-flash",
     ]
     # Deduplicate while preserving order
     models_to_try = []
@@ -262,6 +261,12 @@ Cross-Document & Entity Intelligence:
 - Deep Dive & Comprehensive Breakdown:
   * When the user asks for a "deep dive", "detailed analysis", or questions about specific clauses and terms, do not give a generic surface-level answer. Leverage the full 'Notes:' and extracted document content to provide an in-depth, structured breakdown.
 
+- Contextual Vault Health & Blindspot Intelligence:
+  * Check the 'KNOWN VAULT BLINDSPOTS & HEALTH CHECKS' in the context.
+  * If the user's question directly relates to a vehicle, trip, travel, health policy, or overall vault status, smoothly and concisely append a helpful 1-2 sentence notice at the end of your answer:
+    💡 Vault Insight: <brief observation of what is missing, e.g. 'I noticed you have Insurance and RC for UP15EB3113, but no active PUC on file.'>
+  * Strict Relevance Guard: NEVER inject blindspot notices if the question is an unrelated lookup (e.g. asking about an electricity bill, wifi password, or general purchase). Only inject when genuinely relevant to the entity being discussed.
+
 Formatting Guidelines:
 - State the direct answer or total in the very first sentence.
   * When referencing vehicle numbers, codes, or identifiers, format in monospace: e.g. `UP15EB3113`.
@@ -330,10 +335,9 @@ async def answer_vault_query(user_id: int, query: str, context_text: str) -> str
     raw_models = [
         config.settings.ai_model_name,
         *config.settings.ai_fallback_chain,
-        "gemini-3.5-flash",
-        "gemini-3.1-flash-lite",
-        "gemini-3.8-flash",
-        "gemini-flash-latest",
+        "gemini-2.0-flash",
+        "gemini-2.0-flash-lite",
+        "gemini-1.5-flash",
     ]
     models_to_try = []
     for m in raw_models:
