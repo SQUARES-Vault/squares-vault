@@ -479,11 +479,34 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
     kb = _get_end_chat_kb(extra_buttons)
     response_msg = _format_assistant_msg(clean_answer)
 
-    try:
-        await message.answer(response_msg, reply_markup=kb, parse_mode="Markdown")
-    except Exception:
-        # Fallback if Markdown parsing encounters special characters
-        await message.answer(response_msg, reply_markup=kb)
+    # Telegram 4,096 char limit safety guard
+    if len(response_msg) <= 4000:
+        try:
+            await message.answer(response_msg, reply_markup=kb, parse_mode="Markdown")
+        except Exception:
+            await message.answer(response_msg, reply_markup=kb)
+    else:
+        # Split into clean chunks respecting paragraph breaks
+        parts = []
+        curr = []
+        curr_len = 0
+        for para in response_msg.split("\n\n"):
+            if curr_len + len(para) + 2 > 3500 and curr:
+                parts.append("\n\n".join(curr))
+                curr = [para]
+                curr_len = len(para)
+            else:
+                curr.append(para)
+                curr_len += len(para) + 2
+        if curr:
+            parts.append("\n\n".join(curr))
+
+        for idx, part in enumerate(parts):
+            chunk_kb = kb if idx == len(parts) - 1 else None
+            try:
+                await message.answer(part, reply_markup=chunk_kb, parse_mode="Markdown")
+            except Exception:
+                await message.answer(part, reply_markup=chunk_kb)
 
 
 @router.callback_query(F.data == "ask_view_docs")

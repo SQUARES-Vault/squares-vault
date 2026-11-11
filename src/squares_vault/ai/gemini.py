@@ -270,8 +270,11 @@ Formatting Guidelines:
     📅 <Date in DD Mon YYYY> • 💰 <Amount in ₹> • 🏷️ <Category>
   * If amount is not applicable, omit the 💰 part completely.
   * Never cram title and metadata onto one long line.
+- Conciseness & Complete Thoughts Guarantee:
+  * Formulate precise, curated answers tailored directly to the question without unnecessary fluff.
+  * Always finish your response completely within output limits. Never cut off mid-thought, leave bullet cards unclosed, or trail off mid-sentence.
+  * Every response must reach a clear grammatical conclusion (. or !).
 - NEVER generate horizontal divider lines (no '---', '___', '***', or '—').
-- Be thorough and concise. Never leave a response half-finished or cut off.
 - If no records match, give a friendly 1-2 sentence notice.
 
 Instructions:
@@ -367,7 +370,14 @@ async def answer_vault_query(user_id: int, query: str, context_text: str) -> str
                             break
                         if resp.status == 200:
                             data = await resp.json()
-                            ans = data["candidates"][0]["content"]["parts"][0]["text"].strip()
+                            candidate = data["candidates"][0]
+                            ans = candidate["content"]["parts"][0]["text"].strip()
+                            finish_reason = candidate.get("finishReason")
+                            if finish_reason == "MAX_TOKENS" or (ans and ans[-1] not in ".!?)*`'\""):
+                                # If truncated, cleanly close at the last complete sentence
+                                last_punct = max(ans.rfind(".\n"), ans.rfind(". "), ans.rfind("!"), ans.rfind("?"))
+                                if last_punct > len(ans) // 2:
+                                    ans = ans[:last_punct + 1].strip()
                             if not user_custom_key:
                                 await pool.mark_success(current_key)
                             return ans

@@ -7,7 +7,25 @@ from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject, Message
 from aiogram.fsm.context import FSMContext
 
-MENU_BUTTON_KEYWORDS = ["add", "search", "find", "browse", "ask your vault", "upcoming", "settings"]
+MENU_BUTTON_EXACT = {
+    "➕ add",
+    "🔍 search",
+    "🔍 find",
+    "📁 browse",
+    "💬 ask your vault",
+    "💬 ask vault",
+    "📅 upcoming",
+    "🗓️ upcoming",
+    "⚙️ settings",
+    "add",
+    "search",
+    "find",
+    "browse",
+    "ask your vault",
+    "ask vault",
+    "upcoming",
+    "settings",
+}
 
 
 class MenuInterruptMiddleware(BaseMiddleware):
@@ -20,8 +38,17 @@ class MenuInterruptMiddleware(BaseMiddleware):
         data: dict[str, Any],
     ) -> Any:
         if isinstance(event, Message) and event.text:
-            text_lower = event.text.strip().lower()
-            if any(keyword in text_lower for keyword in MENU_BUTTON_KEYWORDS):
+            raw = event.text.strip()
+            raw_lower = raw.lower()
+
+            # Exact button match, or starts with menu emoji + short menu label, or slash command
+            is_menu_press = (
+                raw_lower in MENU_BUTTON_EXACT
+                or (raw.startswith(("➕", "🔍", "📁", "💬", "📅", "🗓️", "⚙️")) and len(raw) <= 25)
+                or (raw.startswith("/") and len(raw.split()[0]) <= 20)
+            )
+
+            if is_menu_press:
                 state: FSMContext | None = data.get("state")
                 if state:
                     cur_state = await state.get_state()
