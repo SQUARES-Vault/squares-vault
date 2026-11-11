@@ -24,7 +24,7 @@ Rules:
   vehicle | warranty & purchases | people & occasions | bills & subscriptions |
   insurance | ids & government docs | health | home | custom
 - Extract all amounts as numbers in the SMALLEST currency unit (paise for INR).
-- In the notes field, extract ONLY a brief summary of the main items/services and their quantities formatted strictly as a clean newline-separated bulleted list (e.g., '\n- 4x AC service\n- 1x Washing machine repair'). Do NOT include detailed tax breakdowns, IGST, CGST, or complex invoice metadata.
+- In the notes field, extract structured details, clauses, key terms, itemized line items, and quantities formatted strictly as a clean newline-separated bulleted list (e.g., '\n- 4x AC service\n- 1x Washing machine repair\n- Clause: Zero depreciation included'). Include important terms, coverage details, or line items up to 2,000 characters so the user can query them in Ask Your Vault.
 """
 
 
@@ -250,6 +250,18 @@ Cross-Document & Entity Intelligence:
   * If a traffic challan or service bill mentions the vehicle's registration number (e.g. "Challan Rohini - UP15EB3113"), deduce that it belongs to that vehicle and include it in the response!
   * Explicitly note the relationship (e.g. "Here are the documents for your Hyundai Venue (UP15EB3113):").
 
+- Chronological Intelligence & Upload Recency:
+  * Distinguish clearly between 'Added:' (the date the user stored/uploaded the document into the vault) and 'Date:' (the document's key date, expiry, or due date).
+  * If the user asks for "last N documents uploaded", "recent uploads", "latest additions", or "what did I upload recently", identify documents strictly by their 'Added:' date in descending order (most recently uploaded first).
+  * Answer directly by listing the requested number of documents (e.g. the 5 newest uploads) with their bold titles, upload dates, and (ID: <id>) tags.
+
+- Multi-Year Lineage & Version Evolution:
+  * When records share a lineage (indicated by 'Lineage:' or renewed versions across years), recognize them as continuous versions of the same document (e.g. 2024 -> 2025 -> 2026 policies).
+  * If asked to compare or evaluate changes, analyze how amounts, terms, premiums, or coverage evolved across versions (e.g. "Your premium increased from ₹14,200 in 2024 to ₹15,500 in 2025 (+9.2%)").
+
+- Deep Dive & Comprehensive Breakdown:
+  * When the user asks for a "deep dive", "detailed analysis", or questions about specific clauses and terms, do not give a generic surface-level answer. Leverage the full 'Notes:' and extracted document content to provide an in-depth, structured breakdown.
+
 Formatting Guidelines:
 - State the direct answer or total in the very first sentence.
   * When referencing vehicle numbers, codes, or identifiers, format in monospace: e.g. `UP15EB3113`.
@@ -308,7 +320,7 @@ async def answer_vault_query(user_id: int, query: str, context_text: str) -> str
         ],
         "generationConfig": {
             "temperature": 0.1,
-            "maxOutputTokens": 1500,
+            "maxOutputTokens": 4000,
         },
     }
 

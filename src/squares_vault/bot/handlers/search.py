@@ -8,6 +8,9 @@ from aiogram.filters import Command, StateFilter
 
 from squares_vault.search.index import search_records
 from squares_vault.db.connection import get_db
+from squares_vault.logging_setup import get_logger
+
+log = get_logger(__name__)
 
 router = Router(name="search")
 
@@ -148,6 +151,150 @@ async def on_search_page_change(cq: CallbackQuery) -> None:
     await cq.answer()
 
 
+async def get_document_lineage(record_id: str, user_id: int) -> list[dict]:
+    """Recursively traverse the parent/child renewal graph to get all versions chronologically."""
+    async with get_db() as db:
+        async with db.execute(
+            """
+            SELECT * FROM records 
+            WHERE id = ? AND (
+                user_id = ? 
+                OR id IN (
+                    SELECT r2.id FROM records r2 
+                    JOIN access_grants ag ON r2.user_id = ag.owner_id 
+                    WHERE ag.granted_id = ? AND (ag.category = 'all' OR r2.category LIKE '%' || ag.category || '%')
+                )
+            ) AND status != 'soft_deleted'
+            """,
+            (record_id, user_id, user_id)
+        ) as cur:
+            curr = await cur.fetchone()
+
+        if not curr:
+            return []
+
+        curr = dict(curr)
+        visited_ids = {curr["id"]}
+        ancestors = []
+
+        # Walk up parent chain
+        pid = curr.get("parent_record_id")
+        while pid and pid not in visited_ids:
+            visited_ids.add(pid)
+            async with db.execute(
+                """
+                SELECT * FROM records 
+                WHERE id = ? AND (
+                    user_id = ? 
+                    OR id IN (
+                        SELECT r2.id FROM records r2 
+                        JOIN access_grants ag ON r2.user_id = ag.owner_id 
+                        WHERE ag.granted_id = ? AND (ag.category = 'all' OR r2.category LIKE '%' || ag.category || '%')
+                    )
+                ) AND status != 'soft_deleted'
+                """,
+                (pid, user_id, user_id)
+            ) as cur:
+                p_row = await cur.fetchone()
+            if not p_row:
+                break
+            p_dict = dict(p_row)
+            ancestors.append(p_dict)
+            pid = p_dict.get("parent_record_id")
+
+        ancestors.reverse()  # Oldest ancestor first
+
+        # Walk down child chain
+        descendants = []
+        queue = [curr["id"]]
+        while queue:
+            parent = queue.pop(0)
+            async with db.execute(
+                """
+                SELECT * FROM records 
+                WHERE parent_record_id = ? AND (
+                    user_id = ? 
+                    OR id IN (
+                        SELECT r2.id FROM records r2 
+                        JOIN access_grants ag ON r2.user_id = ag.owner_id 
+                        WHERE ag.granted_id = ? AND (ag.category = 'all' OR r2.category LIKE '%' || ag.category || '%')
+                    )
+                ) AND status != 'soft_deleted'
+                ORDER BY created_at ASC
+                """,
+                (parent, user_id, user_id)
+            ) as cur:
+                c_rows = await cur.fetchall()
+            for cr in c_rows:
+                cd = dict(cr)
+                if cd["id"] not in visited_ids:
+                    visited_ids.add(cd["id"])
+                    descendants.append(cd)
+                    queue.append(cd["id"])
+
+        full_chain = ancestors + [curr] + descendants
+        full_chain.sort(key=lambda r: str(r.get("key_date") or r.get("created_at") or ""))
+        return full_chain
+
+
+def render_version_timeline_text(lineage: list[dict], current_record_id: str) -> str:
+    """Render a visual ASCII/Unicode timeline with cost deltas and version lineage."""
+    if not lineage:
+        return "No version history found."
+
+    lines = [
+        "📈 **DOCUMENT VERSION TIMELINE**",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        f"Tracking **{len(lineage)}** sequential version{'s' if len(lineage) > 1 else ''} across renewal history:\n",
+    ]
+
+    prev_amt = None
+    first_amt = None
+
+    for idx, rec in enumerate(lineage, 1):
+        rid = rec["id"]
+        title = rec["title"]
+        status = rec.get("status", "active")
+        amt_minor = rec.get("amount_minor")
+        dt_str = rec.get("key_date") or (rec.get("created_at")[:10] if rec.get("created_at") else "—")
+
+        year_str = dt_str[:4] if dt_str and len(dt_str) >= 4 else "—"
+
+        is_current = (rid == current_record_id)
+        marker = "⭐ Current Version" if is_current else (f"🟢 {status.title()}" if status == "active" else "⚪ Archived")
+
+        amt_display = f"₹{amt_minor/100:,.2f}" if amt_minor else "—"
+
+        delta_str = ""
+        if amt_minor and prev_amt is not None and prev_amt > 0:
+            diff = amt_minor - prev_amt
+            pct = (diff / prev_amt) * 100
+            sign = "+" if diff > 0 else ""
+            delta_str = f" ({sign}₹{diff/100:,.2f} / {sign}{pct:.1f}%)"
+
+        if first_amt is None and amt_minor:
+            first_amt = amt_minor
+        if amt_minor:
+            prev_amt = amt_minor
+
+        connector = "┌─" if idx == 1 else ("└─" if idx == len(lineage) else "├─")
+
+        lines.append(f"{connector} **v{idx} ({year_str}): {title}**")
+        lines.append(f"   🗓️ Date: `{dt_str}`  •  💰 `{amt_display}`{delta_str}")
+        lines.append(f"   Status: {marker}")
+        if idx < len(lineage):
+            lines.append("   │")
+
+    if len(lineage) > 1 and first_amt and prev_amt and first_amt != prev_amt:
+        total_diff = prev_amt - first_amt
+        total_pct = (total_diff / first_amt) * 100
+        sign = "+" if total_diff > 0 else ""
+        lines.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        lines.append(f"📊 **Cumulative Cost Delta:** {sign}₹{total_diff/100:,.2f} ({sign}{total_pct:.1f}%) across all renewals.")
+
+    return "\n".join(lines)
+
+
 @router.callback_query(F.data.startswith("view_record:"))
 async def on_view_record(cq: CallbackQuery, state: FSMContext = None) -> None:
     """Show full record details."""
@@ -220,7 +367,11 @@ async def on_view_record(cq: CallbackQuery, state: FSMContext = None) -> None:
         "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
     ]
 
-    # Fetch renewal chain
+    # Fetch renewal chain & full lineage
+    lineage = await get_document_lineage(record_id, cq.from_user.id)
+    if len(lineage) > 1:
+        lines += [f"🔄 *Version Lineage:* {len(lineage)} versions tracked across renewals"]
+
     parent_id = row.get('parent_record_id') or ""
     async with get_db() as db:
         async with db.execute(
@@ -236,6 +387,15 @@ async def on_view_record(cq: CallbackQuery, state: FSMContext = None) -> None:
             lines += [f"🔄 *Renewed by:* {cr['title']} ({_fmt(cr['created_at'][:10])})"]
 
     kb_buttons = []
+
+    # If lineage > 1, add Version Timeline button at the top of actions
+    if len(lineage) > 1:
+        kb_buttons.append([
+            InlineKeyboardButton(
+                text=f"📈 Version Timeline ({len(lineage)} Years)",
+                callback_data=f"view_timeline:{record_id}:{origin}"
+            )
+        ])
     
     # Fetch associated files
     async with get_db() as db:
@@ -245,10 +405,19 @@ async def on_view_record(cq: CallbackQuery, state: FSMContext = None) -> None:
         ) as cur:
             file_rows = await cur.fetchall()
             
+    is_owner = (row["user_id"] == cq.from_user.id)
+
     for idx, f_row in enumerate(file_rows, 1):
         fid_db = f_row['id']
         label = "📎 View Attachment" if len(file_rows) == 1 else f"📎 View Attachment {idx}"
-        kb_buttons.append([InlineKeyboardButton(text=label, callback_data=f"get_file:{fid_db}")])
+        if is_owner:
+            del_label = "🗑️ Delete File" if len(file_rows) == 1 else f"🗑️ Del {idx}"
+            kb_buttons.append([
+                InlineKeyboardButton(text=label, callback_data=f"get_file:{fid_db}"),
+                InlineKeyboardButton(text=del_label, callback_data=f"del_file_confirm:{fid_db}:{record_id}")
+            ])
+        else:
+            kb_buttons.append([InlineKeyboardButton(text=label, callback_data=f"get_file:{fid_db}")])
 
     # Check if there are pending reminders for this record
     async with get_db() as db:
@@ -259,7 +428,6 @@ async def on_view_record(cq: CallbackQuery, state: FSMContext = None) -> None:
             rem_row = await cur.fetchone()
             has_pending_reminders = rem_row["cnt"] > 0 if rem_row else False
 
-    is_owner = (row["user_id"] == cq.from_user.id)
     if is_owner:
         kb_buttons.append([
             InlineKeyboardButton(text="✏️ Edit", callback_data=f"edit_record:{record_id}"),
@@ -281,7 +449,10 @@ async def on_view_record(cq: CallbackQuery, state: FSMContext = None) -> None:
     kb = InlineKeyboardMarkup(inline_keyboard=kb_buttons)
 
     await cq.message.edit_text("\n".join(lines), reply_markup=kb, parse_mode="Markdown")
-    await cq.answer()
+    try:
+        await cq.answer()
+    except Exception:
+        pass
 
 
 @router.callback_query(F.data.startswith("cancel_record_rem:"))
@@ -481,6 +652,123 @@ async def on_delete_record_confirm(cq: CallbackQuery) -> None:
     kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="⬅️ Back to Categories", callback_data="search_back")]])
     await cq.message.edit_text("🗑️ Record deleted and files removed from Google Drive.", reply_markup=kb)
     await cq.answer("Deleted")
+
+
+@router.callback_query(F.data.startswith("del_file_confirm:"))
+async def on_delete_file_confirm(cq: CallbackQuery) -> None:
+    """Prompt user for confirmation before deleting a single attached file."""
+    parts = cq.data.split(":")
+    file_id = parts[1]
+    record_id = parts[2]
+
+    async with get_db() as db:
+        async with db.execute(
+            """
+            SELECT f.id, f.coded_name, f.drive_file_id, r.title, r.user_id 
+            FROM files f
+            JOIN records r ON f.record_id = r.id
+            WHERE f.id = ? AND r.id = ? AND r.user_id = ?
+            """,
+            (file_id, record_id, cq.from_user.id)
+        ) as cur:
+            row = await cur.fetchone()
+
+    if not row:
+        await cq.answer("File or record not found.", show_alert=True)
+        return
+
+    filename = row["coded_name"] or "Attachment"
+    title = row["title"]
+
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🗑️ Yes, Delete File", callback_data=f"del_file_exec:{file_id}:{record_id}")],
+        [InlineKeyboardButton(text="❌ Cancel", callback_data=f"view_record:{record_id}")]
+    ])
+    await cq.message.edit_text(
+        f"⚠️ **DELETE FILE CONFIRMATION**\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"Are you sure you want to delete this file attachment?\n\n"
+        f"📄 **Document:** {title}\n"
+        f"📎 **File:** `{filename}`\n\n"
+        f"_This will permanently delete the file from your Google Drive and vault. The document record itself will remain intact._",
+        reply_markup=kb,
+        parse_mode="Markdown"
+    )
+    await cq.answer()
+
+
+@router.callback_query(F.data.startswith("del_file_exec:"))
+async def on_delete_file_exec(cq: CallbackQuery, state: FSMContext = None) -> None:
+    """Execute deletion of a single attached file from Google Drive and database."""
+    parts = cq.data.split(":")
+    file_id = parts[1]
+    record_id = parts[2]
+
+    async with get_db() as db:
+        async with db.execute(
+            """
+            SELECT f.id, f.drive_file_id, r.user_id 
+            FROM files f
+            JOIN records r ON f.record_id = r.id
+            WHERE f.id = ? AND r.id = ? AND r.user_id = ?
+            """,
+            (file_id, record_id, cq.from_user.id)
+        ) as cur:
+            row = await cur.fetchone()
+
+    if not row:
+        await cq.answer("File not found or permission denied.", show_alert=True)
+        return
+
+    drive_file_id = row["drive_file_id"]
+
+    # Delete from Google Drive if valid Drive ID
+    if drive_file_id:
+        try:
+            from squares_vault.drive.api import DriveAPI
+            drive = DriveAPI(cq.from_user.id)
+            await drive.delete_file(drive_file_id)
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning(f"Failed to delete file from drive: {e}")
+
+    # Delete from files table
+    async with get_db() as db:
+        await db.execute("DELETE FROM files WHERE id = ? AND record_id = ?", (file_id, record_id))
+        await db.commit()
+
+    await cq.answer("🗑️ File attachment permanently deleted.", show_alert=True)
+    cq.data = f"view_record:{record_id}"
+    await on_view_record(cq, state)
+
+
+@router.callback_query(F.data.startswith("view_timeline:"))
+async def on_view_timeline(cq: CallbackQuery, state: FSMContext = None) -> None:
+    """Render the full interactive version timeline graph."""
+    parts = cq.data.split(":")
+    record_id = parts[1]
+    origin = parts[2] if len(parts) > 2 else "search"
+
+    lineage = await get_document_lineage(record_id, cq.from_user.id)
+    if not lineage:
+        await cq.answer("Version lineage not found.", show_alert=True)
+        return
+
+    text = render_version_timeline_text(lineage, current_record_id=record_id)
+
+    kb_buttons = []
+    # Add jump buttons for other versions in the lineage
+    for idx, rec in enumerate(lineage, 1):
+        if rec["id"] != record_id:
+            year_tag = (rec.get("key_date") or rec.get("created_at") or "")[:4]
+            btn_label = f"📄 View {year_tag} ({rec['title'][:16]})"
+            kb_buttons.append([InlineKeyboardButton(text=btn_label, callback_data=f"view_record:{rec['id']}:{origin}")])
+
+    kb_buttons.append([InlineKeyboardButton(text="⬅️ Back to Document", callback_data=f"view_record:{record_id}:{origin}")])
+    kb = InlineKeyboardMarkup(inline_keyboard=kb_buttons)
+
+    await cq.message.edit_text(text, reply_markup=kb, parse_mode="Markdown")
+    await cq.answer()
 
 
 @router.callback_query(F.data == "search_back")

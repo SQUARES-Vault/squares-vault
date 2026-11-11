@@ -316,7 +316,8 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
         async with db.execute(
             """
             SELECT r.id, r.title, r.category, r.subtype, r.key_date, r.key_date_type,
-                   r.amount_minor, r.notes, r.tags, r.extra_json, e.display_name as entity_name
+                   r.amount_minor, r.notes, r.tags, r.extra_json, r.parent_record_id,
+                   r.created_at, e.display_name as entity_name
             FROM records r
             LEFT JOIN entities e ON r.entity_id = e.id
             WHERE (
@@ -396,23 +397,39 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
 
         scored_records.append((score, r))
 
-    scored_records.sort(key=lambda x: x[0], reverse=True)
+    # Detect recency query intent (e.g. "last 5 documents that I uploaded", "recent additions")
+    recency_pattern = re.compile(
+        r"\b(last|latest|recent|recently|newest|uploaded|upload|added|new|newly)\b",
+        re.IGNORECASE
+    )
+    is_recency_query = bool(recency_pattern.search(raw_lower))
+
+    if is_recency_query:
+        scored_records.sort(
+            key=lambda x: (x[0], str(x[1].get("created_at") or "")),
+            reverse=True
+        )
+    else:
+        scored_records.sort(key=lambda x: x[0], reverse=True)
+
     matching_records = [r for score, r in scored_records if score > 0]
 
     # Format context for Gemini
     today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     context_lines = [f"TODAY'S DATE: {today_str}"]
 
-    # Include up to 50 records in context (prioritizing matched records)
+    # Include up to 50 records in context (prioritizing matched/recent records)
     selected_records = [r for _, r in scored_records[:50]]
     for r in selected_records:
         amt = f"₹{r['amount_minor']/100:.2f}" if r.get("amount_minor") else "None"
         dt = f"{r.get('key_date')} ({r.get('key_date_type')})" if r.get("key_date") else "None"
-        notes_clean = f" | Notes: {r['notes'][:120]}" if r.get("notes") else ""
+        added_str = _fmt_date(r.get("created_at")[:10]) if r.get("created_at") else "Unknown"
+        notes_clean = f" | Notes: {r['notes'][:1500]}" if r.get("notes") else ""
         ent_clean = f" | Entity: {r['entity_name']}" if r.get("entity_name") else ""
         veh_clean = f" | Plate: {r['vehicle_number']}" if r.get("vehicle_number") else ""
+        lineage_clean = f" | Lineage: Renewed from ID {r['parent_record_id']}" if r.get("parent_record_id") else ""
         context_lines.append(
-            f"- ID: {r['id']} | Title: \"{r['title']}\" | Category: {r['category']} | Date: {dt} | Amount: {amt}{notes_clean}{ent_clean}{veh_clean}"
+            f"- ID: {r['id']} | Title: \"{r['title']}\" | Category: {r['category']} | Added: {added_str} | Document Date: {dt} | Amount: {amt}{notes_clean}{ent_clean}{veh_clean}{lineage_clean}"
         )
 
     context_text = "\n".join(context_lines)
@@ -424,6 +441,9 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
         if matching_records:
             items_str = "\n".join(f"• **{r['title']}** ({r['category']})" for r in matching_records[:5])
             raw_answer = f"I found the following matching documents in your vault:\n\n{items_str}"
+        elif is_recency_query:
+            items_str = "\n".join(f"• **{r['title']}** ({r['category']})" for _, r in scored_records[:5])
+            raw_answer = f"Here are your most recently added documents:\n\n{items_str}"
         else:
             raw_answer = "I couldn't process that question right now. Please try again or rephrase."
 
@@ -433,8 +453,11 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
     clean_answer = _beautify_answer(raw_answer)
 
     valid_cited_ids = [cid for cid in cited_ids if cid in record_map]
-    if not valid_cited_ids and matching_records:
-        valid_cited_ids = [r["id"] for r in matching_records[:6]]
+    if not valid_cited_ids:
+        if matching_records:
+            valid_cited_ids = [r["id"] for r in matching_records[:6]]
+        elif is_recency_query:
+            valid_cited_ids = [r["id"] for _, r in scored_records[:6]]
 
     # Deduplicate while preserving order
     matched_ids = list(dict.fromkeys(valid_cited_ids))

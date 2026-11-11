@@ -1708,9 +1708,29 @@ async def on_save_edit_notes(message: Message, state: FSMContext) -> None:
 
 @router.callback_query(F.data == "edit_field:attachment", EditEntry.menu)
 async def on_edit_field_attachment(cq: CallbackQuery, state: FSMContext) -> None:
-    kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="❌ Cancel", callback_data="edit_cancel_field")]])
+    data = await state.get_data()
+    rid = data["record_id"]
+    async with get_db() as db:
+        async with db.execute(
+            "SELECT id, coded_name, mime FROM files WHERE record_id = ?", (rid,)
+        ) as cur:
+            file_rows = await cur.fetchall()
+
+    kb_rows = []
+    for idx, f_row in enumerate(file_rows, 1):
+        name = f_row["coded_name"] or f"File #{idx}"
+        kb_rows.append([
+            InlineKeyboardButton(text=f"🗑️ Delete {name[:24]}", callback_data=f"del_file_confirm:{f_row['id']}:{rid}")
+        ])
+    kb_rows.append([InlineKeyboardButton(text="❌ Cancel", callback_data="edit_cancel_field")])
+    kb = InlineKeyboardMarkup(inline_keyboard=kb_rows)
+
+    files_summary = f"Currently **{len(file_rows)}** file(s) attached.\n\n" if file_rows else "No files attached yet.\n\n"
     await cq.message.edit_text(
-        "📎 **Add / Replace Attachment**\n\n📸 _Send a photo or PDF document to attach it to this record in Google Drive:_",
+        f"📎 **Manage Attachments**\n\n"
+        f"{files_summary}"
+        f"📸 _To add another attachment, send any photo, PDF, or document in this chat._\n"
+        f"_Or tap a file above to delete it._",
         reply_markup=kb,
         parse_mode="Markdown"
     )
