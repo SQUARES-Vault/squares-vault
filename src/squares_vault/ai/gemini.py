@@ -262,6 +262,13 @@ Cross-Document & Entity Intelligence:
 - Deep Dive & Comprehensive Breakdown:
   * When the user asks for a "deep dive", "detailed analysis", or questions about specific clauses and terms, do not give a generic surface-level answer. Leverage the full 'Notes:' and extracted document content to provide an in-depth, structured breakdown.
 
+- Contextual Vault Health & Blindspot Intelligence:
+  * When 'VAULT HEALTH & BLINDSPOTS (Coverage Gaps)' are present in the context, check if the user's question touches upon that entity, vehicle, travel/passport, or overall vault status.
+  * RELEVANCE RULE: Smartly and unobtrusively append a brief, helpful 1-2 sentence notice at the very end of your answer ONLY when directly relevant:
+    Example: When the user asks about their vehicle, its insurance, or upcoming deadlines, answer their question directly and then append:
+    💡 Vault Insight: Your vehicle UP15EB3113 has active Insurance and RC, but no active Pollution Certificate (PUC) on file.
+  * ZERO NOISE RULE: If the user is asking an unrelated specific query (e.g. "What is my WiFi bill?" or "Show my electricity due date"), NEVER inject unrelated vehicle or passport blindspots.
+
 Formatting Guidelines:
 - State the direct answer or total in the very first sentence.
   * When referencing vehicle numbers, codes, or identifiers, format in monospace: e.g. `UP15EB3113`.

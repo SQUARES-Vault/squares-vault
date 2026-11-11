@@ -21,8 +21,8 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import datetime, timezone
-from typing import Optional
+from datetime import datetime, timezone, timedelta
+from typing import Optional, Any
 
 from aiogram import Router, F
 from aiogram.filters import Command
@@ -94,6 +94,90 @@ def _expand_tokens_for_cross_records(records: list[dict], substantive_tokens: li
                             expanded.add(w.lower())
 
     return expanded
+
+
+def _compute_vault_blindspots(records: list[dict]) -> list[str]:
+    """Analyze records across life-admin clusters and identify missing standard documents or coverage gaps."""
+    blindspots: list[str] = []
+
+    # 1. Group vehicle records by vehicle plate or model name
+    vehicles: dict[str, dict[str, Any]] = {}
+    for r in records:
+        cat = (r.get("category") or "").lower()
+        title_l = (r.get("title") or "").lower()
+        extra = r.get("_extra") or {}
+        if not extra and r.get("extra_json"):
+            try:
+                extra = json.loads(r["extra_json"])
+            except Exception:
+                extra = {}
+
+        v_num = (r.get("vehicle_number") or extra.get("vehicle_number") or "").upper().replace(" ", "").replace("-", "")
+        e_name = (r.get("entity_name") or extra.get("entity_name") or "").strip()
+
+        # If it's a vehicle category or mentions plate/vehicle terms
+        is_vehicle_doc = (
+            cat == "vehicle"
+            or bool(v_num)
+            or any(w in title_l for w in ("car", "bike", "scooter", "motorcycle", "vehicle", "venue", "honda", "hyundai", "tata", "suzuki", "rc", "puc", "insurance"))
+        )
+        if is_vehicle_doc:
+            key = v_num if v_num else (e_name if e_name else "Unknown Vehicle")
+            if key not in vehicles:
+                vehicles[key] = {"display": e_name or v_num or "Vehicle", "plate": v_num, "types": set(), "records": []}
+            vehicles[key]["records"].append(r)
+            if v_num and not vehicles[key]["plate"]:
+                vehicles[key]["plate"] = v_num
+
+            # Determine document type within vehicle cluster
+            if any(k in title_l for k in ("puc", "pollution")):
+                vehicles[key]["types"].add("puc")
+            elif any(k in title_l for k in ("insurance", "policy", "cover")):
+                vehicles[key]["types"].add("insurance")
+            elif any(k in title_l for k in ("rc", "registration", "smart card")):
+                vehicles[key]["types"].add("rc")
+            elif any(k in title_l for k in ("service", "maintenance", "repair", "bill")):
+                vehicles[key]["types"].add("service")
+            elif any(k in title_l for k in ("challan", "fine")):
+                vehicles[key]["types"].add("challan")
+
+    for v_key, v_info in vehicles.items():
+        disp = v_info["display"]
+        plate_str = f" ({v_info['plate']})" if v_info.get("plate") and v_info["plate"] not in disp else ""
+        v_types = v_info["types"]
+        # Only analyze if we have at least 1 primary doc (RC or Insurance)
+        if "rc" in v_types or "insurance" in v_types:
+            missing = []
+            if "puc" not in v_types:
+                missing.append("active Pollution Certificate (PUC)")
+            if "insurance" not in v_types:
+                missing.append("active Vehicle Insurance")
+            if "rc" not in v_types:
+                missing.append("Registration Certificate (RC)")
+
+            if missing:
+                blindspots.append(f"Vehicle '{disp}{plate_str}': Has {', '.join(t.upper() for t in sorted(v_types))}, but MISSING: {', '.join(missing)}.")
+
+    # 2. Identity & Travel Cluster: Check passport validity (6-month international travel window)
+    today_dt = datetime.now(timezone.utc).date()
+    for r in records:
+        cat = (r.get("category") or "").lower()
+        title_l = (r.get("title") or "").lower()
+        if "passport" in title_l or (cat == "ids & government docs" and "passport" in title_l):
+            kd = r.get("key_date")
+            if kd:
+                try:
+                    exp_dt = datetime.strptime(kd[:10], "%Y-%m-%d").date()
+                    days_left = (exp_dt - today_dt).days
+                    if 0 < days_left <= 180:
+                        blindspots.append(
+                            f"Passport '{r['title']}': Expires on {kd} ({days_left} days left). "
+                            f"International travel requires at least 6 months validity."
+                        )
+                except Exception:
+                    pass
+
+    return blindspots
 
 
 def _get_end_chat_kb(extra_buttons: Optional[list[list[InlineKeyboardButton]]] = None) -> InlineKeyboardMarkup:
@@ -417,6 +501,14 @@ async def handle_ask_vault_query(message: Message, state: FSMContext) -> None:
     # Format context for Gemini
     today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     context_lines = [f"TODAY'S DATE: {today_str}"]
+
+    # Compute vault health & coverage blindspots across user records
+    vault_blindspots = _compute_vault_blindspots(records)
+    if vault_blindspots:
+        context_lines.append("\nVAULT HEALTH & BLINDSPOTS (Coverage Gaps):")
+        for bs in vault_blindspots:
+            context_lines.append(f"- {bs}")
+        context_lines.append("")
 
     # Include up to 50 records in context (prioritizing matched/recent records)
     selected_records = [r for _, r in scored_records[:50]]
